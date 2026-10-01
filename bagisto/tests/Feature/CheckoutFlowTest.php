@@ -43,6 +43,8 @@ it('places a configurable fashion order end to end', function () {
     // Arrange: seeded catalog + customer (no truncate-safe seeding here).
     $customer = Customer::where('email', 'customer@classy.local')->firstOrFail();
 
+    $maxOrderId = Order::max('id') ?? 0;
+
     $this->actingAs($customer);
 
     $product = Product::where('type', 'configurable')->with('variants')->firstOrFail();
@@ -95,6 +97,8 @@ it('places a configurable fashion order end to end', function () {
     // Assert: pending UGX order with the variant, visible in history.
     $order = Order::where('customer_id', $customer->id)->latest('id')->firstOrFail();
 
+    expect($order->id)->toBeGreaterThan($maxOrderId);
+
     expect($order->status)->toBe('pending')
         ->and($order->order_currency_code)->toBe('UGX')
         ->and((float) $order->grand_total)->toBeGreaterThan(0)
@@ -103,7 +107,7 @@ it('places a configurable fashion order end to end', function () {
         ->and((float) $order->items->first()->price)->toBe((float) $variant->price)
         ->and(json_encode($order->items->first()->additional))->toContain((string) $variant->id);
 
-    get(route('shop.customers.account.orders.index'))->assertOk()->assertSee((string) $order->id);
+    get(route('shop.customers.account.orders.index'))->assertOk()->assertSee((string) $order->increment_id);
 
     // Delivery info (report 9.7) reached the order address.
     expect($order->shipping_address->delivery_instructions)

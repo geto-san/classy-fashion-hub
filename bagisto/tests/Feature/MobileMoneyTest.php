@@ -93,6 +93,8 @@ it('starts a pending attempt on charge', function () {
 
     $cart = mobilemoneyCart();
 
+    $ordersBefore = Order::where('customer_id', $cart->customer_id)->count();
+
     post(route('classy.mobilemoney.charge'), ['network' => 'MTN', 'phone' => '+256772000002'])
         ->assertRedirect();
 
@@ -101,7 +103,7 @@ it('starts a pending attempt on charge', function () {
     expect($attempt->status)->toBe('pending')
         ->and($attempt->gateway_tx_id)->toBe('999001')
         ->and($attempt->network)->toBe('MTN')
-        ->and(Order::where('customer_id', $cart->customer_id)->count())->toBe(0);
+        ->and(Order::where('customer_id', $cart->customer_id)->count())->toBe($ordersBefore);
 });
 
 it('creates the paid order only after verified webhook success', function () {
@@ -204,6 +206,8 @@ it('proves returning from payment creates no order', function () {
 
     $cart = mobilemoneyCart();
 
+    $ordersBefore = Order::where('customer_id', $cart->customer_id)->count();
+
     post(route('classy.mobilemoney.charge'), ['network' => 'MTN', 'phone' => '+256772000002'])
         ->assertRedirect();
 
@@ -216,5 +220,5 @@ it('proves returning from payment creates no order', function () {
         ->assertOk();
 
     expect($attempt->fresh()->status)->toBe('pending')
-        ->and(Order::where('customer_id', $cart->customer_id)->count())->toBe(0);
+        ->and(Order::where('customer_id', $cart->customer_id)->count())->toBe($ordersBefore);
 });
