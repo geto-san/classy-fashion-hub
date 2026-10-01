@@ -90,7 +90,12 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         DB::table('channels')->where('id', $this->channelId)->update(['base_currency_id' => $ugxId]);
 
-        $this->command->info('Currency UGX ready (channel base currency).');
+        DB::table('core_config')->updateOrInsert(
+            ['code' => 'catalog.inventory.stock_options.out_of_stock_threshold', 'channel_code' => null, 'locale_code' => null],
+            ['value' => '5']
+        );
+
+        $this->command->info('Currency UGX ready (channel base currency). Low-stock threshold set to 5.');
     }
 
     /**

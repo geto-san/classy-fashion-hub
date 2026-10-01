@@ -41,5 +41,32 @@ class ProductInventoryObserver
             $admin,
             'stock.updated'
         );
+
+        $this->logThresholdCrossing($inventory, $admin, (int) $inventory->getOriginal('qty'), (int) $inventory->qty);
+    }
+
+    /**
+     * Record a low-stock alert entry when quantity drops to or below the
+     * configured out-of-stock threshold (report 9.8). The admin dashboard
+     * threshold widget surfaces the same products visually.
+     */
+    protected function logThresholdCrossing(ProductInventory $inventory, $admin, int $oldQty, int $newQty): void
+    {
+        $threshold = (int) core()->getConfigData('catalog.inventory.stock_options.out_of_stock_threshold');
+
+        if ($oldQty > $threshold && $newQty <= $threshold) {
+            Audit::log(
+                $inventory->product ?? $inventory,
+                "Low stock for {$inventory->product?->sku}: {$newQty} left (threshold {$threshold})",
+                [
+                    'sku'        => $inventory->product?->sku,
+                    'product_id' => $inventory->product_id,
+                    'qty'        => $newQty,
+                    'threshold'  => $threshold,
+                ],
+                $admin,
+                'stock.low'
+            );
+        }
     }
 }
