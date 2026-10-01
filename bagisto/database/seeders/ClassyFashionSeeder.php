@@ -37,6 +37,7 @@ class ClassyFashionSeeder extends Seeder
         'sales.orders.view',
         'sales.orders.create',
         'sales.orders.cancel',
+        'sales.orders.status',
         'sales.invoices',
         'sales.invoices.view',
         'sales.invoices.create',
