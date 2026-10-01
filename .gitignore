@@ -1,0 +1,5 @@
+/bagisto/
+/vendor/
+/node_modules/
+.env
+!/Classy_Fashion_Hub_Bagisto_Plan.xlsx
