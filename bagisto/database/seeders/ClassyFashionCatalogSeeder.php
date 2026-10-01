@@ -78,7 +78,12 @@ class ClassyFashionCatalogSeeder extends Seeder
     {
         DB::table('currencies')->updateOrInsert(
             ['code' => 'UGX'],
-            ['name' => 'Ugandan Shilling', 'symbol' => 'USh', 'decimal' => 0]
+            [
+                'name'              => 'Ugandan Shilling',
+                'symbol'            => 'USh',
+                'decimal'           => 0,
+                'currency_position' => 'left_with_space',
+            ]
         );
 
         $ugxId = DB::table('currencies')->where('code', 'UGX')->value('id');
@@ -283,7 +288,7 @@ class ClassyFashionCatalogSeeder extends Seeder
         $white = imagecolorallocate($img, 255, 255, 255);
         $gold = imagecolorallocate($img, 0x4A, 0x19, 0x42);
 
-        $font = '/usr/share/fonts/TTF/DejaVuSans-Bold.ttf';
+        $font = '/usr/share/fonts/TTF/DejaVuSansMNerdFontPropo-Bold.ttf';
 
         $label = 'Classy Fashion Hub';
         $words = explode(' ', $text);
