@@ -62,6 +62,12 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $this->setupUgxCurrency();
 
+        if (Product::whereNull('parent_id')->where('type', 'configurable')->exists()) {
+            $this->command->info('Fashion catalog already present; skipping (redeploy-safe).');
+
+            return;
+        }
+
         $this->wipeDemoProducts();
 
         foreach ($this->catalog as $item) {
