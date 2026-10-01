@@ -2,7 +2,9 @@
 
 namespace ClassyFashion\Providers;
 
+use ClassyFashion\Observers\ProductInventoryObserver;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Product\Models\ProductInventory as WebkulProductInventory;
 
 class ClassyFashionServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,8 @@ class ClassyFashionServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+
+        WebkulProductInventory::observe(ProductInventoryObserver::class);
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'classy-fashion');
 

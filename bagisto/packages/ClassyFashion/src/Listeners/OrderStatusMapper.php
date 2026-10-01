@@ -3,6 +3,7 @@
 namespace ClassyFashion\Listeners;
 
 use ClassyFashion\Models\Sales\Order as ClassyOrder;
+use ClassyFashion\Support\Audit;
 use Webkul\Sales\Models\Order;
 
 /**
@@ -25,6 +26,14 @@ class OrderStatusMapper
             $order->status = ClassyOrder::STATUS_DISPATCHED;
 
             $order->save();
+
+            Audit::log(
+                $order,
+                "Order #{$order->increment_id} auto-moved: completed to dispatched",
+                ['from' => Order::STATUS_COMPLETED, 'to' => ClassyOrder::STATUS_DISPATCHED],
+                auth('admin')->user(),
+                'order.status'
+            );
         }
     }
 }

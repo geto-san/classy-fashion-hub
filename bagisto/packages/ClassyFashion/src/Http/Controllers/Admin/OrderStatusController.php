@@ -3,6 +3,7 @@
 namespace ClassyFashion\Http\Controllers\Admin;
 
 use ClassyFashion\Models\Sales\Order as ClassyOrder;
+use ClassyFashion\Support\Audit;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -42,7 +43,17 @@ class OrderStatusController extends Controller
             ], 'order_status');
         }
 
+        $from = $order->status;
+
         $this->orderRepository->updateOrderStatus($order, $request->input('status'));
+
+        Audit::log(
+            $order->fresh(),
+            "Order #{$order->increment_id} status: {$from} to {$order->fresh()->status}",
+            ['from' => $from, 'to' => $order->fresh()->status],
+            auth('admin')->user(),
+            'order.status'
+        );
 
         session()->flash('success', "Order #{$order->increment_id} is now {$order->fresh()->status_label}.");
 
