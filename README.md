@@ -34,6 +34,21 @@ Project seeders (idempotent, in `bagisto/database/seeders/`):
 |---|---|
 | `ClassyFashionSeeder` | Worker role (limited ACL) + worker & customer accounts |
 | `ClassyFashionCatalogSeeder` | UGX currency + channel base, 16 fashion products (67 variants), stock, images |
+| `DemoOrdersSeeder` | 3 real demo orders (pending/paid/delivered) for screenshots & reports |
+
+## Mobile money sandbox (Flutterwave, MTN/Airtel)
+
+1. Create a free Flutterwave account → sandbox (test) dashboard.
+2. Copy test **public key**, **secret key**, and set/​copy the webhook
+   **secret hash** (Dashboard → Settings → Webhooks).
+3. Put them in `bagisto/.env` (keys from `.env.example`, never committed):
+   `FLUTTERWAVE_PUBLIC_KEY`, `FLUTTERWAVE_SECRET_KEY`,
+   `FLUTTERWAVE_SECRET_HASH`, `FLUTTERWAVE_SANDBOX=true`.
+4. Enable the method: admin → Configuration → Sales → Payment Methods →
+   Mobile Money → Active. It appears at checkout only when keys exist.
+5. Localhost cannot receive webhooks: demo with the status page
+   (“I Have Approved — Check Status”); production needs a public URL
+   (ngrok/Render) registered in the Flutterwave dashboard.
 
 ## Test accounts
 
