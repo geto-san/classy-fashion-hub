@@ -16,12 +16,23 @@ needs MySQL/MariaDB) + sandbox Flutterwave keys.
 
 ## 1. Create the database (~10 min, your clicks)
 
-Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use a
-free MySQL **without mandatory TLS** (keeps this deploy simple):
+Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
+**Railway MySQL** plugin (trial credit covers a demo; watch usage):
 
-1. Sign up at Clever Cloud (or Railway trial) and create a **MySQL** add-on.
-2. Note: host, port, database, username, password.
-3. Alternatives needing TLS setup (advanced): TiDB Serverless, Aiven.
+| Railway variable | Render env var |
+|---|---|
+| `MYSQLHOST` | `DB_HOST` |
+| `MYSQLPORT` | `DB_PORT` |
+| `MYSQLDATABASE` | `DB_DATABASE` |
+| `MYSQLUSER` | `DB_USERNAME` |
+| `MYSQLPASSWORD` | `DB_PASSWORD` |
+
+- Ignore `MYSQL_URL`, `MYSQL_ROOT_PASSWORD`, `MYSQL_DATABASE` (alternate
+  naming) and all `RAILWAY_*` system vars — Render does not need them.
+- Use the **public** proxy host Railway shows (Render connects over the
+  internet, not Railway's private network). No TLS setup needed.
+- Alternatives: Clever Cloud free MySQL; TiDB Serverless / Aiven (both
+  enforce TLS — advanced).
 
 ## 2. Deploy on Render (~10 min + ~15 min first build)
 
@@ -54,10 +65,16 @@ free MySQL **without mandatory TLS** (keeps this deploy simple):
 ## 4. Free-tier caveats (accepted for the demo)
 
 - **Sleep:** the service sleeps when idle; first load takes ~1 min.
-- **Ephemeral disk:** uploads (product images, re-uploaded logos) vanish
-  on redeploy. Seeded catalog/brand restore automatically on a **fresh**
-  database only. After a redeploy, check the logo and re-upload in
-  Configuration → General → Design if missing.
+- **Media (Cloudinary, no AWS needed):** Render disk is ephemeral, so
+  uploads live in Cloudinary:
+  1. Free Cloudinary account → cloud name, API key, API secret.
+  2. Render env: `CLOUDINARY_CLOUD_NAME/KEY/SECRET` + keep
+     `FILESYSTEM_DISK=public` for now.
+  3. Backfill existing files: open a Render Shell on the service and run
+     `php artisan classy:media-to-cloud` (use `--dry-run` first to preview).
+  4. Flip `FILESYSTEM_DISK=cloudinary` → redeploy. New uploads persist;
+     old URLs keep working because paths were preserved.
+  5. Local dev is unaffected (disk registers only when creds exist).
 - **No queue worker / scheduler:** `QUEUE_CONNECTION=sync` (mail +
   indexing run inline); date-bound prices need the cron entry from the
   Bagisto deployment docs (VPS step-up).

@@ -37,8 +37,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Pinned Bagisto core (matches local dev: 2.4.x line).
-RUN composer create-project bagisto/bagisto /var/www/html "2.4.*" \
+# Pinned Bagisto core (matches local dev: v2.4.12, same composer.lock).
+RUN composer create-project bagisto/bagisto /var/www/html "2.4.12" \
         --no-interaction --prefer-dist --no-dev
 
 # Overlay our tracked customizations from this repo.
@@ -53,8 +53,9 @@ RUN git clone --depth 1 --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
     && rm -rf /tmp/overlay \
     && test -f /var/www/html/packages/ClassyFashion/src/Providers/ClassyFashionServiceProvider.php
 
-# Autoload our namespace, then rebuild shop assets (plum theme).
-RUN composer dump-autoload --optimize \
+# Autoload our namespace, install our extra deps (activity log,
+# Cloudinary adapter) from the overlaid lock file, rebuild shop assets.
+RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader \
     && cd packages/Webkul/Shop && npm install --no-audit --no-fund && npm run build \
     && rm -rf /var/www/html/packages/Webkul/Shop/node_modules
 

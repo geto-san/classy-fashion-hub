@@ -25,6 +25,8 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
         WebkulProductInventory::observe(ProductInventoryObserver::class);
 
+        $this->registerCloudinaryDisk();
+
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'classy-fashion');
 
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'classy-fashion');
@@ -32,5 +34,31 @@ class ClassyFashionServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../Routes/admin-routes.php');
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/shop-routes.php');
+
+        $this->commands([
+            \ClassyFashion\Console\Commands\PushMediaToCloud::class,
+        ]);
+    }
+
+    /**
+     * Register the Cloudinary disk when credentials exist (report media
+     * persistence). The disk is only USED when FILESYSTEM_DISK=cloudinary,
+     * so local development is unaffected.
+     */
+    protected function registerCloudinaryDisk(): void
+    {
+        if (! filled(env('CLOUDINARY_CLOUD_NAME'))) {
+            return;
+        }
+
+        config([
+            'filesystems.disks.cloudinary' => [
+                'driver'     => 'cloudinary',
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key'    => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+                'url'        => ['secure' => true],
+            ],
+        ]);
     }
 }

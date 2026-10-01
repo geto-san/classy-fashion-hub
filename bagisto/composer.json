@@ -19,6 +19,7 @@
         "ext-tokenizer": "*",
         "astrotomic/laravel-translatable": "^11.16",
         "barryvdh/laravel-dompdf": "^2.0.0|^3.0",
+        "codebar-ag/laravel-flysystem-cloudinary": "^12.9",
         "diglactic/laravel-breadcrumbs": "^10.0",
         "elasticsearch/elasticsearch": "^8.10",
         "enshrined/svg-sanitize": "^0.22.0",
