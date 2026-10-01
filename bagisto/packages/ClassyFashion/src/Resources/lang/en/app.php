@@ -12,4 +12,25 @@ return [
         'delivery_instructions' => 'Delivery Instructions (e.g. gate, landmark, call on arrival)',
         'delivery_instructions_placeholder' => 'e.g. Blue gate opposite the mosque, call on arrival',
     ],
+
+    'configuration' => [
+        'mobile_money' => 'Mobile Money (MTN / Airtel)',
+        'mobile_money_info' => 'Flutterwave sandbox/test keys live ONLY in .env (FLUTTERWAVE_*). Nothing secret is stored here.',
+        'sandbox' => 'Sandbox Mode (use Flutterwave test keys)',
+    ],
+
+    'mobilemoney' => [
+        'title' => 'Mobile Money Payment',
+        'choose_network' => 'Pay :amount from your phone. Choose your network and enter the mobile money number.',
+        'network' => 'Network',
+        'phone' => 'Mobile Money Number',
+        'pay_now' => 'Send Payment Prompt',
+        'approve_title' => 'Approve on Your Phone',
+        'approve_body' => 'A payment prompt of :amount was sent to your :network line. Enter your mobile money PIN on the phone to approve.',
+        'tx_ref' => 'Reference: :ref',
+        'check_status' => 'I Have Approved — Check Status',
+        'ugx_only' => 'Mobile money is available for UGX orders only.',
+        'charge_failed' => 'The payment could not be started. Please try again or choose another method.',
+        'payment_failed' => 'The payment failed or was cancelled. No order was created; your cart is unchanged.',
+    ],
 ];

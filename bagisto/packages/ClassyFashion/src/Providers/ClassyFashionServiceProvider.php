@@ -13,6 +13,10 @@ class ClassyFashionServiceProvider extends ServiceProvider
         $this->app->register(EventServiceProvider::class);
 
         $this->mergeConfigFrom(__DIR__.'/../Config/acl.php', 'acl');
+
+        $this->mergeConfigFrom(__DIR__.'/../Config/payment-methods.php', 'payment_methods');
+
+        $this->mergeConfigFrom(__DIR__.'/../Config/system.php', 'core');
     }
 
     public function boot(): void
@@ -26,5 +30,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'classy-fashion');
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/admin-routes.php');
+
+        $this->loadRoutesFrom(__DIR__.'/../Routes/shop-routes.php');
     }
 }

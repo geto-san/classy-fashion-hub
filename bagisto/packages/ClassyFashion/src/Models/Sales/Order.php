@@ -27,7 +27,7 @@ class Order extends BaseOrder
      * pending -> confirmed -> paid -> processing -> dispatched -> delivered.
      */
     public const TRANSITIONS = [
-        self::STATUS_PENDING         => [self::STATUS_CONFIRMED, self::STATUS_CANCELED],
+        self::STATUS_PENDING         => [self::STATUS_CONFIRMED, self::STATUS_PAID, self::STATUS_CANCELED],
         self::STATUS_PENDING_PAYMENT => [self::STATUS_PAID, self::STATUS_CANCELED],
         self::STATUS_CONFIRMED       => [self::STATUS_PAID, self::STATUS_CANCELED],
         self::STATUS_PAID            => [self::STATUS_PROCESSING, self::STATUS_CANCELED],
