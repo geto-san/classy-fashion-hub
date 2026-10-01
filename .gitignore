@@ -1,5 +1,30 @@
+# Bagisto core: reinstalled via `composer create-project` (see README.md).
+# Project customizations inside bagisto/ are tracked explicitly with
+# `git add -f` (seeders, tests, ClassyFashion package, docs hooks) and
+# are listed in README.md under "Custom code".
 /bagisto/
-/vendor/
-/node_modules/
+
+# Secrets and local environment — never commit.
 .env
-!/Classy_Fashion_Hub_Bagisto_Plan.xlsx
+*.env.local
+*.env.*.local
+
+# Dependencies and front-end build outputs.
+vendor/
+node_modules/
+
+# Laravel runtime, caches and logs.
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*
+*.log
+
+# OS and editor noise.
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+.~lock.*
