@@ -57,6 +57,11 @@ php-legacy vendor/bin/pest tests/Feature/CheckoutFlowTest.php
 Manual click-paths: log in as worker → Roles/Users/Configuration return 401;
 browse `/womens`, open a product, pick size/colour, check out Cash on Delivery.
 
+> After any theme rebuild (`npm run build` in a package), clear rendered-page
+> caches or pages keep referencing deleted hashed files (unstyled pages):
+> `php-legacy artisan optimize:clear && php-legacy artisan responsecache:clear`.
+> Users also need a hard refresh (Ctrl+Shift+R) after a rebuild.
+
 ## Custom code (all outside core)
 
 - `bagisto/database/seeders/ClassyFashion*.php` — roles, accounts, UGX catalog
