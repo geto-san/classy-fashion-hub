@@ -67,12 +67,24 @@ it('shows the new labels on the admin order view', function () {
 
     Webkul\Sales\Models\OrderPayment::factory()->create(['order_id' => $order->id]);
 
+    Webkul\Sales\Models\OrderAddress::factory()->create([
+        'order_id'     => $order->id,
+        'address_type' => Webkul\Sales\Models\OrderAddress::ADDRESS_TYPE_SHIPPING,
+        'first_name'   => 'Delivery',
+        'last_name'    => 'Customer',
+        'address'      => 'Plot 12 Kampala Road',
+        'city'         => 'Kampala',
+        'phone'        => '+256772000002',
+        'delivery_instructions' => 'Leave at the blue gate, call on arrival',
+    ]);
+
     $this->actingAs(Admin::where('email', 'admin@example.com')->firstOrFail(), 'admin');
 
     get(route('admin.sales.orders.view', $order->id))
         ->assertOk()
         ->assertSee('Confirmed')
-        ->assertSee('Mark as Paid');
+        ->assertSee('Mark as Paid')
+        ->assertSee('Leave at the blue gate, call on arrival');
 });
 
 it('refuses guests on the status route', function () {
