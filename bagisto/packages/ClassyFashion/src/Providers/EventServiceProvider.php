@@ -4,6 +4,7 @@ namespace ClassyFashion\Providers;
 
 use ClassyFashion\Listeners\CheckoutDeliveryField;
 use ClassyFashion\Listeners\OrderDeliveryInfo;
+use ClassyFashion\Listeners\OrderProfitSummary;
 use ClassyFashion\Listeners\OrderStatusButtons;
 use ClassyFashion\Listeners\OrderStatusMapper;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,6 +26,14 @@ class EventServiceProvider extends ServiceProvider
 
         'bagisto.admin.sales.order.shipping_address.after' => [
             [OrderDeliveryInfo::class, 'showShippingInfo'],
+        ],
+
+        'bagisto.admin.sales.order.list.item.after' => [
+            [OrderProfitSummary::class, 'showItemProfit'],
+        ],
+
+        'bagisto.admin.sales.order.view.grand-total.after' => [
+            [OrderProfitSummary::class, 'showOrderProfit'],
         ],
 
         'bagisto.shop.checkout.onepage.address.form.phone.after' => [

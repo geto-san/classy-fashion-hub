@@ -204,6 +204,7 @@ class ClassyFashionCatalogSeeder extends Seeder
             'short_description'   => $name.' - Classy Fashion Hub.',
             'description'         => $name.' sold at a fixed price of USh '.number_format($price).'.',
             'price'               => $price,
+            'cost'                => (int) round($price * 0.6),
             'weight'              => 1,
             'status'              => 1,
             'visible_individually' => 1,

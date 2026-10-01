@@ -4,6 +4,8 @@ return [
     'orders' => [
         'mark_as' => 'Mark as :status',
         'delivery_instructions' => 'Delivery Instructions',
+        'profit' => 'Profit: :amount',
+        'order_profit' => 'Order Profit',
     ],
 
     'checkout' => [
