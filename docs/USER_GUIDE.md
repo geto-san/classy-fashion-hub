@@ -23,7 +23,7 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
      appears only after the network confirms payment.
 
 ### Pay with mobile money (demo)
-1. Sandbox keys must be in `bagisto/.env` (see README / .env.example).
+1. Sandbox keys must be in `store/.env` (see README / .env.example).
 2. Check out with Mobile Money → approve on the phone → use
    **“I Have Approved — Check Status”**. The order shows up with status
    **Paid** once confirmed. Returning from any payment page without

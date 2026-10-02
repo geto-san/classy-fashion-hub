@@ -17,7 +17,7 @@ Build plan & status: `Classy_Fashion_Hub_Bagisto_Plan.xlsx`.
 
 ```bash
 composer create-project bagisto/bagisto bagisto "2.4.*"
-cd bagisto
+cd store
 cp .env.example .env
 # Edit .env: APP_NAME="Classy Fashion Hub", APP_URL=http://localhost:8000,
 # APP_TIMEZONE=Africa/Kampala, DB_* for your database. Secrets ONLY in .env.
@@ -28,7 +28,7 @@ php-legacy artisan db:seed --class='Database\Seeders\ClassyFashionCatalogSeeder'
 php-legacy artisan serve --port=8000
 ```
 
-Project seeders (idempotent, in `bagisto/database/seeders/`):
+Project seeders (idempotent, in store/database/seeders/`):
 
 | Seeder | What |
 |---|---|
@@ -41,7 +41,7 @@ Project seeders (idempotent, in `bagisto/database/seeders/`):
 1. Create a free Flutterwave account → sandbox (test) dashboard.
 2. Copy test **public key**, **secret key**, and set/​copy the webhook
    **secret hash** (Dashboard → Settings → Webhooks).
-3. Put them in `bagisto/.env` (keys from `.env.example`, never committed):
+3. Put them in store/.env` (keys from `.env.example`, never committed):
    `FLUTTERWAVE_PUBLIC_KEY`, `FLUTTERWAVE_SECRET_KEY`,
    `FLUTTERWAVE_SECRET_HASH`, `FLUTTERWAVE_SANDBOX=true`.
 4. Enable the method: admin → Configuration → Sales → Payment Methods →
@@ -64,7 +64,7 @@ customer registration `http://localhost:8000/customer/register`.
 ## Verify
 
 ```bash
-cd bagisto
+cd store
 php-legacy vendor/bin/pest tests/Feature/WorkerAccessTest.php
 php-legacy vendor/bin/pest tests/Feature/CheckoutFlowTest.php
 ```
@@ -79,8 +79,8 @@ browse `/womens`, open a product, pick size/colour, check out Cash on Delivery.
 
 ## Custom code (all outside core)
 
-- `bagisto/database/seeders/ClassyFashion*.php` — roles, accounts, UGX catalog
-- `bagisto/tests/Feature/*Test.php` — role enforcement + E2E checkout
+- store/database/seeders/ClassyFashion*.php` — roles, accounts, UGX catalog
+- store/tests/Feature/*Test.php` — role enforcement + E2E checkout
 - Day-2 package `ClassyFashion` (payment, audit log, profit) — to come
 
 Docs: `docs/USER_GUIDE.md`, `docs/DEMO_SCRIPT.md`, `docs/KNOWN_LIMITATIONS.md`

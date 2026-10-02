@@ -1,8 +1,8 @@
 # Bagisto core: reinstalled via `composer create-project` (see README.md).
-# Project customizations inside bagisto/ are tracked explicitly with
+# Project customizations inside store/ are tracked explicitly with
 # `git add -f` (seeders, tests, ClassyFashion package, docs hooks) and
 # are listed in README.md under "Custom code".
-/bagisto/
+/store/
 
 # Secrets and local environment — never commit.
 .env

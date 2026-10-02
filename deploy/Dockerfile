@@ -46,8 +46,8 @@ ARG OVERLAY_REPO=https://github.com/geto-san/classy-fashion-hub.git
 ARG OVERLAY_REF=main
 RUN git clone --depth 1 --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
     && cd /tmp/overlay \
-    && git ls-files 'bagisto/*' | while IFS= read -r f; do \
-           dest="/var/www/html/${f#bagisto/}"; \
+    && git ls-files 'store/*' | while IFS= read -r f; do \
+           dest="/var/www/html/${f#store/}"; \
            mkdir -p "$(dirname "$dest")"; \
            cp "$f" "$dest"; \
        done \
