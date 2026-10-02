@@ -270,7 +270,7 @@ class ClassyFashionCatalogSeeder extends Seeder
     {
         $tmp = tempnam(sys_get_temp_dir(), 'classy').'.png';
 
-        $this->makePlaceholder($tmp, $name);
+        \ClassyFashion\Support\ProductImage::placeholder($tmp, $name);
 
         $path = Storage::putFile('product/'.$product->id, new File($tmp));
 
@@ -284,55 +284,5 @@ class ClassyFashionCatalogSeeder extends Seeder
                 'position'   => 0,
             ]);
         }
-    }
-
-    protected function makePlaceholder(string $path, string $text): void
-    {
-        $w = 800;
-        $h = 1000;
-
-        $img = imagecreatetruecolor($w, $h);
-
-        imagefill($img, 0, 0, imagecolorallocate($img, 0x4A, 0x19, 0x42));
-
-        imagefilledrectangle($img, 0, $h - 160, $w, $h, imagecolorallocate($img, 0xE8, 0xB8, 0x4B));
-
-        $white = imagecolorallocate($img, 255, 255, 255);
-        $gold = imagecolorallocate($img, 0x4A, 0x19, 0x42);
-
-        $font = '/usr/share/fonts/TTF/DejaVuSansMNerdFontPropo-Bold.ttf';
-
-        $label = 'Classy Fashion Hub';
-        $words = explode(' ', $text);
-
-        if (is_file($font)) {
-            $size = 34;
-
-            $tb = imagettfbbox($size, 0, $font, $text);
-            $tw = $tb[2] - $tb[0];
-
-            if ($tw > $w - 80) {
-                $size = (int) ($size * ($w - 80) / $tw);
-            }
-
-            $y = 430;
-
-            foreach (array_chunk($words, 2) as $line) {
-                $line = implode(' ', $line);
-                $tb = imagettfbbox($size, 0, $font, $line);
-                imagettftext($img, $size, 0, (int) (($w - ($tb[2] - $tb[0])) / 2), $y, $white, $font, $line);
-                $y += $size + 24;
-            }
-
-            $tb = imagettfbbox(24, 0, $font, $label);
-            imagettftext($img, 24, 0, (int) (($w - ($tb[2] - $tb[0])) / 2), $h - 70, $gold, $font, $label);
-        } else {
-            imagestring($img, 5, 60, 450, substr($text, 0, 40), $white);
-            imagestring($img, 5, 60, 500, $label, $white);
-        }
-
-        imagepng($img, $path);
-
-        imagedestroy($img);
     }
 }

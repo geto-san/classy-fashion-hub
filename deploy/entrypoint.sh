@@ -26,6 +26,9 @@ done
 php artisan storage:link || true
 php artisan migrate --force
 
+# Restore any media missing from the (ephemeral) disk. Idempotent.
+php artisan classy:repair-images || true
+
 # Fresh database? Seed core data + Classy Fashion data (never wipes).
 ADMINS=$(php artisan tinker --execute="echo DB::table('admins')->count();" 2>/dev/null | tr -cd '0-9')
 if [ "${ADMINS:-0}" = "0" ]; then
@@ -35,11 +38,8 @@ if [ "${ADMINS:-0}" = "0" ]; then
   if [ "${SEED_DEMO:-false}" = "true" ]; then
     php artisan db:seed --class='Database\Seeders\DemoOrdersSeeder' --force
   fi
-  # Restore brand logo/favicon into (ephemeral) storage on fresh installs.
-  mkdir -p storage/app/public/channel
-  cp public/images/brand-logo.png storage/app/public/channel/cfh-logo-brandkit.png
-  cp public/images/brand-favicon.png storage/app/public/channel/cfh-favicon-brandkit.png
-  php artisan tinker --execute="DB::table('channels')->where('id', 1)->update(['logo' => 'channel/cfh-logo-brandkit.png', 'favicon' => 'channel/cfh-favicon-brandkit.png']);" --no-interaction
+  # Brand logo/favicon and seeded images are restored by
+  # classy:repair-images (runs on every boot, below).
   php artisan indexer:index --mode=full || true
 fi
 

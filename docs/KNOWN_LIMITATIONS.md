@@ -47,6 +47,12 @@ future work they map to.
   (`ClassyFashion`) is where they would live; Bagisto marketplace
   add-ons are paid, verify licensing before citing.
 
+- **Cloudinary evaluated and rejected:** uploads work but the only
+  Laravel-12-compatible Flysystem adapter (codebar-ag v12.9) returns
+  broken reads (SDK signature mismatch) and 404ing delivery URLs, while
+  v13 requires Laravel 13. Media persistence is handled by
+  `classy:repair-images` instead (see DEPLOY.md).
+
 ## Small core touches (documented for upgrade reviews)
 - `Order` model: 4 status codes/labels (no extension seam exists).
 - `Cart`: delivery_instructions allow-list (+1 key); `OrderAddressResource` (+1 key).

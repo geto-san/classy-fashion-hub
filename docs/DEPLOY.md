@@ -65,16 +65,15 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 ## 4. Free-tier caveats (accepted for the demo)
 
 - **Sleep:** the service sleeps when idle; first load takes ~1 min.
-- **Media (Cloudinary, no AWS needed):** Render disk is ephemeral, so
-  uploads live in Cloudinary:
-  1. Free Cloudinary account → cloud name, API key, API secret.
-  2. Render env: `CLOUDINARY_CLOUD_NAME/KEY/SECRET` + keep
-     `FILESYSTEM_DISK=public` for now.
-  3. Backfill existing files: open a Render Shell on the service and run
-     `php artisan classy:media-to-cloud` (use `--dry-run` first to preview).
-  4. Flip `FILESYSTEM_DISK=cloudinary` → redeploy. New uploads persist;
-     old URLs keep working because paths were preserved.
-  5. Local dev is unaffected (disk registers only when creds exist).
+- **Media without AWS/Cloudinary:** Render disk is ephemeral, so
+  `classy:repair-images` (runs on every boot, and manually any time)
+  regenerates any missing product images as branded placeholders and
+  restores the brand logo/favicon from committed copies. Seeded/brand
+  media therefore survives redeploys. Admin-uploaded images are still
+  ephemeral — re-upload after a redeploy if needed.
+  (Cloudinary was evaluated and rejected: the only Laravel 12-compatible
+  Flysystem adapter has broken reads and 404ing URLs upstream; see
+  KNOWN_LIMITATIONS.)
 - **No queue worker / scheduler:** `QUEUE_CONNECTION=sync` (mail +
   indexing run inline); date-bound prices need the cron entry from the
   Bagisto deployment docs (VPS step-up).
