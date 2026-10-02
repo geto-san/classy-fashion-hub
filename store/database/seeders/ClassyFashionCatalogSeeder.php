@@ -64,6 +64,16 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $this->pruneDemoCategories();
 
+        DB::table('categories')
+            ->join('category_translations', function ($join) {
+                $join->on('category_translations.category_id', '=', 'categories.id')
+                    ->where('category_translations.locale', 'en');
+            })
+            ->whereIn('category_translations.name', [
+                'Kids', 'Girls Clothing', 'Boys Clothing', 'Girls Footwear', 'Boys Footwear',
+            ])
+            ->update(['categories.status' => 0]);
+
         if (Product::whereNull('parent_id')->where('type', 'configurable')->exists()) {
             $this->command->info('Fashion catalog already present; skipping (redeploy-safe).');
 
