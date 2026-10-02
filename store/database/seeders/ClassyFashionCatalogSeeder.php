@@ -64,6 +64,10 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $this->pruneDemoCategories();
 
+        DB::table('theme_sections')
+            ->where('type', 'category_carousel')
+            ->update(['status' => 0, 'draft_status' => 0]);
+
         DB::table('categories')
             ->join('category_translations', function ($join) {
                 $join->on('category_translations.category_id', '=', 'categories.id')
