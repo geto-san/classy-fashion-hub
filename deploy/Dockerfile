@@ -41,14 +41,15 @@ WORKDIR /var/www/html
 RUN composer create-project bagisto/bagisto /var/www/html "2.4.12" \
         --no-interaction --prefer-dist --no-dev
 
-# Overlay our tracked customizations from this repo.
+# Overlay our tracked customizations from this repo (strip the bagisto/ prefix).
 ARG OVERLAY_REPO=https://github.com/geto-san/classy-fashion-hub.git
 ARG OVERLAY_REF=main
 RUN git clone --depth 1 --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
     && cd /tmp/overlay \
     && git ls-files 'bagisto/*' | while IFS= read -r f; do \
-           mkdir -p "/var/www/html/$(dirname "$f")"; \
-           cp "$f" "/var/www/html/$f"; \
+           dest="/var/www/html/${f#bagisto/}"; \
+           mkdir -p "$(dirname "$dest")"; \
+           cp "$f" "$dest"; \
        done \
     && rm -rf /tmp/overlay \
     && test -f /var/www/html/packages/ClassyFashion/src/Providers/ClassyFashionServiceProvider.php
