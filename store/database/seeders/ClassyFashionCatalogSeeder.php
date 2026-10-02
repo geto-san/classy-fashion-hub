@@ -62,6 +62,8 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $this->setupUgxCurrency();
 
+        $this->setupUgandaStore();
+
         $this->pruneDemoCategories();
 
         DB::table('theme_sections')
@@ -91,6 +93,41 @@ class ClassyFashionCatalogSeeder extends Seeder
         }
 
         $this->command->info('Classy Fashion Hub catalog seeded: '.count($this->catalog).' products in UGX.');
+    }
+
+    /**
+     * Uganda store context (currency, payments, shipping, address rules).
+     * Idempotent: safe on every run and on fresh installs (Render).
+     */
+    protected function setupUgandaStore(): void
+    {
+        $ugxId = DB::table('currencies')->where('code', 'UGX')->value('id');
+
+        DB::table('channel_currencies')->delete();
+        DB::table('channel_currencies')->insert(['channel_id' => $this->channelId, 'currency_id' => $ugxId]);
+
+        $config = function (string $code, ?string $value, ?string $channel = 'default', ?string $locale = null) {
+            DB::table('core_config')->updateOrInsert(
+                ['code' => $code, 'channel_code' => $channel, 'locale_code' => $locale],
+                ['value' => $value]
+            );
+        };
+
+        foreach (['stripe', 'razorpay', 'payu', 'phonepe', 'paypal_standard', 'paypal_smart_button', 'payglocal', 'moneytransfer'] as $method) {
+            $config("sales.payment_methods.{$method}.active", '0');
+        }
+
+        $config('sales.carriers.free.active', '0');
+        $config('sales.carriers.flatrate.active', '1');
+        $config('sales.carriers.flatrate.title', 'Delivery Across Uganda', 'default', 'en');
+        $config('sales.carriers.flatrate.description', 'Flat delivery fee anywhere in Uganda.', 'default', 'en');
+        $config('sales.carriers.flatrate.default_rate', '5000');
+        $config('sales.carriers.flatrate.type', 'per_order');
+
+        $config('customer.address.requirements.state', '0');
+        $config('customer.address.requirements.postcode', '0');
+
+        $this->command->info('Uganda store context ready (UGX only, local payments, UGX 5,000 flat delivery).');
     }
 
     /**
