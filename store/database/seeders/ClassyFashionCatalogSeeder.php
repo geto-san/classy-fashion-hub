@@ -64,6 +64,8 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $this->setupUgandaStore();
 
+        $this->seedCmsContent();
+
         $this->pruneDemoCategories();
 
         DB::table('theme_sections')
@@ -93,6 +95,35 @@ class ClassyFashionCatalogSeeder extends Seeder
         }
 
         $this->command->info('Classy Fashion Hub catalog seeded: '.count($this->catalog).' products in UGX.');
+    }
+
+    /**
+     * Uganda-appropriate content for the stock CMS policy pages.
+     * Idempotent: keyed by url_key + locale.
+     */
+    protected function seedCmsContent(): void
+    {
+        $pages = [
+            'about-us' => '<div class="static-container"><div class="mb-5"><h2>About Classy Fashion Hub</h2><p>Classy Fashion Hub is a fashion shop in Kampala, Uganda, serving students and adults with shirts, jackets, shoes and more. Our prices are fixed in Uganda Shillings — no bargaining — and you can pay with MTN Mobile Money, Airtel Money or cash on delivery.</p></div></div>',
+            'return-policy' => '<div class="static-container"><div class="mb-5"><h2>Return Policy</h2><p>Unworn items with tags can be returned within 7 days of delivery for exchange or refund to mobile money. Contact us with your order number to arrange a Kampala pickup or rider return.</p></div></div>',
+            'refund-policy' => '<div class="static-container"><div class="mb-5"><h2>Refund Policy</h2><p>Approved refunds go back to your MTN or Airtel line within 3 working days, or as cash for cash-on-delivery orders.</p></div></div>',
+            'payment-policy' => '<div class="static-container"><div class="mb-5"><h2>Payment Policy</h2><p>We accept MTN Mobile Money and Airtel Money (confirmed before your order is marked Paid) and cash on delivery within our delivery zones. All prices are in Uganda Shillings (USh).</p></div></div>',
+            'shipping-policy' => '<div class="static-container"><div class="mb-5"><h2>Shipping Policy</h2><p>Flat delivery fee of USh 5,000 anywhere in Uganda. Kampala orders arrive within 24 hours; upcountry orders take 2–4 days. Add gate, landmark or call-on-arrival notes in the delivery instructions at checkout.</p></div></div>',
+            'privacy-policy' => '<div class="static-container"><div class="mb-5"><h2>Privacy Policy</h2><p>We keep only what your order needs: name, contact, delivery location and transaction records. Your details are never sold and only staff who handle your order can see them.</p></div></div>',
+            'terms-conditions' => '<div class="static-container"><div class="mb-5"><h2>Terms &amp; Conditions</h2><p>Displayed USh prices are final. Orders are confirmed subject to stock availability; mobile-money orders are fulfilled after payment confirmation.</p></div></div>',
+            'terms-of-use' => '<div class="static-container"><div class="mb-5"><h2>Terms of Use</h2><p>Use accurate contact and delivery details so our riders can reach you. Misuse of accounts may lead to suspension.</p></div></div>',
+            'customer-service' => '<div class="static-container"><div class="mb-5"><h2>Customer Service</h2><p>Questions about sizes, orders or delivery? Message us with your order number and we shall help — we reply within one working day.</p></div></div>',
+            'whats-new' => '<div class="static-container"><div class="mb-5"><h2>What&apos;s New</h2><p>New kitenge and ankara arrivals every month. Follow our catalogue for the latest Kampala fashion.</p></div></div>',
+        ];
+
+        foreach ($pages as $urlKey => $html) {
+            DB::table('cms_page_translations')
+                ->where('url_key', $urlKey)
+                ->where('locale', 'en')
+                ->update(['html_content' => $html]);
+        }
+
+        $this->command->info('CMS policy pages localized for Uganda.');
     }
 
     /**
@@ -126,6 +157,8 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $config('customer.address.requirements.state', '0');
         $config('customer.address.requirements.postcode', '0');
+
+        DB::table('channels')->where('id', $this->channelId)->update(['timezone' => 'Africa/Kampala']);
 
         $this->command->info('Uganda store context ready (UGX only, local payments, UGX 5,000 flat delivery).');
     }

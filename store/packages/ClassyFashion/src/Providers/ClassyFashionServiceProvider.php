@@ -23,6 +23,12 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        /*
+         * Uganda store defaults (universal): country pre-selected across
+         * address forms; timezone handled per channel (Africa/Kampala).
+         */
+        config(['app.default_country' => config('app.default_country') ?: 'UG']);
+
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
 
         WebkulProductInventory::observe(ProductInventoryObserver::class);

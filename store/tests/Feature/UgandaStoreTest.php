@@ -15,6 +15,8 @@ it('fits the Ugandan context: UGX only, local payments, no postcode', function (
     $this->actingAs($customer);
 
     expect(core()->getCurrentCurrency()->code)->toBe('UGX')
+        ->and(config('app.default_country'))->toBe('UG')
+        ->and(core()->getCurrentChannel()->timezone)->toBe('Africa/Kampala')
         ->and(core()->getConfigData('customer.address.requirements.postcode'))->toBeFalsy()
         ->and(core()->getConfigData('customer.address.requirements.state'))->toBeFalsy();
 
