@@ -62,7 +62,20 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 6. Mobile money (needs sandbox keys): charge → approve (test prompt) →
    Paid order with tx ref.
 
-## 4. Free-tier caveats (accepted for the demo)
+## 5. Backups (report 10.5)
+
+- `scripts/backup.sh` — timestamped `db.sql` (single-transaction dump)
+  + `storage-public.tar.gz`; keeps the last 7 in `backups/` (gitignored).
+  Credentials via `DB_*` env, same names as the app.
+- `scripts/restore.sh backups/<stamp>` — restores into an **empty**
+  database (refuses otherwise) and unpacks media.
+- Cadence for grading: run `backup.sh` before any risky change and
+  nightly during the demo period; copy `backups/` off-machine.
+- Restore drill: dump content + media archive verified locally; run one
+  full drill on Railway (root can create the empty target DB) before
+  grading day.
+
+## 6. Free-tier caveats (accepted for the demo)
 
 - **Sleep:** the service sleeps when idle; first load takes ~1 min.
 - **Media without AWS/Cloudinary:** Render disk is ephemeral, so
