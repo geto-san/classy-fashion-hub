@@ -33,4 +33,21 @@ return [
         'charge_failed' => 'The payment could not be started. Please try again or choose another method.',
         'payment_failed' => 'The payment failed or was cancelled. No order was created; your cart is unchanged.',
     ],
+
+    'menu' => [
+        'profit_report' => 'Profit Report',
+    ],
+
+    'reports' => [
+        'profit_title' => 'Profit Report',
+        'start' => 'Start Date',
+        'end' => 'End Date',
+        'apply' => 'Apply',
+        'export_csv' => 'Export CSV',
+        'total_sales' => 'Total Sales',
+        'transactions' => 'Transactions',
+        'total_profit' => 'Total Profit',
+        'date' => 'Date',
+        'no_data' => 'No orders in this period.',
+    ],
 ];

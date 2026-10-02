@@ -14,6 +14,8 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(__DIR__.'/../Config/acl.php', 'acl');
 
+        $this->mergeConfigFrom(__DIR__.'/../Config/admin-menu.php', 'menu.admin');
+
         $this->mergeConfigFrom(__DIR__.'/../Config/payment-methods.php', 'payment_methods');
 
         $this->mergeConfigFrom(__DIR__.'/../Config/system.php', 'core');

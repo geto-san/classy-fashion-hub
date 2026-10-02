@@ -50,6 +50,7 @@ class ClassyFashionSeeder extends Seeder
 
         'reporting',
         'reporting.sales',
+        'reporting.profit',
     ];
 
     public function run(): void

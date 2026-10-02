@@ -8,6 +8,38 @@ use Webkul\User\Models\Admin;
 
 use function Pest\Laravel\get;
 
+it('shows the profit report for a selected period', function () {
+    $this->actingAs(Admin::where('email', 'admin@example.com')->firstOrFail(), 'admin');
+
+    $start = now()->subDays(7)->toDateString();
+    $end = now()->toDateString();
+
+    get(route('admin.classy.reports.profit', ['start' => $start, 'end' => $end]))
+        ->assertOk()
+        ->assertSee('Profit Report', false)
+        ->assertSee('Total Profit', false);
+});
+
+it('exports the profit report as CSV', function () {
+    $this->actingAs(Admin::where('email', 'admin@example.com')->firstOrFail(), 'admin');
+
+    $response = get(route('admin.classy.reports.profit', ['export' => 'csv']))
+        ->assertOk();
+
+    expect($response->headers->get('content-type'))->toContain('csv')
+        ->and($response->streamedContent())->toContain('Date,Transactions');
+});
+
+it('lets the worker open the profit report but refuses guests', function () {
+    $this->actingAs(Admin::where('email', 'worker@classy.local')->firstOrFail(), 'admin');
+
+    get(route('admin.classy.reports.profit'))->assertOk();
+
+    auth()->logout();
+
+    get(route('admin.classy.reports.profit'))->assertRedirect();
+});
+
 it('computes profit per item from variant cost with parent fallback', function () {
     $parent = Product::where('type', 'configurable')->firstOrFail();
 
