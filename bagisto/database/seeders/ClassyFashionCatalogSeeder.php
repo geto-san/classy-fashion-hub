@@ -62,6 +62,8 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $this->setupUgxCurrency();
 
+        $this->pruneDemoCategories();
+
         if (Product::whereNull('parent_id')->where('type', 'configurable')->exists()) {
             $this->command->info('Fashion catalog already present; skipping (redeploy-safe).');
 
@@ -102,6 +104,62 @@ class ClassyFashionCatalogSeeder extends Seeder
         );
 
         $this->command->info('Currency UGX ready (channel base currency). Low-stock threshold set to 5.');
+    }
+
+    /**
+     * Remove installer demo categories outside a fashion shop (Wellness,
+     * Bookings, Electronics, Household, Books & Stationery) with their
+     * subtrees, and repoint homepage section links at fashion categories.
+     * Skips any category holding products. Idempotent.
+     */
+    protected function pruneDemoCategories(): void
+    {
+        $roots = DB::table('categories')
+            ->join('category_translations', function ($join) {
+                $join->on('category_translations.category_id', '=', 'categories.id')
+                    ->where('category_translations.locale', 'en');
+            })
+            ->whereIn('category_translations.name', [
+                'Wellness', 'Bookings', 'Electronics', 'Household', 'Books & Stationery',
+            ])
+            ->pluck('categories.id')
+            ->all();
+
+        if (empty($roots)) {
+            return;
+        }
+
+        $ids = $roots;
+        $queue = $roots;
+
+        while (! empty($queue)) {
+            $children = DB::table('categories')->whereIn('parent_id', $queue)->pluck('id')->all();
+            $ids = array_merge($ids, $children);
+            $queue = $children;
+        }
+
+        $withProducts = DB::table('product_categories')->whereIn('category_id', $ids)->distinct()->pluck('category_id')->all();
+
+        $deleteIds = array_diff($ids, $withProducts);
+
+        \Webkul\Category\Models\Category::whereIn('id', $deleteIds)->get()->each->delete();
+
+        $removed = count($roots) - count(array_intersect($roots, $withProducts));
+
+        foreach (['electronics' => 'mens', 'wellness' => 'womens'] as $old => $new) {
+            DB::table('theme_section_translations')
+                ->where('options', 'like', '%'.$old.'%')
+                ->orWhere('draft_options', 'like', '%'.$old.'%')
+                ->get(['id', 'options', 'draft_options'])
+                ->each(function ($row) use ($old, $new) {
+                    DB::table('theme_section_translations')->where('id', $row->id)->update([
+                        'options'       => str_replace('href=\\"'.$old, 'href=\\"'.$new, $row->options),
+                        'draft_options' => $row->draft_options ? str_replace('href=\\"'.$old, 'href=\\"'.$new, $row->draft_options) : $row->draft_options,
+                    ]);
+                });
+        }
+
+        $this->command->info("Pruned {$removed} demo category tree(s); homepage links repointed to fashion.");
     }
 
     /**
