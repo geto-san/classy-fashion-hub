@@ -31,7 +31,7 @@ class ShopAssistant
 
         if (self::wants($text, ['deliver', 'shipping', 'ship ', 'how long', 'fee', 'charge', 'kampala', 'upcountry', 'pickup', 'pick up'])) {
             return self::reply(
-                "Delivery is a flat USh 5,000 anywhere in Uganda. Kampala arrives within 24 hours;".
+                "Delivery is a flat UGX 5,000 anywhere in Uganda. Kampala arrives within 24 hours;".
                 " upcountry takes 2–4 days. Add gate or landmark notes in the delivery instructions at checkout,"
                 ." and the rider will call on arrival. The price you see is the price you pay."
             );
@@ -139,7 +139,7 @@ class ShopAssistant
         $count = Product::whereNull('parent_id')->count();
 
         return self::reply(
-            "We stock shirts, jackets, dresses and shoes for men and women — {$count} styles with fixed USh prices.".
+            "We stock shirts, jackets, dresses and shoes for men and women — {$count} styles with fixed UGX prices.".
             " Tell me a colour, size or max price and I will narrow it down."
         );
     }
@@ -251,7 +251,7 @@ class ShopAssistant
     protected static function systemPrompt(): string
     {
         return 'You are the Classy Fashion Hub shop assistant (Kampala, Uganda). Short plain sentences.'.
-            ' Fixed USh prices, MTN/Airtel mobile money or cash on delivery, USh 5,000 flat delivery'.
+            ' Fixed UGX prices, MTN/Airtel mobile money or cash on delivery, UGX 5,000 flat delivery'.
             ' (Kampala 24h, upcountry 2-4 days), 7-day returns. Never invent products or prices.';
     }
 }

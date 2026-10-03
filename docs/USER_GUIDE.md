@@ -7,7 +7,7 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
 ### Browse and search
 - Open the shop. Categories: Mens (`/mens`), Womens (`/womens`), Footwear
   (`/footwear` — under Mens). Use search for names like “jacket”.
-- Prices are fixed in Uganda Shillings (USh) — no bargaining.
+- Prices are fixed in Uganda Shillings (UGX) — no bargaining.
 
 ### Order
 1. Open a product, pick **size and colour**, add to cart.

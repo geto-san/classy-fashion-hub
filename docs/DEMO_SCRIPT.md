@@ -4,7 +4,7 @@ Run on `http://localhost:8000` + `/admin`. Demo accounts in README.md.
 
 ## 1. Digital product catalogue
 - **Show:** `/womens` (4 products), open Gomesi → size/colour selectors,
-  fixed “USh 150,000”, description, availability.
+  fixed “UGX 150,000”, description, availability.
 - **Say:** names, categories, sizes, colours, descriptions, prices and
   availability without visiting the shop (objective 1).
 - **Screenshot:** product page with an open size dropdown + price.

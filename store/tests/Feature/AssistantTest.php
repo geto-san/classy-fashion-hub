@@ -19,7 +19,7 @@ it('answers delivery and payment questions without any key', function () {
 
     postJson(route('classy.assistant.chat'), ['message' => 'How much is delivery to Kampala?'])
         ->assertOk()
-        ->assertSee('flat USh 5,000', false);
+        ->assertSee('flat UGX 5,000', false);
 
     postJson(route('classy.assistant.chat'), ['message' => 'Can I pay with Airtel money?'])
         ->assertOk()
@@ -37,7 +37,7 @@ it('finds products by colour, category and UGX ceiling', function () {
     expect($items)->not->toBeEmpty();
 
     foreach ($items as $item) {
-        expect($item['price'])->toContain('USh')
+        expect($item['price'])->toContain('UGX')
             ->and($item['url'])->toStartWith('http');
     }
 });
@@ -57,7 +57,7 @@ it('uses the LLM for open questions when keys exist', function () {
 
     Http::fake([
         'api.groq.com/openai/v1/chat/completions*' => Http::response([
-            'choices' => [['message' => ['content' => 'Yes — we gift wrap for USh 2,000.']]],
+            'choices' => [['message' => ['content' => 'Yes — we gift wrap for UGX 2,000.']]],
         ]),
     ]);
 

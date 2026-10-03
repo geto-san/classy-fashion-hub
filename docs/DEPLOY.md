@@ -53,7 +53,7 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 
 ## 3. Verify (the Definition of Done, live)
 
-1. `/up` → 200. Homepage shows products with USh prices + brand logo.
+1. `/up` → 200. Homepage shows products with UGX prices + brand logo.
 2. Log in as `admin@example.com / admin123` → **change the password
    immediately**, create the worker/customer or confirm seeded ones.
 3. As customer: browse → variant → COD checkout → order history.

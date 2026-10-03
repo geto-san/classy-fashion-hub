@@ -32,7 +32,7 @@ future work they map to.
   “completed”; we record “dispatched”. Digital/downloadable orders would
   also show Dispatched — fine for a fashion shop, wrong for digital goods.
 - **Prices in tests vs display**: API `min_price` once showed decimals;
-  fixed via UGX `currency_position` (USh 150,000).
+  fixed via UGX `currency_position` (UGX 150,000).
 - **Dependency advisories**: `composer audit` flags league/commonmark
   (transitive, pre-existing). No advisories on added packages.
 - **Render hosting**: free tier has no MySQL; deploy needs an external

@@ -79,19 +79,19 @@ class DescribeProducts extends Command
             }
 
             return AiAssistant::chat([
-                ['role' => 'system', 'content' => 'Write a 2-sentence product description for a Ugandan online fashion shop. Plain words, mention the fixed USh price only if given. No hype.'],
+                ['role' => 'system', 'content' => 'Write a 2-sentence product description for a Ugandan online fashion shop. Plain words, mention the fixed UGX price only if given. No hype.'],
                 ['role' => 'user', 'content' => "Product: {$name} ({$code})"],
             ], 150);
         }
 
         $price = DB::table('product_flat')->where('product_id', $productId)->value('price');
 
-        $priceText = $price ? ' Fixed price USh '.number_format((float) $price).'.' : '';
+        $priceText = $price ? ' Fixed price UGX '.number_format((float) $price).'.' : '';
 
         if ($code === 'short_description') {
             return "{$name} from Classy Fashion Hub.{$priceText}";
         }
 
-        return "{$name} from Classy Fashion Hub.{$priceText} Delivery across Uganda at USh 5,000 — add gate or landmark notes at checkout.";
+        return "{$name} from Classy Fashion Hub.{$priceText} Delivery across Uganda at UGX 5,000 — add gate or landmark notes at checkout.";
     }
 }
