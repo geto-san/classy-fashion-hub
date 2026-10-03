@@ -43,6 +43,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
         $this->commands([
             \ClassyFashion\Console\Commands\RepairImages::class,
+            \ClassyFashion\Console\Commands\DescribeProducts::class,
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace ClassyFashion\Providers;
 
 use ClassyFashion\Listeners\BrandHeadAssets;
 use ClassyFashion\Listeners\CheckoutDeliveryField;
+use ClassyFashion\Listeners\ProductRecommendations;
 use ClassyFashion\Listeners\OrderDeliveryInfo;
 use ClassyFashion\Listeners\OrderProfitSummary;
 use ClassyFashion\Listeners\OrderStatusButtons;
@@ -43,6 +44,10 @@ class EventServiceProvider extends ServiceProvider
 
         'bagisto.shop.layout.head.after' => [
             [BrandHeadAssets::class, 'addAssets'],
+        ],
+
+        'bagisto.shop.products.view.after' => [
+            [ProductRecommendations::class, 'showPicks'],
         ],
     ];
 }

@@ -38,6 +38,14 @@ return [
         'profit_report' => 'Profit Report',
     ],
 
+    'assistant' => [
+        'title' => 'Shop Assistant',
+        'subtitle' => 'Ask about products, prices, sizes, delivery, payments or your order.',
+        'greeting' => 'Hello, and welcome to Classy Fashion Hub! Try “red dresses under 100000” or “where is my order?”.',
+        'placeholder' => 'Type your question…',
+        'send' => 'Send',
+    ],
+
     'reports' => [
         'profit_title' => 'Profit Report',
         'start' => 'Start Date',

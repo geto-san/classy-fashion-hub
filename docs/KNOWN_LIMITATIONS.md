@@ -38,8 +38,7 @@ future work they map to.
 - **Render hosting**: free tier has no MySQL; deploy needs an external
   MySQL (or VPS). Local demo is the verified path.
 
-## Report future work (out of scope, by design)
-- **AI recommendations** (5.1): needs purchase history + a recommender;
+## Report future work (out of scope, by design)- **AI recommendations** (5.1): needs purchase history + a recommender;
   hook point is the category/product API + a new package.
 - **Virtual fitting preview** (5.2): needs AR/size-tech spike first.
 - **Multi-seller marketplace** (5.3): needs seller accounts, per-seller
@@ -52,6 +51,12 @@ future work they map to.
   broken reads (SDK signature mismatch) and 404ing delivery URLs, while
   v13 requires Laravel 13. Media persistence is handled by
   `classy:repair-images` instead (see DEPLOY.md).
+
+- **AI assistant (report 5.1, first stage):** rule-based recommendations,
+  shop chat and description filler work with no keys; an optional
+  free-tier LLM (Groq default, any OpenAI-compatible endpoint) polishes
+  open questions. Chat is throttled (30/min) plus a daily cap (200).
+  True learned recommendations need order history volume first.
 
 ## Small core touches (documented for upgrade reviews)
 - `Order` model: 4 status codes/labels (no extension seam exists).

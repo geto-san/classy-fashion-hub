@@ -34,6 +34,12 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
   Pending → Confirmed → Paid → Processing → Dispatched → Delivered.
 - Click an order for items, totals and delivery details.
 
+### Shop assistant (`/assistant`)
+- Ask about products (“green dresses under 100000”), prices, sizes,
+  delivery, MTN/Airtel payments, returns, or “where is my order?”
+  (logged in). Works without any setup; with a free Groq key in `.env`
+  (`AI_LLM_*`, see `.env.example`) it also handles open questions.
+
 ## Worker (`worker@classy.local / worker123`)
 
 - Dashboard, catalogue, sales orders, customer list, sales reports.
