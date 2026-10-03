@@ -1,6 +1,7 @@
 <?php
 
 use ClassyFashion\Models\Sales\Order as ClassyOrder;
+use Spatie\Activitylog\Models\Activity;
 use Webkul\Sales\Models\Order;
 use Webkul\User\Models\Admin;
 
@@ -94,4 +95,20 @@ it('refuses guests on the status route', function () {
         ->assertRedirect();
 
     expect($order->fresh()->status)->toBe('pending');
+});
+
+it('assigns a delivery partner with an audit entry', function () {
+    $order = Order::factory()->create(['status' => 'dispatched']);
+
+    $this->actingAs(Admin::where('email', 'worker@classy.local')->firstOrFail(), 'admin');
+
+    post(route('admin.classy.orders.partner.update', $order->id), ['delivery_partner' => 'SafeBoda Rider Kampala'])
+        ->assertRedirect();
+
+    expect($order->fresh()->delivery_partner)->toBe('SafeBoda Rider Kampala');
+
+    expect(Activity::where('log_name', 'classy-fashion')
+        ->where('event', 'order.delivery')
+        ->where('subject_id', $order->id)
+        ->count())->toBe(1);
 });

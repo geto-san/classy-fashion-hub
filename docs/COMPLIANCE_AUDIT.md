@@ -55,10 +55,10 @@ pending/success/failed distinguished with stored tx refs; Paid is set
 only after webhook signature + server-side verify (tested, incl.
 mismatch and bad-signature rejection). Live merchant approval pending.
 
-**9.7 Delivery — Partial.** Location, contact phone and instructions
+**9.7 Delivery — Compliant.** Location, contact phone and instructions
 collected and visible in admin; staff update delivery progress through
-order statuses; customers see live status. **Missing: assigning a
-delivery partner/rider to an order.**
+order statuses; customers see live status; rider/partner assignable per
+order with audit entry.
 
 **9.8 Notifications — Partial.** Admin new-order notices and low-stock
 alerts work (dashboard-only, per the agreed cut). **Customer order-event

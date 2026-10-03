@@ -4,7 +4,10 @@ return [
     [
         'key'   => 'sales.orders.status',
         'name'  => 'classy-fashion::acl.orders.status',
-        'route' => 'admin.classy.orders.status.update',
+        'route' => [
+            'admin.classy.orders.status.update',
+            'admin.classy.orders.partner.update',
+        ],
         'sort'  => 5,
     ], [
         'key'   => 'reporting.profit',

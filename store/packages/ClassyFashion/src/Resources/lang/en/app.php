@@ -6,6 +6,9 @@ return [
         'delivery_instructions' => 'Delivery Instructions',
         'profit' => 'Profit: :amount',
         'order_profit' => 'Order Profit',
+        'partner_save' => 'Save Rider',
+        'partner_placeholder' => 'Rider name or company (optional)',
+        'partner_saved' => 'Delivery partner saved.',
     ],
 
     'checkout' => [

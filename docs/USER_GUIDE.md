@@ -50,6 +50,8 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
 - Update stock on the product edit page (inventories). Every change is
   logged with your name. Low-stock products (≤ 5 units) appear red on the
   dashboard threshold widget.
+- On the order view, optionally set the **rider / delivery partner** in
+  the Save Rider box (recorded in the audit trail).
 - You cannot open Settings, Roles/Users or Configuration (401), and you
   cannot delete products — deactivate them instead (Status toggle).
 

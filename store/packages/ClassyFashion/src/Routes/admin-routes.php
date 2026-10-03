@@ -12,6 +12,9 @@ Route::group(['middleware' => ['web', 'admin', NoCacheMiddleware::class], 'prefi
     Route::post('classy/orders/{id}/status', [OrderStatusController::class, 'update'])
         ->name('admin.classy.orders.status.update');
 
+    Route::post('classy/orders/{id}/partner', [OrderStatusController::class, 'partner'])
+        ->name('admin.classy.orders.partner.update');
+
     Route::get('classy/reports/profit', [ProfitReportController::class, 'index'])
         ->name('admin.classy.reports.profit');
 });
