@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/Resources/**/*.blade.php", "./src/Resources/**/*.js"],
+    content: [
+        "./src/Resources/**/*.blade.php",
+        "./src/Resources/**/*.js",
+        "../ClassyFashion/src/Resources/**/*.blade.php",
+        "../ClassyFashion/src/Listeners/*.php",
+    ],
 
     theme: {
         container: {
@@ -29,7 +34,7 @@ module.exports = {
 
         extend: {
             colors: {
-                navyBlue: "#0A0A0A",
+                navyBlue: "#060C3B",
                 lightOrange: "#F6F2EB",
                 darkGreen: '#40994A',
                 darkBlue: '#0044F2',
@@ -46,9 +51,6 @@ module.exports = {
             fontFamily: {
                 poppins: ["Poppins", "sans-serif"],
                 dmserif: ["DM Serif Display", "serif"],
-                display: ["'Cormorant Garamond'", "Georgia", "serif"],
-                caps: ["Belleza", "Optima", "sans-serif"],
-                body: ["Jost", "Arial", "sans-serif"],
             },
         }
     },

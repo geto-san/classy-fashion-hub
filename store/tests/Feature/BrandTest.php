@@ -15,7 +15,7 @@ it('serves the brand v1.0 head assets on the storefront', function () {
 it('serves the brand stylesheets and icons', function () {
     get('/brand.css')->assertOk();
 
-    expect(file_get_contents(public_path('brand.css')))->toContain('--cfh-noir');
+    expect(file_get_contents(public_path('brand.css')))->toContain('--cfh-noir')->not->toContain('font-family');
 
     get('/css/classy-brand.css')->assertOk();
 
@@ -32,4 +32,15 @@ it('uses the official kit logo and favicon', function () {
     $favicon = getimagesize(public_path('images/brand-favicon.png'));
 
     expect($favicon[0])->toBe(48);
+});
+
+it('keeps Bagisto typography and text colour (no brand font overrides)', function () {
+    $css = file_get_contents(public_path('css/classy-brand.css')).file_get_contents(public_path('brand.css'));
+
+    expect($css)->not->toContain('Cormorant')->not->toContain('Belleza')->not->toContain('Jost')
+        ->and($css)->not->toContain('@import');
+
+    $tailwind = file_get_contents(base_path('packages/Webkul/Shop/tailwind.config.js'));
+
+    expect($tailwind)->toContain('navyBlue: "#060C3B"');
 });

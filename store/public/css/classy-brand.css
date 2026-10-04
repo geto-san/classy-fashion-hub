@@ -1,44 +1,7 @@
-/* Classy Fashion Hub — theme overrides mapping Bagisto components to
- * Brand Guidelines v1.0 (Noir #0A0A0A, Gold #8A6A3B, Champagne #E8E0D4).
- * Loaded after brand.css and the theme build.
+/* Classy Fashion Hub - the only theme override left on top of Bagisto:
+ * sale tags use brand gold instead of stock red. Fonts, text colours and
+ * buttons are Bagisto's own.
  */
-
-.primary-button {
-    background: #0A0A0A !important;
-    border: 1px solid #0A0A0A !important;
-    border-radius: 2px !important;
-    font-family: 'Belleza', 'Optima', sans-serif !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.2em !important;
-}
-
-.primary-button:hover {
-    background: transparent !important;
-    color: #0A0A0A !important;
-}
-
-.secondary-button {
-    border-radius: 2px !important;
-    font-family: 'Belleza', 'Optima', sans-serif !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.2em !important;
-    border-color: #0A0A0A !important;
-    color: #0A0A0A !important;
-}
-
-.secondary-button:hover {
-    background: #0A0A0A !important;
-    color: #F7F3EC !important;
-}
-
-/* Guideline: fixed price always visible, gold serif. */
-.final-price {
-    color: #8A6A3B !important;
-    font-family: 'Cormorant Garamond', Georgia, serif !important;
-    font-weight: 700 !important;
-}
-
-/* Sale tags use brand gold instead of stock red. */
 [class*="bg-red-600"] {
     background-color: #8A6A3B !important;
 }

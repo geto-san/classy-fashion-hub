@@ -8,21 +8,21 @@
             {{ __('classy-fashion::app.mobilemoney.approve_title') }}
         </h1>
 
-        <p class="mt-3 text-gray-600">
+        <p class="mt-3 text-zinc-500">
             {{ __('classy-fashion::app.mobilemoney.approve_body', ['amount' => core()->formatPrice($attempt->amount), 'network' => $attempt->network]) }}
         </p>
 
-        <p class="mt-2 text-sm text-gray-500">
+        <p class="mt-2 text-sm text-zinc-500">
             {{ __('classy-fashion::app.mobilemoney.tx_ref', ['ref' => $attempt->tx_ref]) }}
         </p>
 
         @if (! empty($till))
-            <div class="mt-6 rounded-lg border border-[#E8E0D4] bg-white p-4 text-left">
+            <div class="mt-6 rounded-lg border border-zinc-200 bg-white p-4 text-left">
                 <h2 class="font-semibold">
                     {{ __('classy-fashion::app.mobilemoney.till_title') }}
                 </h2>
 
-                <p class="mt-1 text-sm text-gray-600">
+                <p class="mt-1 text-sm text-zinc-500">
                     {{ __('classy-fashion::app.mobilemoney.till_body', ['amount' => core()->formatPrice($attempt->amount), 'till' => $till, 'network' => $attempt->network]) }}
                 </p>
 

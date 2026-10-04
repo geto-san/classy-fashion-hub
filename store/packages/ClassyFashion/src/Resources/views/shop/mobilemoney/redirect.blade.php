@@ -8,7 +8,7 @@
             {{ __('classy-fashion::app.mobilemoney.title') }}
         </h1>
 
-        <p class="mt-2 text-gray-600">
+        <p class="mt-2 text-zinc-500">
             {{ __('classy-fashion::app.mobilemoney.choose_network', ['amount' => core()->formatPrice($cart->grand_total)]) }}
         </p>
 

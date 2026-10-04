@@ -4,21 +4,21 @@
     </x-slot>
 
     <div class="mx-auto max-w-2xl px-4 py-10">
-        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-[#8A6A3B]">
+        <p class="text-sm text-zinc-500">
             Classy Fashion Hub
         </p>
 
-        <h1 class="mt-1 font-['Cormorant_Garamond'] text-4xl font-semibold max-sm:text-3xl">
+        <h1 class="mt-1 font-dmserif text-4xl max-sm:text-3xl">
             {{ __('classy-fashion::app.assistant.title') }}
         </h1>
 
-        <p class="mt-2 text-gray-600">
+        <p class="mt-2 text-zinc-500">
             {{ __('classy-fashion::app.assistant.subtitle') }}
         </p>
 
         <div
             id="cfh-chat"
-            class="mt-6 flex h-[420px] flex-col gap-3 overflow-y-auto rounded-lg border border-[#E8E0D4] bg-[#F7F3EC] p-4"
+            class="mt-6 flex h-[420px] flex-col gap-3 overflow-y-auto rounded-lg border border-zinc-200 bg-white p-4"
         >
             <div class="max-w-[85%] rounded-lg bg-white p-3 text-sm shadow-sm">
                 {{ __('classy-fashion::app.assistant.greeting') }}
@@ -58,7 +58,7 @@
             function bubble(text, mine) {
                 const div = document.createElement('div');
                 div.className = mine
-                    ? 'max-w-[85%] self-end rounded-lg bg-[#0A0A0A] p-3 text-sm text-white'
+                    ? 'max-w-[85%] self-end rounded-lg bg-navyBlue p-3 text-sm text-white'
                     : 'max-w-[85%] rounded-lg bg-white p-3 text-sm shadow-sm';
                 div.textContent = text;
                 box.appendChild(div);
@@ -98,11 +98,11 @@
 
                         (data.products || []).forEach((p) => {
                             const div = document.createElement('div');
-                            div.className = 'max-w-[85%] rounded-lg bg-[#E8E0D4] p-3 text-sm shadow-sm';
+                            div.className = 'max-w-[85%] rounded-lg bg-zinc-100 p-3 text-sm';
 
                             const a = document.createElement('a');
                             a.href = p.url;
-                            a.style.color = '#8A6A3B';
+                            a.className = 'underline';
                             a.style.fontWeight = '600';
                             a.textContent = p.name + ' — ' + p.price;
 
