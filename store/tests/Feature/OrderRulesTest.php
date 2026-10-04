@@ -115,7 +115,7 @@ it('stops customers cancelling a paid order but not staff', function () {
     expect(ClassyOrder::find($paid->id)->canCancel())->toBeTrue();
 });
 
-it('puts stock back and flags the refund when staff cancel a paid mobile-money order', function () {
+it('lets staff cancel a paid mobile-money order and flags the refund', function () {
     $order = rulesOrder('paid', 'mobilemoney');
 
     $this->actingAs(rulesAdmin(), 'admin');

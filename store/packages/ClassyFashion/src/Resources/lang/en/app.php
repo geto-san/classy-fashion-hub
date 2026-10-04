@@ -38,6 +38,29 @@ return [
 
     'menu' => [
         'profit_report' => 'Profit Report',
+        'audit_log' => 'Audit Log',
+        'payments' => 'Mobile Money Payments',
+    ],
+
+    'audit' => [
+        'title' => 'Audit Log',
+        'event' => 'Event',
+        'who' => 'Who',
+        'what' => 'What happened',
+        'all' => 'All',
+        'system' => 'System',
+        'none' => 'No entries match.',
+    ],
+
+    'payments' => [
+        'title' => 'Mobile Money Payments',
+        'status' => 'Status',
+        'reference' => 'Reference',
+        'amount' => 'Amount',
+        'order' => 'Order',
+        'note' => 'Note',
+        'none' => 'No payment attempts yet.',
+        'attention' => ':count payment(s) need attention: money was received but no order exists (or finalising did not finish). Create the order by hand or refund the customer, quoting the reference.',
     ],
 
     'reports' => [

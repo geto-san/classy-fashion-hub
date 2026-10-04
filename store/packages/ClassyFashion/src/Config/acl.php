@@ -11,5 +11,15 @@ return [
         'name'  => 'classy-fashion::acl.reports.profit',
         'route' => 'admin.classy.reports.profit',
         'sort'  => 4,
+    ], [
+        'key'   => 'reporting.audit',
+        'name'  => 'classy-fashion::acl.reports.audit',
+        'route' => 'admin.classy.reports.audit',
+        'sort'  => 5,
+    ], [
+        'key'   => 'sales.payments',
+        'name'  => 'classy-fashion::acl.payments.view',
+        'route' => 'admin.classy.payments.index',
+        'sort'  => 6,
     ],
 ];

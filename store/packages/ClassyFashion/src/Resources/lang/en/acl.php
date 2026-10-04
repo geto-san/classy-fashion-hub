@@ -7,5 +7,10 @@ return [
 
     'reports' => [
         'profit' => 'Profit Report',
+        'audit'  => 'Audit Log',
+    ],
+
+    'payments' => [
+        'view' => 'Mobile Money Payments',
     ],
 ];

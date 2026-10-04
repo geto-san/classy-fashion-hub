@@ -37,6 +37,13 @@ class ClassyFashionCatalogSeeder extends Seeder
      * [name, type, category_ids, price, qty_per_variant, sizes, colors]
      * sizes/colors are admin names of the size/color attribute options.
      */
+    /**
+     * EU shoe sizes sold in Uganda. Added to the same 'size' attribute as
+     * S/M/L/XL so footwear is chosen by size and colour like clothing
+     * (report 9.2: size on products).
+     */
+    public const SHOE_SIZES = ['38', '39', '40', '41', '42', '43', '44', '45'];
+
     protected array $catalog = [
         ['Classic White Cotton Shirt', 'configurable', [2, 6], 45000, 25, ['S', 'M', 'L', 'XL'], ['White', 'Blue']],
         ['Ankara Print Shirt', 'configurable', [2, 6], 65000, 15, ['M', 'L', 'XL'], ['Red', 'Yellow', 'Green']],
@@ -46,8 +53,8 @@ class ClassyFashionCatalogSeeder extends Seeder
         ['Kitenge Wrap Dress', 'configurable', [4], 85000, 14, ['S', 'M', 'L'], ['Yellow', 'Green', 'Orange']],
         ["Men's Formal Shirt", 'configurable', [2, 5], 55000, 20, ['S', 'M', 'L', 'XL'], ['White', 'Blue']],
         ['Hooded Sweatshirt', 'configurable', [2, 6, 7], 75000, 18, ['M', 'L', 'XL'], ['Grey', 'Black', 'Blue']],
-        ['Running Sneakers', 'configurable', [8], 135000, 16, [], ['White', 'Black', 'Red']],
-        ['Leather Loafers', 'configurable', [8], 160000, 10, [], ['Black', 'Brown']],
+        ['Running Sneakers', 'configurable', [8], 135000, 4, self::SHOE_SIZES, ['White', 'Black', 'Red']],
+        ['Leather Loafers', 'configurable', [8], 160000, 3, self::SHOE_SIZES, ['Black', 'Brown']],
         ['Leather Belt', 'simple', [2], 35000, 30, [], []],
         ['Silk Scarf', 'simple', [4], 25000, 40, [], []],
         ['Canvas Tote Bag', 'simple', [4, 6], 30000, 35, [], []],
@@ -87,6 +94,8 @@ class ClassyFashionCatalogSeeder extends Seeder
 
             return;
         }
+
+        $this->ensureShoeSizeOptions();
 
         $this->wipeDemoProducts();
 
@@ -244,6 +253,41 @@ class ClassyFashionCatalogSeeder extends Seeder
         }
 
         $this->command->info("Pruned {$removed} demo category tree(s); homepage links repointed to fashion.");
+    }
+
+    /**
+     * Make sure the numeric shoe sizes exist as options of the 'size'
+     * attribute (the installer only ships S/M/L/XL). Idempotent.
+     */
+    protected function ensureShoeSizeOptions(): void
+    {
+        $attributeId = DB::table('attributes')->where('code', 'size')->value('id');
+
+        if (! $attributeId) {
+            return;
+        }
+
+        $order = (int) DB::table('attribute_options')->where('attribute_id', $attributeId)->max('sort_order');
+
+        foreach (self::SHOE_SIZES as $size) {
+            $optionId = DB::table('attribute_options')
+                ->where('attribute_id', $attributeId)
+                ->where('admin_name', $size)
+                ->value('id');
+
+            if (! $optionId) {
+                $optionId = DB::table('attribute_options')->insertGetId([
+                    'attribute_id' => $attributeId,
+                    'admin_name'   => $size,
+                    'sort_order'   => ++$order,
+                ]);
+            }
+
+            DB::table('attribute_option_translations')->updateOrInsert(
+                ['attribute_option_id' => $optionId, 'locale' => $this->locale],
+                ['label' => $size]
+            );
+        }
     }
 
     /**

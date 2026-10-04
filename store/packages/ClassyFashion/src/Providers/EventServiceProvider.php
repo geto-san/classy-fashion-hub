@@ -2,6 +2,7 @@
 
 namespace ClassyFashion\Providers;
 
+use ClassyFashion\Listeners\AuditStaffChanges;
 use ClassyFashion\Listeners\CheckoutDeliveryField;
 use ClassyFashion\Listeners\OrderDeliveryInfo;
 use ClassyFashion\Listeners\OrderPaymentRecords;
@@ -17,6 +18,13 @@ class EventServiceProvider extends ServiceProvider
         'sales.order.update-status.after' => [
             [OrderStatusMapper::class, 'mapCompletedToDispatched'],
         ],
+
+        'user.admin.create.after' => [[AuditStaffChanges::class, 'adminCreated']],
+        'user.admin.update.after' => [[AuditStaffChanges::class, 'adminUpdated']],
+        'user.admin.delete.after' => [[AuditStaffChanges::class, 'adminDeleted']],
+        'user.role.create.after'  => [[AuditStaffChanges::class, 'roleCreated']],
+        'user.role.update.after'  => [[AuditStaffChanges::class, 'roleUpdated']],
+        'user.role.delete.after'  => [[AuditStaffChanges::class, 'roleDeleted']],
 
         'checkout.order.orderitem.save.after' => [
             [SnapshotOrderItemCost::class, 'handle'],

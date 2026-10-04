@@ -1,6 +1,8 @@
 <?php
 
+use ClassyFashion\Http\Controllers\Admin\AuditLogController;
 use ClassyFashion\Http\Controllers\Admin\OrderStatusController;
+use ClassyFashion\Http\Controllers\Admin\PaymentAttemptController;
 use ClassyFashion\Http\Controllers\Admin\ProfitReportController;
 use Illuminate\Support\Facades\Route;
 use Webkul\Core\Http\Middleware\NoCacheMiddleware;
@@ -14,4 +16,10 @@ Route::group(['middleware' => ['web', 'admin', NoCacheMiddleware::class], 'prefi
 
     Route::get('classy/reports/profit', [ProfitReportController::class, 'index'])
         ->name('admin.classy.reports.profit');
+
+    Route::get('classy/reports/audit', [AuditLogController::class, 'index'])
+        ->name('admin.classy.reports.audit');
+
+    Route::get('classy/payments', [PaymentAttemptController::class, 'index'])
+        ->name('admin.classy.payments.index');
 });
