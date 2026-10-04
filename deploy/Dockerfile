@@ -47,11 +47,12 @@ ARG OVERLAY_REPO=https://github.com/geto-san/classy-fashion-hub.git
 ARG OVERLAY_REF=main
 # Render exposes the commit it is deploying as RENDER_GIT_COMMIT. When it is
 # passed in, build exactly that commit instead of whatever the branch tip is
-# by the time the build runs; when it is empty, fall back to OVERLAY_REF.
+# by the time the build runs; when it is empty (or unfetchable), fall back
+# to the branch tip so the build never breaks on the pinning itself.
 ARG RENDER_GIT_COMMIT=
 RUN git clone --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
     && cd /tmp/overlay \
-    && if [ -n "$RENDER_GIT_COMMIT" ]; then git checkout --quiet "$RENDER_GIT_COMMIT"; fi \
+    && if [ -n "$RENDER_GIT_COMMIT" ]; then git fetch --quiet --depth 1 origin "$RENDER_GIT_COMMIT" && git checkout --quiet "$RENDER_GIT_COMMIT" || true; fi \
     && git ls-files 'store/*' | while IFS= read -r f; do \
            dest="/var/www/html/${f#store/}"; \
            mkdir -p "$(dirname "$dest")"; \

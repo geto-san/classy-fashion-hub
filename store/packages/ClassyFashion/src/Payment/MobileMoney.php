@@ -9,8 +9,9 @@ use Webkul\Payment\Payment\Payment;
  * Mobile Money via Flutterwave (MTN / Airtel Uganda, report 9.6).
  *
  * Redirect-style method: the order is created only after server-side
- * verification. Gateway keys live exclusively in .env (see .env.example) and are read
- * through config('classy.flutterwave'); the admin screen carries display
+ * verification. Gateway keys live exclusively in environment variables
+ * (documented in .env.example) and are read through
+ * config('classy.flutterwave'); the admin screen carries display
  * settings only.
  */
 class MobileMoney extends Payment

@@ -382,11 +382,27 @@ it('expires an unapproved prompt but still honours a late payment', function () 
 
     $attempt->update(['expires_at' => now()->subMinute()]);
 
+    // One stateful stub serving pending then successful: Http::fake appends
+    // (never replaces), so re-faking the same URL would keep serving the
+    // first response, and a nested fakeSequence registers a catch-all '*'.
+    $verifyCalls = 0;
+    $txRef = $attempt->tx_ref;
+    $amount = (float) $attempt->amount;
+
     Http::fake([
-        'api.flutterwave.com/v3/transactions/999015/verify' => Http::response([
-            'status' => 'success',
-            'data'   => ['id' => 999015, 'status' => 'pending'],
-        ]),
+        'api.flutterwave.com/v3/transactions/999015/verify' => function () use (&$verifyCalls, $txRef, $amount) {
+            $verifyCalls++;
+
+            return $verifyCalls === 1
+                ? Http::response(['status' => 'success', 'data' => ['id' => 999015, 'status' => 'pending']])
+                : Http::response(['status' => 'success', 'data' => [
+                    'id'       => 999015,
+                    'tx_ref'   => $txRef,
+                    'status'   => 'successful',
+                    'amount'   => $amount,
+                    'currency' => 'UGX',
+                ]]);
+        },
     ]);
 
     mobilemoneyWebhook($attempt, 999015)->assertOk();
@@ -394,8 +410,6 @@ it('expires an unapproved prompt but still honours a late payment', function () 
     expect($attempt->fresh()->status)->toBe(PaymentAttempt::STATUS_EXPIRED);
 
     // The customer approves on their phone after the timeout.
-    mobilemoneyVerified($attempt, 999015);
-
     mobilemoneyWebhook($attempt, 999015)->assertOk();
 
     expect($attempt->fresh()->status)->toBe(PaymentAttempt::STATUS_SUCCESS)

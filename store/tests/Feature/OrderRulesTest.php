@@ -16,14 +16,18 @@ use function Pest\Laravel\post;
 
 function rulesOrder(string $status, string $payment = 'cashondelivery', bool $withItem = true): Order
 {
-    $order = Order::factory()->create(['status' => $status]);
+    // Canceled orders email the customer, so an address is required.
+    $order = Order::factory()->create([
+        'status'         => $status,
+        'customer_email' => 'customer@classy.local',
+    ]);
 
     OrderPayment::factory()->create(['order_id' => $order->id, 'method' => $payment]);
 
     if ($withItem) {
         $parent = Product::where('type', 'configurable')->firstOrFail();
 
-        OrderItem::factory()->create([
+        $parentItem = OrderItem::factory()->create([
             'order_id'     => $order->id,
             'product_id'   => $parent->id,
             'product_type' => Product::class,
@@ -36,6 +40,24 @@ function rulesOrder(string $status, string $payment = 'cashondelivery', bool $wi
             'qty_canceled' => 0,
             'qty_refunded' => 0,
         ]);
+
+        // Core cancel walks child rows for composite parents.
+        if ($variant = $parent->variants()->first()) {
+            OrderItem::factory()->create([
+                'order_id'     => $order->id,
+                'parent_id'    => $parentItem->id,
+                'product_id'   => $variant->id,
+                'product_type' => Product::class,
+                'sku'          => $variant->sku,
+                'name'         => $variant->name,
+                'type'         => 'simple',
+                'qty_ordered'  => 1,
+                'qty_invoiced' => 0,
+                'qty_shipped'  => 0,
+                'qty_canceled' => 0,
+                'qty_refunded' => 0,
+            ]);
+        }
     }
 
     return $order;

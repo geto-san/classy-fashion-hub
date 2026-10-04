@@ -14,10 +14,12 @@ return new class extends Migration
     {
         Schema::create('classy_manual_payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id')->index();
+            // int unsigned to match core orders/admins id columns (MySQL
+            // rejects FKs across int/bigint).
+            $table->unsignedInteger('order_id')->index();
             $table->string('method', 60);
             $table->decimal('amount', 12, 2);
-            $table->unsignedBigInteger('received_by')->nullable();
+            $table->unsignedInteger('received_by')->nullable();
             $table->timestamp('received_at');
             $table->string('note')->nullable();
             $table->timestamps();

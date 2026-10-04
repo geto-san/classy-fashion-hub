@@ -9,6 +9,20 @@ use Webkul\User\Models\Admin;
 
 use function Pest\Laravel\get;
 
+// Cost lives in product_attribute_values (EAV), never on products.
+function setProductCost(Product $product, float $cost): void
+{
+    DB::table('product_attribute_values')->updateOrInsert(
+        [
+            'product_id'   => $product->id,
+            'attribute_id' => DB::table('attributes')->where('code', 'cost')->value('id'),
+            'locale'       => 'en',
+            'channel'      => null,
+        ],
+        ['float_value' => $cost]
+    );
+}
+
 it('shows the profit report for a selected period', function () {
     $this->actingAs(Admin::where('email', 'admin@example.com')->firstOrFail(), 'admin');
 
@@ -60,14 +74,12 @@ it('keeps the sale-time cost when the product cost changes later', function () {
     $original = (float) $parent->cost;
 
     // Supplier raises the price after the sale.
-    $parent->cost = $original + 15000;
-    $parent->save();
+    setProductCost($parent, $original + 15000);
 
     expect(Profit::itemCost($item->fresh()))->toBe(21000.0)
         ->and(Profit::itemProfit($item->fresh()))->toBe(29000.0);
 
-    $parent->cost = $original;
-    $parent->save();
+    setProductCost($parent, $original);
 });
 
 it('snapshots the cost when an order item is created', function () {
