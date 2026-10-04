@@ -5,6 +5,7 @@ namespace ClassyFashion\Http\Controllers\Admin;
 use ClassyFashion\Models\ManualPayment;
 use ClassyFashion\Models\Sales\Order as ClassyOrder;
 use ClassyFashion\Support\Audit;
+use ClassyFashion\Support\Notify;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -64,6 +65,8 @@ class OrderStatusController extends Controller
         $order = $order->fresh();
 
         $this->recordPayment($order, $target, $admin);
+
+        Notify::orderStatus($order, $target);
 
         $refundDue = $target === ClassyOrder::STATUS_CANCELED
             && $from === ClassyOrder::STATUS_PAID

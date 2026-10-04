@@ -3,14 +3,16 @@
 namespace ClassyFashion\Observers;
 
 use ClassyFashion\Support\Audit;
+use ClassyFashion\Support\Notify;
 use Webkul\Product\Models\ProductInventory;
 
 /**
  * Audit trail for stock changes (report 9.3/10.2).
  *
- * Fires on every inventory write (admin product saves, worker stock
- * edits) but only records staff (admin-guard) actions, so customer
- * checkouts do not flood the log; those remain traceable via orders.
+ * Fires on every inventory write. Only staff (admin-guard) actions are
+ * written to the audit log, so customer checkouts do not flood it (those
+ * stay traceable via orders). The low-stock e-mail to the owner is sent
+ * whoever caused the drop, including a customer's checkout (report 9.8).
  */
 class ProductInventoryObserver
 {
@@ -22,12 +24,17 @@ class ProductInventoryObserver
 
         $admin = auth('admin')->user();
 
-        if (! $admin) {
-            return;
-        }
-
         $product = $inventory->product;
 
+        if ($admin) {
+            $this->logStockChange($inventory, $product, $admin);
+        }
+
+        $this->handleThresholdCrossing($inventory, $admin, (int) $inventory->getOriginal('qty'), (int) $inventory->qty);
+    }
+
+    protected function logStockChange(ProductInventory $inventory, $product, $admin): void
+    {
         Audit::log(
             $product ?? $inventory,
             "Stock updated for {$product?->sku}: {$inventory->getOriginal('qty')} to {$inventory->qty}",
@@ -41,20 +48,24 @@ class ProductInventoryObserver
             $admin,
             'stock.updated'
         );
-
-        $this->logThresholdCrossing($inventory, $admin, (int) $inventory->getOriginal('qty'), (int) $inventory->qty);
     }
 
     /**
-     * Record a low-stock alert entry when quantity drops to or below the
-     * configured out-of-stock threshold (report 9.8). The admin dashboard
-     * threshold widget surfaces the same products visually.
+     * When quantity drops to or below the configured out-of-stock threshold
+     * (report 9.8): e-mail the owner, and log it when staff caused the drop.
+     * The admin dashboard threshold widget surfaces the same products.
      */
-    protected function logThresholdCrossing(ProductInventory $inventory, $admin, int $oldQty, int $newQty): void
+    protected function handleThresholdCrossing(ProductInventory $inventory, $admin, int $oldQty, int $newQty): void
     {
         $threshold = (int) core()->getConfigData('catalog.inventory.stock_options.out_of_stock_threshold');
 
         if ($oldQty > $threshold && $newQty <= $threshold) {
+            Notify::lowStock($inventory->product?->sku, $newQty, $threshold);
+
+            if (! $admin) {
+                return;
+            }
+
             Audit::log(
                 $inventory->product ?? $inventory,
                 "Low stock for {$inventory->product?->sku}: {$newQty} left (threshold {$threshold})",

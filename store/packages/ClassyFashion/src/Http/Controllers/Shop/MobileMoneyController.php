@@ -5,6 +5,7 @@ namespace ClassyFashion\Http\Controllers\Shop;
 use ClassyFashion\Models\PaymentAttempt;
 use ClassyFashion\Support\Audit;
 use ClassyFashion\Support\Flutterwave;
+use ClassyFashion\Support\Notify;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -324,6 +325,8 @@ class MobileMoneyController extends Controller
         Cart::deActivateCart();
 
         session()->flash('order_id', $order->id);
+
+        Notify::orderStatus($order->fresh(), \ClassyFashion\Models\Sales\Order::STATUS_PAID);
 
         return PaymentAttempt::STATUS_SUCCESS;
     }

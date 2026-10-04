@@ -4,6 +4,7 @@ namespace ClassyFashion\Listeners;
 
 use ClassyFashion\Models\Sales\Order as ClassyOrder;
 use ClassyFashion\Support\Audit;
+use ClassyFashion\Support\Notify;
 use Webkul\Sales\Models\Order;
 
 /**
@@ -34,6 +35,8 @@ class OrderStatusMapper
                 auth('admin')->user(),
                 'order.status'
             );
+
+            Notify::orderStatus($order, ClassyOrder::STATUS_DISPATCHED);
         }
     }
 }

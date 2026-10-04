@@ -9,6 +9,7 @@ use ClassyFashion\Listeners\OrderPaymentRecords;
 use ClassyFashion\Listeners\OrderProfitSummary;
 use ClassyFashion\Listeners\OrderStatusButtons;
 use ClassyFashion\Listeners\OrderStatusMapper;
+use ClassyFashion\Listeners\OrderTimeline;
 use ClassyFashion\Listeners\SnapshotOrderItemCost;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -33,6 +34,10 @@ class EventServiceProvider extends ServiceProvider
         'bagisto.admin.sales.order.status_label.after' => [
             [OrderStatusButtons::class, 'addButtons'],
             [OrderPaymentRecords::class, 'show'],
+        ],
+
+        'bagisto.shop.customers.account.orders.view.before' => [
+            [OrderTimeline::class, 'show'],
         ],
 
         'bagisto.admin.sales.order.billing_address.after' => [

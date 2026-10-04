@@ -36,6 +36,11 @@ return [
         'payment_failed' => 'The payment failed or was cancelled. No order was created; your cart is unchanged.',
     ],
 
+    'timeline' => [
+        'title' => 'Order progress',
+        'placed' => 'Order placed',
+    ],
+
     'menu' => [
         'profit_report' => 'Profit Report',
         'audit_log' => 'Audit Log',
