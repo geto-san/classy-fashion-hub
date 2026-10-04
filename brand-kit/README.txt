@@ -4,7 +4,6 @@ guidelines/   Brand guidelines PDF (start here)
 logo/         Logo in 4 versions (colour, black, reversed, white): SVG + PNG (transparent)
 icon/         "C" monogram icon: SVG + PNG
 favicon/      favicon.ico/.svg, PNGs, Apple/Android icons, manifest
-website-root/ Ready-to-upload files for your site root (favicons, logo SVGs, og-image, brand.css)
 web/          head-snippet.html (paste into <head>), brand.css, brand-tokens.json
 social/       Profile pictures (TikTok, WhatsApp, etc.) and 1200x630 share card
 email/        Email account names, profile picture, signature template
