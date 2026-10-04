@@ -35,8 +35,8 @@ future work they map to.
 - **Workers can still see a product's cost** by opening the product edit page
   (they need it to manage stock). They do not see profit reports or profit on
   orders. Remove product-edit from the Worker role if that matters to the owner.
-- **Delivery partner** is stored in the shipment's Carrier Title / Tracking
-  Number fields, not a dedicated table.
+- **Delivery partner** is a free-text name on the order (no rider directory,
+  phone number or per-rider history).
 - **Not measured**: usability with real users, phone/weak-network behaviour,
   load. **Backups** are manual scripts with no recorded restore drill.
 - **Delivery instructions** live on the shipping address only. If a
@@ -48,7 +48,7 @@ future work they map to.
   “completed”; we record “dispatched”. Digital/downloadable orders would
   also show Dispatched — fine for a fashion shop, wrong for digital goods.
 - **Prices in tests vs display**: API `min_price` once showed decimals;
-  fixed via UGX `currency_position` (USh 150,000).
+  fixed via UGX `currency_position` (UGX 150,000).
 - **Dependency advisories**: `composer audit` flags league/commonmark
   (transitive, pre-existing). No advisories on added packages.
 - **Render hosting**: free tier has no MySQL; deploy needs an external
@@ -68,6 +68,12 @@ future work they map to.
   broken reads (SDK signature mismatch) and 404ing delivery URLs, while
   v13 requires Laravel 13. Media persistence is handled by
   `classy:repair-images` instead (see DEPLOY.md).
+
+- **AI assistant (report 5.1, first stage):** rule-based recommendations,
+  shop chat and description filler work with no keys; an optional
+  free-tier LLM (Groq default, any OpenAI-compatible endpoint) polishes
+  open questions. Chat is throttled (30/min) plus a daily cap (200).
+  True learned recommendations need order history volume first.
 
 ## Small core touches (documented for upgrade reviews)
 - `Order` model: 4 status codes/labels (no extension seam exists). All other

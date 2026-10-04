@@ -4,7 +4,7 @@ Run on `http://localhost:8000` + `/admin`. Demo accounts (local only) in README.
 
 ## 1. Digital product catalogue
 - **Show:** `/womens` (4 products), open Gomesi → size/colour selectors,
-  fixed “USh 150,000”, description, availability.
+  fixed “UGX 150,000”, description, availability.
 - **Say:** names, categories, sizes, colours, descriptions, prices and
   availability without visiting the shop (objective 1).
 - **Screenshot:** product page with an open size dropdown + price.
@@ -43,7 +43,7 @@ Run on `http://localhost:8000` + `/admin`. Demo accounts (local only) in README.
 
 ## 6. Usability, reliability, security, performance
 - **Show:** terminal run `php vendor/bin/pest tests/Feature/`
-  (68 test cases: roles, checkout, statuses, order rules, audit, profit,
+  (83 test cases: roles, checkout, statuses, order rules, audit, profit,
   payments, notifications, reports — quote the number from your actual run);
   phone view of the shop (responsive layout, thumb-sized
   buttons, readable prices).

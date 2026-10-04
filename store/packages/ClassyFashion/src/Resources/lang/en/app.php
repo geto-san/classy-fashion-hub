@@ -6,6 +6,9 @@ return [
         'delivery_instructions' => 'Delivery Instructions',
         'profit' => 'Profit: :amount',
         'order_profit' => 'Order Profit',
+        'partner_save' => 'Save Rider',
+        'partner_placeholder' => 'Rider name or company (optional)',
+        'partner_saved' => 'Delivery partner saved.',
     ],
 
     'checkout' => [
@@ -66,6 +69,14 @@ return [
         'note' => 'Note',
         'none' => 'No payment attempts yet.',
         'attention' => ':count payment(s) need attention: money was received but no order exists (or finalising did not finish). Create the order by hand or refund the customer, quoting the reference.',
+    ],
+
+    'assistant' => [
+        'title' => 'Shop Assistant',
+        'subtitle' => 'Ask about products, prices, sizes, delivery, payments or your order.',
+        'greeting' => 'Hello, and welcome to Classy Fashion Hub! Try “red dresses under 100000” or “where is my order?”.',
+        'placeholder' => 'Type your question…',
+        'send' => 'Send',
     ],
 
     'reports' => [

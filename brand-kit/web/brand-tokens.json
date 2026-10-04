@@ -1,0 +1,23 @@
+{
+  "name": "Classy Fashion Hub",
+  "color": {
+    "noir": "#0A0A0A",
+    "taupe": "#B8B0A8",
+    "ivory": "#F7F3EC",
+    "champagne": "#E8E0D4",
+    "stone": "#6B635B",
+    "gold": "#8A6A3B",
+    "white": "#FFFFFF",
+    "success": "#2F6B4F",
+    "error": "#A8392F"
+  },
+  "font": {
+    "display": "Cormorant Garamond",
+    "caps": "Belleza",
+    "body": "Jost"
+  },
+  "radius": {
+    "base": "2px",
+    "card": "8px"
+  }
+}

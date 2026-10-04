@@ -53,9 +53,12 @@ services:
       - key: FLUTTERWAVE_SECRET_HASH
         sync: false
       - key: SEED_DEMO
-        value: "false"
-      # Production credentials. Leave blank to get random passwords printed
-      # once in the deploy log (classy:secure-accounts).
+        value: "true"
+      # Production credentials (classy:secure-accounts). With SEED_DEMO=true the
+      # demo worker/customer accounts exist, so SET the three passwords below to
+      # the ones you will hand to testers; blank = random, printed ONCE in the
+      # deploy log. SET SEED_ADMIN_PASSWORD BEFORE DEPLOYING or the admin login
+      # will be a random password you must dig out of that log.
       - key: SEED_ADMIN_EMAIL
         sync: false
       - key: SEED_ADMIN_PASSWORD
@@ -63,4 +66,7 @@ services:
       - key: SEED_WORKER_PASSWORD
         sync: false
       - key: SEED_CUSTOMER_PASSWORD
+        sync: false
+      # Optional shop-assistant LLM (blank = rule-based answers only).
+      - key: AI_LLM_API_KEY
         sync: false

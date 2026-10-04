@@ -99,6 +99,31 @@ class AccountSecurity
     }
 
     /**
+     * Lost-password recovery for hosts without a shell (Render free tier).
+     * Sets the admin's password to SEED_ADMIN_PASSWORD, whatever it was.
+     * Returns the admin's e-mail, or null when nothing was done.
+     */
+    public static function resetAdmin(): ?string
+    {
+        $password = config('classy.seed.admin_password');
+
+        if (blank($password)) {
+            return null;
+        }
+
+        $admin = Admin::where('email', config('classy.seed.admin_email') ?: self::KNOWN['admin']['email'])->first()
+            ?? Admin::where('email', self::KNOWN['admin']['email'])->first();
+
+        if (! $admin) {
+            return null;
+        }
+
+        $admin->forceFill(['password' => Hash::make((string) $password)])->save();
+
+        return $admin->email;
+    }
+
+    /**
      * Optional: move the installer admin off admin@example.com.
      */
     protected static function renameAdmin(): void

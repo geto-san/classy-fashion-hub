@@ -1,0 +1,35 @@
+/* Classy Fashion Hub — web brand tokens + base styles (v1.0) */
+@import url('https://fonts.googleapis.com/css2?family=Belleza&family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap');
+
+:root{
+  /* colour */
+  --cfh-noir:#0A0A0A;        /* primary: text, buttons, header */
+  --cfh-taupe:#B8B0A8;       /* ribbon colour: lines, borders, decoration (not for body text on light) */
+  --cfh-ivory:#F7F3EC;       /* page background */
+  --cfh-champagne:#E8E0D4;   /* cards, panels, alt sections */
+  --cfh-stone:#6B635B;       /* secondary text (5.3:1 on ivory) */
+  --cfh-gold:#8A6A3B;        /* accent: sale tags, links on light (4.5:1 on ivory) */
+  --cfh-white:#FFFFFF;
+  --cfh-success:#2F6B4F;
+  --cfh-error:#A8392F;
+  /* type */
+  --cfh-font-display:'Cormorant Garamond',Georgia,serif;
+  --cfh-font-caps:'Belleza','Optima','Segoe UI',sans-serif;
+  --cfh-font-body:'Jost','Helvetica Neue',Arial,sans-serif;
+  /* shape */
+  --cfh-radius:2px; --cfh-radius-lg:8px;
+}
+html{background:var(--cfh-ivory);color:var(--cfh-noir)}
+body{font-family:var(--cfh-font-body);font-weight:400;line-height:1.6;margin:0}
+h1,h2,h3{font-family:var(--cfh-font-display);font-weight:600;line-height:1.1;letter-spacing:.01em}
+.eyebrow,.nav a,.label{font-family:var(--cfh-font-caps);text-transform:uppercase;letter-spacing:.22em;font-size:.78rem}
+a{color:var(--cfh-gold)}
+.btn{display:inline-block;font-family:var(--cfh-font-caps);text-transform:uppercase;letter-spacing:.2em;font-size:.82rem;
+  padding:.95rem 1.8rem;background:var(--cfh-noir);color:var(--cfh-ivory);border:1px solid var(--cfh-noir);border-radius:var(--cfh-radius);text-decoration:none;cursor:pointer}
+.btn:hover{background:transparent;color:var(--cfh-noir)}
+.btn--ghost{background:transparent;color:var(--cfh-noir)} .btn--ghost:hover{background:var(--cfh-noir);color:var(--cfh-ivory)}
+.card{background:var(--cfh-champagne);border-radius:var(--cfh-radius-lg);padding:1.25rem}
+.price{font-family:var(--cfh-font-display);font-size:1.5rem;font-weight:700}
+.tag-sale{background:var(--cfh-gold);color:var(--cfh-white);font-family:var(--cfh-font-caps);letter-spacing:.15em;font-size:.7rem;padding:.25rem .6rem}
+:focus-visible{outline:2px solid var(--cfh-gold);outline-offset:3px}
+.site-header{background:var(--cfh-noir);color:var(--cfh-ivory)} /* use logo-reversed.svg here */

@@ -29,7 +29,7 @@ class OrderStatusButtons
 
         $next = $order->nextStatuses();
 
-        if (empty($next)) {
+        if ($order->status === ClassyOrder::STATUS_CANCELED) {
             return;
         }
 
@@ -47,6 +47,17 @@ class OrderStatusButtons
         }
 
         $html .= '</div>';
+
+        $partner = e($order->delivery_partner ?? '');
+
+        $html .= '<form method="POST" action="'.e(route('admin.classy.orders.partner.update', $order->id)).'" class="mt-2 flex gap-2">'
+            .csrf_field()
+            .'<input type="text" name="delivery_partner" value="'.$partner.'" maxlength="100" placeholder="'
+            .e(__('classy-fashion::app.orders.partner_placeholder'))
+            .'" class="rounded-md border px-3 py-1.5 text-sm">'
+            .'<button type="submit" class="secondary-button text-sm">'
+            .e(__('classy-fashion::app.orders.partner_save'))
+            .'</button></form>';
 
         $eventManager->addTemplate($html);
     }

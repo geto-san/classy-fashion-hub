@@ -53,3 +53,18 @@ it('never hands out a documented password on production', function () {
 
     expect(AccountSecurity::demoAccountsAllowed())->toBeTrue();
 });
+
+it('lets the owner recover a lost admin password from the environment', function () {
+    app()->detectEnvironment(fn () => 'production');
+
+    expect(AccountSecurity::resetAdmin())->toBeNull(); // nothing configured: does nothing
+
+    config(['classy.seed.admin_password' => 'Recovered-Pass-9']);
+
+    $email = AccountSecurity::resetAdmin();
+
+    $admin = Admin::where('email', $email)->first();
+
+    expect($email)->toBe('admin@example.com')
+        ->and(Hash::check('Recovered-Pass-9', $admin->password))->toBeTrue();
+});

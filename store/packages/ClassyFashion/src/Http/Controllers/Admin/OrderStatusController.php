@@ -103,4 +103,34 @@ class OrderStatusController extends Controller
             ManualPayment::record($order, 'cashondelivery', $admin, 'Cash collected on delivery');
         }
     }
+
+    /**
+     * Assign a delivery partner / rider to an order (report 9.7).
+     */
+    public function partner(Request $request, int $id): RedirectResponse
+    {
+        $request->validate([
+            'delivery_partner' => ['nullable', 'string', 'max:100'],
+        ]);
+
+        $order = $this->orderRepository->findOrFail($id);
+
+        abort_unless(bouncer()->hasPermission('sales.orders.status'), 401);
+
+        $from = $order->delivery_partner;
+
+        $order->update(['delivery_partner' => $request->input('delivery_partner') ?: null]);
+
+        Audit::log(
+            $order->fresh(),
+            "Order #{$order->increment_id} delivery partner: ".($from ?: 'none').' to '.($order->fresh()->delivery_partner ?: 'none'),
+            ['from' => $from, 'to' => $order->fresh()->delivery_partner],
+            auth('admin')->user(),
+            'order.delivery'
+        );
+
+        session()->flash('success', __('classy-fashion::app.orders.partner_saved'));
+
+        return redirect()->back();
+    }
 }

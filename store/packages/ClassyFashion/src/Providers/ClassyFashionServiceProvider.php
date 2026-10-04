@@ -54,6 +54,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
             \ClassyFashion\Console\Commands\RepairImages::class,
             \ClassyFashion\Console\Commands\SecureAccounts::class,
             \ClassyFashion\Console\Commands\ExpirePayments::class,
+            \ClassyFashion\Console\Commands\DescribeProducts::class,
         ]);
     }
 

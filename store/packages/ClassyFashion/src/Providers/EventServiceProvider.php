@@ -3,7 +3,9 @@
 namespace ClassyFashion\Providers;
 
 use ClassyFashion\Listeners\AuditStaffChanges;
+use ClassyFashion\Listeners\BrandHeadAssets;
 use ClassyFashion\Listeners\CheckoutDeliveryField;
+use ClassyFashion\Listeners\ProductRecommendations;
 use ClassyFashion\Listeners\OrderDeliveryInfo;
 use ClassyFashion\Listeners\OrderPaymentRecords;
 use ClassyFashion\Listeners\OrderProfitSummary;
@@ -58,6 +60,14 @@ class EventServiceProvider extends ServiceProvider
 
         'bagisto.shop.checkout.onepage.address.form.phone.after' => [
             [CheckoutDeliveryField::class, 'addField'],
+        ],
+
+        'bagisto.shop.layout.head.after' => [
+            [BrandHeadAssets::class, 'addAssets'],
+        ],
+
+        'bagisto.shop.products.view.after' => [
+            [ProductRecommendations::class, 'showPicks'],
         ],
     ];
 }

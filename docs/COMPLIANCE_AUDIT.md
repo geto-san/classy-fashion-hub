@@ -6,10 +6,10 @@ automated test back it. This revision follows an independent review of the
 repository against the report; where that review changed a verdict, the
 reason is given.
 
-**Test status — read first.** `store/tests/Feature` holds **68 test cases**.
-The original 31 were passing when this audit was first written. The other
-**37 were added alongside the review fixes and have not been run yet** (no
-PHP/MySQL/Bagisto vendor was available where they were written). Run
+**Test status — read first.** `store/tests/Feature` holds **83 test cases**: the original 31, 14 added by
+the AI-assistant/brand/rider work, and **38 added with the review fixes. None
+of the 38 has been run** (no PHP/MySQL/Bagisto vendor was available where they
+were written), and the 14 were not run after the merge either. Run
 `php vendor/bin/pest tests/Feature` and treat any red test as a defect to fix
 before relying on the rows below that cite it.
 
@@ -65,10 +65,11 @@ admin "Mobile Money Payments" page lists every attempt. **No automatic
 refund**: cancelling a paid order flags it and staff refund in the Flutterwave
 dashboard.
 
-**9.7 Delivery — Partial.** Location, phone, instructions captured and shown
-to staff. A delivery partner/rider is recorded with the shipment's *Carrier
-Title* and *Tracking Number* fields (the customer sees the tracking number, so
-put the rider's name and phone there). No dedicated rider table.
+**9.7 Delivery — Compliant.** Location, phone, instructions captured and shown
+to staff; a rider / delivery partner can be assigned to each order from the
+order page and every assignment is audit-logged. It is a free-text name (no
+rider directory or phone number); customers see live status and the order
+progress timeline.
 
 **9.8 Notifications — Partial.** Customers are e-mailed on Confirmed, Paid,
 Processing, Dispatched, Delivered and Canceled; the owner on low stock. All
@@ -98,7 +99,7 @@ and profit CSV exports.
 
 ## What still needs a person (cannot be closed by code)
 
-1. Run the test suite and fix anything red (37 tests are new and unrun).
+1. Run the test suite and fix anything red (38 tests are new and unrun).
 2. Configure SMTP and prove reset + order e-mails arrive (9.1, 9.8).
 3. Real-user, phone/weak-network and load testing (objective 6, 10.3, 10.8).
 4. Schedule backups and record one successful restore drill (10.5).

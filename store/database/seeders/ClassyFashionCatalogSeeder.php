@@ -79,6 +79,8 @@ class ClassyFashionCatalogSeeder extends Seeder
             ->where('type', 'category_carousel')
             ->update(['status' => 0, 'draft_status' => 0]);
 
+        $this->pruneDeadHeroSlides();
+
         DB::table('categories')
             ->join('category_translations', function ($join) {
                 $join->on('category_translations.category_id', '=', 'categories.id')
@@ -116,10 +118,10 @@ class ClassyFashionCatalogSeeder extends Seeder
             'about-us' => '<div class="static-container"><div class="mb-5"><h2>About Classy Fashion Hub</h2><p>Classy Fashion Hub is a fashion shop in Kampala, Uganda, serving students and adults with shirts, jackets, shoes and more. Our prices are fixed in Uganda Shillings — no bargaining — and you can pay with MTN Mobile Money, Airtel Money or cash on delivery.</p></div></div>',
             'return-policy' => '<div class="static-container"><div class="mb-5"><h2>Return Policy</h2><p>Unworn items with tags can be returned within 7 days of delivery for exchange or refund to mobile money. Contact us with your order number to arrange a Kampala pickup or rider return.</p></div></div>',
             'refund-policy' => '<div class="static-container"><div class="mb-5"><h2>Refund Policy</h2><p>Approved refunds go back to your MTN or Airtel line within 3 working days, or as cash for cash-on-delivery orders.</p></div></div>',
-            'payment-policy' => '<div class="static-container"><div class="mb-5"><h2>Payment Policy</h2><p>We accept MTN Mobile Money and Airtel Money (confirmed before your order is marked Paid) and cash on delivery within our delivery zones. All prices are in Uganda Shillings (USh).</p></div></div>',
-            'shipping-policy' => '<div class="static-container"><div class="mb-5"><h2>Shipping Policy</h2><p>Flat delivery fee of USh 5,000 anywhere in Uganda. Kampala orders arrive within 24 hours; upcountry orders take 2–4 days. Add gate, landmark or call-on-arrival notes in the delivery instructions at checkout.</p></div></div>',
+            'payment-policy' => '<div class="static-container"><div class="mb-5"><h2>Payment Policy</h2><p>We accept MTN Mobile Money and Airtel Money (confirmed before your order is marked Paid) and cash on delivery within our delivery zones. All prices are in Uganda Shillings (UGX).</p></div></div>',
+            'shipping-policy' => '<div class="static-container"><div class="mb-5"><h2>Shipping Policy</h2><p>Flat delivery fee of UGX 5,000 anywhere in Uganda. Kampala orders arrive within 24 hours; upcountry orders take 2–4 days. Add gate, landmark or call-on-arrival notes in the delivery instructions at checkout.</p></div></div>',
             'privacy-policy' => '<div class="static-container"><div class="mb-5"><h2>Privacy Policy</h2><p>We keep only what your order needs: name, contact, delivery location and transaction records. Your details are never sold and only staff who handle your order can see them.</p></div></div>',
-            'terms-conditions' => '<div class="static-container"><div class="mb-5"><h2>Terms &amp; Conditions</h2><p>Displayed USh prices are final. Orders are confirmed subject to stock availability; mobile-money orders are fulfilled after payment confirmation.</p></div></div>',
+            'terms-conditions' => '<div class="static-container"><div class="mb-5"><h2>Terms &amp; Conditions</h2><p>Displayed UGX prices are final. Orders are confirmed subject to stock availability; mobile-money orders are fulfilled after payment confirmation.</p></div></div>',
             'terms-of-use' => '<div class="static-container"><div class="mb-5"><h2>Terms of Use</h2><p>Use accurate contact and delivery details so our riders can reach you. Misuse of accounts may lead to suspension.</p></div></div>',
             'customer-service' => '<div class="static-container"><div class="mb-5"><h2>Customer Service</h2><p>Questions about sizes, orders or delivery? Message us with your order number and we shall help — we reply within one working day.</p></div></div>',
             'whats-new' => '<div class="static-container"><div class="mb-5"><h2>What&apos;s New</h2><p>New kitenge and ankara arrivals every month. Follow our catalogue for the latest Kampala fashion.</p></div></div>',
@@ -133,6 +135,56 @@ class ClassyFashionCatalogSeeder extends Seeder
         }
 
         $this->command->info('CMS policy pages localized for Uganda.');
+    }
+
+    /**
+     * Drop hero slides pointing at removed demo categories (smart home,
+     * phones, laptops). Keeps slides whose link is a live category,
+     * product, CMS page or absolute URL. Idempotent.
+     */
+    protected function pruneDeadHeroSlides(): void
+    {
+        $rows = DB::table('theme_section_translations')
+            ->whereIn('section_id', function ($query) {
+                $query->select('id')->from('theme_sections')->where('type', 'image_carousel');
+            })
+            ->get(['id', 'options', 'draft_options']);
+
+        foreach ($rows as $row) {
+            foreach (['options', 'draft_options'] as $column) {
+                $data = json_decode((string) $row->{$column}, true);
+
+                if (empty($data['images']) || ! is_array($data['images'])) {
+                    continue;
+                }
+
+                $kept = array_values(array_filter($data['images'], function ($slide) {
+                    $link = (string) ($slide['link'] ?? '');
+
+                    if ($link === '' || str_starts_with($link, 'http')) {
+                        return true;
+                    }
+
+                    return DB::table('category_translations')->where('slug', $link)->exists()
+                        || DB::table('product_attribute_values as av')
+                            ->join('attributes as a', 'a.id', '=', 'av.attribute_id')
+                            ->where('a.code', 'url_key')
+                            ->where('av.text_value', $link)
+                            ->exists()
+                        || DB::table('cms_page_translations')->where('url_key', $link)->exists();
+                }));
+
+                if (count($kept) !== count($data['images'])) {
+                    $data['images'] = $kept;
+
+                    DB::table('theme_section_translations')
+                        ->where('id', $row->id)
+                        ->update([$column => json_encode($data)]);
+
+                    $this->command->info('Pruned dead hero slide(s).');
+                }
+            }
+        }
     }
 
     /**
@@ -181,7 +233,7 @@ class ClassyFashionCatalogSeeder extends Seeder
             ['code' => 'UGX'],
             [
                 'name'              => 'Ugandan Shilling',
-                'symbol'            => 'USh',
+                'symbol'            => 'UGX',
                 'decimal'           => 0,
                 'currency_position' => 'left_with_space',
             ]
@@ -394,7 +446,7 @@ class ClassyFashionCatalogSeeder extends Seeder
             'name'                => $name,
             'url_key'             => Str::slug($name.' '.strtolower(Str::random(4))),
             'short_description'   => $name.' - Classy Fashion Hub.',
-            'description'         => $name.' sold at a fixed price of USh '.number_format($price).'.',
+            'description'         => $name.' sold at a fixed price of UGX '.number_format($price).'.',
             'price'               => $price,
             'cost'                => (int) round($price * 0.6),
             'weight'              => 1,

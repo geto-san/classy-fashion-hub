@@ -52,7 +52,9 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
      login you want. Blank = a random password is printed **once** in the
      deploy log (search the log for `NEW admin password`).
    - `SEED_WORKER_PASSWORD` / `SEED_CUSTOMER_PASSWORD` only matter with
-     `SEED_DEMO=true`, which creates the demo worker/customer accounts.
+     `SEED_DEMO=true`, which creates the demo worker/customer accounts
+     (`render.yaml` currently ships `SEED_DEMO=true` for client testing, so set
+     these to the logins you will give testers; otherwise they are random).
    - Mail (optional but needed for password reset and order e-mails):
      `MAIL_MAILER=smtp`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`,
      `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`, and `ADMIN_MAIL_ADDRESS` for
@@ -60,6 +62,13 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
    - Keep `FLUTTERWAVE_SANDBOX=true` with test keys; use `false` only with
      live keys. A mismatch hides Mobile Money.
    - Leave the rest as in `render.yaml`.
+   - **Set `SEED_ADMIN_PASSWORD` before the first deploy of this version.**
+     On that boot the old `admin123` password is replaced; without the
+     variable the new one is random and appears once in the log.
+   - **Locked out?** Set `SEED_ADMIN_PASSWORD` to a new password and
+     `RESET_ADMIN_PASSWORD=true`, redeploy, sign in, then delete
+     `RESET_ADMIN_PASSWORD` (it would otherwise reset the password on every
+     boot).
 4. Deploy. First boot runs migrations + seeding (several minutes) —
    watch Logs for `Classy Fashion Hub catalog seeded`.
 5. Set `APP_URL` to your `https://<name>.onrender.com` and redeploy
@@ -67,7 +76,7 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 
 ## 3. Verify (the Definition of Done, live)
 
-1. `/up` → 200. Homepage shows products with USh prices + brand logo.
+1. `/up` → 200. Homepage shows products with UGX prices + brand logo.
 2. Log in as `admin@example.com` (or `SEED_ADMIN_EMAIL`) with the password
    from step 2 (never `admin123` on production) → change it, then create real
    worker accounts under Settings → Users.

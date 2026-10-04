@@ -23,6 +23,16 @@ return [
         'pending_minutes' => (int) env('FLUTTERWAVE_PENDING_MINUTES', 30),
     ],
 
+    // Optional LLM for the shop assistant / product descriptions. Empty key =
+    // rule-based answers only. Any OpenAI-compatible endpoint works.
+    'ai' => [
+        'api_key'     => env('AI_LLM_API_KEY'),
+        'base_url'    => env('AI_LLM_BASE_URL') ?: 'https://api.groq.com/openai/v1',
+        'model'       => env('AI_LLM_MODEL') ?: 'llama-3.3-70b-versatile',
+        'timeout'     => (int) env('AI_LLM_TIMEOUT', 20),
+        'daily_limit' => (int) env('AI_ASSISTANT_DAILY_LIMIT', 200),
+    ],
+
     'seed' => [
         // Create the worker/customer demo accounts on a production database.
         'demo'              => filter_var(env('SEED_DEMO', false), FILTER_VALIDATE_BOOLEAN),

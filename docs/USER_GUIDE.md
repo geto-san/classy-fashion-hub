@@ -7,7 +7,7 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
 ### Browse and search
 - Open the shop. Categories: Mens (`/mens`), Womens (`/womens`), Footwear
   (`/footwear` — under Mens). Use search for names like “jacket”.
-- Prices are fixed in Uganda Shillings (USh) — no bargaining.
+- Prices are fixed in Uganda Shillings (UGX) — no bargaining.
 
 ### Order
 1. Open a product, pick **size and colour**, add to cart.
@@ -41,6 +41,12 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
 - You can cancel an order yourself only while it is Pending or Confirmed;
   after payment, contact the shop.
 
+### Shop assistant (`/assistant`)
+- Ask about products (“green dresses under 100000”), prices, sizes,
+  delivery, MTN/Airtel payments, returns, or “where is my order?”
+  (logged in). Works without any setup; with a free Groq key in `.env`
+  (`AI_LLM_*`, see `.env.example`) it also handles open questions.
+
 ## Worker (demo: `worker@classy.local / worker123`; the owner creates real worker accounts)
 
 - Dashboard, catalogue, sales orders, customer list, sales reports.
@@ -54,9 +60,8 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
     mark it Delivered.
   - Invoice and Shipment buttons appear only once an order is Paid or
     Processing (COD: Confirmed or Processing).
-  - **Rider / delivery partner:** on the shipment form put the rider or
-    company in *Carrier Title* and their phone or reference in *Tracking
-    Number* — the customer sees the tracking number.
+  - **Rider / delivery partner:** type the name in the *Save Rider* box on
+    the order page; every change is recorded in the audit trail.
   - Footwear is chosen by EU size (38–45) and colour like clothing.
 - Update stock on the product edit page (inventories). Every change is
   logged with your name. Low-stock products (≤ 5 units) appear red on the
