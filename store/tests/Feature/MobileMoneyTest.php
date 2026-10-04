@@ -57,9 +57,13 @@ function mobilemoneyCart(): Cart
 
 function mobilemoneyKeys(): void
 {
-    putenv('FLUTTERWAVE_PUBLIC_KEY=FLWPUBK_TEST-xxx');
-    putenv('FLUTTERWAVE_SECRET_KEY=FLWSECK_TEST-xxx');
-    putenv('FLUTTERWAVE_SECRET_HASH=classy-test-hash');
+    // Settings are read from config('classy.flutterwave'), never env().
+    config([
+        'classy.flutterwave.public_key'  => 'FLWPUBK_TEST-xxx',
+        'classy.flutterwave.secret_key'  => 'FLWSECK_TEST-xxx',
+        'classy.flutterwave.secret_hash' => 'classy-test-hash',
+        'classy.flutterwave.sandbox'     => true,
+    ]);
 }
 
 beforeEach(function () {
@@ -69,8 +73,10 @@ beforeEach(function () {
 });
 
 it('hides the method until gateway keys exist', function () {
-    putenv('FLUTTERWAVE_SECRET_KEY=');
-    putenv('FLUTTERWAVE_PUBLIC_KEY=');
+    config([
+        'classy.flutterwave.secret_key' => '',
+        'classy.flutterwave.public_key' => '',
+    ]);
 
     $method = app(ClassyFashion\Payment\MobileMoney::class);
 
@@ -81,6 +87,18 @@ it('hides the method until gateway keys exist', function () {
     mobilemoneyCart();
 
     expect($method->isAvailable())->toBeTrue();
+});
+
+it('stays hidden when the keys do not match the sandbox/live mode', function () {
+    mobilemoneyCart();
+
+    config(['classy.flutterwave.sandbox' => false]); // test keys, live mode
+
+    expect(app(ClassyFashion\Payment\MobileMoney::class)->isAvailable())->toBeFalse();
+
+    config(['classy.flutterwave.sandbox' => true]);
+
+    expect(app(ClassyFashion\Payment\MobileMoney::class)->isAvailable())->toBeTrue();
 });
 
 it('starts a pending attempt on charge', function () {

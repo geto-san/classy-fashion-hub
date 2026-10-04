@@ -7,8 +7,11 @@ use Webkul\Product\Models\Product;
 use function Pest\Laravel\postJson;
 
 it('fits the Ugandan context: UGX only, local payments, no postcode', function () {
-    putenv('FLUTTERWAVE_PUBLIC_KEY=FLWPUBK_TEST-xxx');
-    putenv('FLUTTERWAVE_SECRET_KEY=FLWSECK_TEST-xxx');
+    config([
+        'classy.flutterwave.public_key' => 'FLWPUBK_TEST-xxx',
+        'classy.flutterwave.secret_key' => 'FLWSECK_TEST-xxx',
+        'classy.flutterwave.sandbox'    => true,
+    ]);
 
     $customer = Customer::where('email', 'customer@classy.local')->firstOrFail();
 

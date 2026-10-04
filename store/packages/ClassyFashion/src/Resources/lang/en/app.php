@@ -15,8 +15,7 @@ return [
 
     'configuration' => [
         'mobile_money' => 'Mobile Money (MTN / Airtel)',
-        'mobile_money_info' => 'Flutterwave sandbox/test keys live ONLY in .env (FLUTTERWAVE_*). Nothing secret is stored here.',
-        'sandbox' => 'Sandbox Mode (use Flutterwave test keys)',
+        'mobile_money_info' => 'Flutterwave keys and the sandbox/live switch live ONLY in the server environment (FLUTTERWAVE_*, FLUTTERWAVE_SANDBOX). Nothing secret is stored here.',
     ],
 
     'mobilemoney' => [

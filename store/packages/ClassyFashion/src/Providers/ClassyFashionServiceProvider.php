@@ -12,6 +12,8 @@ class ClassyFashionServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
 
+        $this->mergeConfigFrom(__DIR__.'/../Config/classy.php', 'classy');
+
         $this->mergeConfigFrom(__DIR__.'/../Config/acl.php', 'acl');
 
         $this->mergeConfigFrom(__DIR__.'/../Config/admin-menu.php', 'menu.admin');

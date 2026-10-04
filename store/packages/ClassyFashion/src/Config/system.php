@@ -28,13 +28,6 @@ return [
                 'depends'       => 'active:1',
                 'channel_based' => true,
                 'locale_based'  => true,
-            ], [
-                'name'          => 'sandbox',
-                'title'         => 'classy-fashion::app.configuration.sandbox',
-                'type'          => 'boolean',
-                'depends'       => 'active:1',
-                'channel_based' => false,
-                'locale_based'  => false,
             ],
         ],
     ],
