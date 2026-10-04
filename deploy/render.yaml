@@ -53,4 +53,4 @@ services:
       - key: FLUTTERWAVE_SECRET_HASH
         sync: false
       - key: SEED_DEMO
-        value: "false"
+        value: "true"
