@@ -7,6 +7,7 @@
 #
 # Local verify (needs the Docker daemon):
 #   docker build -f deploy/Dockerfile -t classy:local ./deploy
+# (add --build-arg RENDER_GIT_COMMIT=<sha> to pin the commit it overlays)
 
 FROM php:8.3-apache-bookworm AS app
 
@@ -44,8 +45,13 @@ RUN composer create-project bagisto/bagisto /var/www/html "2.4.12" \
 # Overlay our tracked customizations from this repo (strip the store/ prefix).
 ARG OVERLAY_REPO=https://github.com/geto-san/classy-fashion-hub.git
 ARG OVERLAY_REF=main
-RUN git clone --depth 1 --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
+# Render exposes the commit it is deploying as RENDER_GIT_COMMIT. When it is
+# passed in, build exactly that commit instead of whatever the branch tip is
+# by the time the build runs; when it is empty, fall back to OVERLAY_REF.
+ARG RENDER_GIT_COMMIT=
+RUN git clone --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
     && cd /tmp/overlay \
+    && if [ -n "$RENDER_GIT_COMMIT" ]; then git checkout --quiet "$RENDER_GIT_COMMIT"; fi \
     && git ls-files 'store/*' | while IFS= read -r f; do \
            dest="/var/www/html/${f#store/}"; \
            mkdir -p "$(dirname "$dest")"; \
@@ -54,8 +60,8 @@ RUN git clone --depth 1 --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
     && rm -rf /tmp/overlay \
     && test -f /var/www/html/packages/ClassyFashion/src/Providers/ClassyFashionServiceProvider.php
 
-# Autoload our namespace, install our extra deps (activity log,
-# Cloudinary adapter) from the overlaid lock file, rebuild shop assets.
+# Autoload our namespace, install our extra deps (activity log) from the
+# overlaid lock file, rebuild shop assets.
 RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader \
     && cd packages/Webkul/Shop && npm install --no-audit --no-fund && npm run build \
     && rm -rf /var/www/html/packages/Webkul/Shop/node_modules
