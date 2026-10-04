@@ -3,10 +3,41 @@
 namespace ClassyFashion\Support;
 
 /**
- * Branded placeholder image generator (plum + gold identity).
+ * Product photos: real photos dropped into database/seeders/product-images/
+ * (named after the product, see the README there) win; a generated
+ * placeholder is only the fallback when no photo exists.
  */
 class ProductImage
 {
+    public const PHOTO_DIR = 'database/seeders/product-images';
+
+    /**
+     * Real photo files for a product name, gallery order: <slug>.<ext>,
+     * <slug>-2.<ext>, <slug>-3.<ext> ...
+     *
+     * @return list<string> absolute paths (empty when none supplied)
+     */
+    public static function photos(string $name): array
+    {
+        $slug = \Illuminate\Support\Str::slug($name);
+
+        $found = [];
+
+        for ($n = 1; $n <= 8; $n++) {
+            $base = base_path(self::PHOTO_DIR.'/'.$slug.($n === 1 ? '' : '-'.$n));
+
+            foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
+                if (is_file("$base.$ext")) {
+                    $found[] = "$base.$ext";
+
+                    break;
+                }
+            }
+        }
+
+        return $found;
+    }
+
     public static function placeholder(string $path, string $text, int $w = 800, int $h = 1000): void
     {
         $img = imagecreatetruecolor($w, $h);

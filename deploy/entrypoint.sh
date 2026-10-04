@@ -45,6 +45,8 @@ php artisan migrate --force
 
 # Restore any media missing from the (ephemeral) disk. Idempotent.
 php artisan classy:repair-images || true
+# Attach real product photos (database/seeders/product-images) when supplied.
+php artisan classy:import-photos || true
 
 # Fresh database? Seed core data + Classy Fashion data (never wipes).
 ADMINS=$(php artisan tinker --execute="echo DB::table('admins')->count();" 2>/dev/null | tr -cd '0-9')

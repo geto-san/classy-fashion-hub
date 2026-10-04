@@ -542,7 +542,7 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $product = $this->guarded(fn () => $this->products->update($payload, $product->id));
 
-        $this->attachPlaceholderImage($product, $name);
+        $this->attachImages($product, $name);
 
         Event::dispatch('catalog.product.update.after', $product);
 
@@ -550,11 +550,31 @@ class ClassyFashionCatalogSeeder extends Seeder
     }
 
     /**
-     * Generate a branded placeholder PNG and link it to the product,
-     * following the installer seeder storage pattern.
+     * Link the product's real photos (database/seeders/product-images) or,
+     * when none were supplied, a generated placeholder, following the
+     * installer seeder storage pattern.
      */
-    protected function attachPlaceholderImage(Product $product, string $name): void
+    protected function attachImages(Product $product, string $name): void
     {
+        $photos = \ClassyFashion\Support\ProductImage::photos($name);
+
+        if ($photos !== []) {
+            foreach ($photos as $position => $photo) {
+                $path = Storage::putFile('product/'.$product->id, new File($photo));
+
+                if ($path) {
+                    DB::table('product_images')->insert([
+                        'type'       => null,
+                        'path'       => $path,
+                        'product_id' => $product->id,
+                        'position'   => $position,
+                    ]);
+                }
+            }
+
+            return;
+        }
+
         $tmp = tempnam(sys_get_temp_dir(), 'classy').'.png';
 
         \ClassyFashion\Support\ProductImage::placeholder($tmp, $name);

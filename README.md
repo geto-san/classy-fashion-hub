@@ -40,7 +40,7 @@ Project seeders (idempotent, in `store/database/seeders/`):
 | Seeder | What |
 |---|---|
 | `ClassyFashionSeeder` | Worker role (limited ACL) + worker & customer test accounts |
-| `ClassyFashionCatalogSeeder` | UGX currency + channel, 16 fashion products with size/colour variants (footwear in EU sizes 38–45), stock, images |
+| `ClassyFashionCatalogSeeder` | UGX currency + channel, 19 fashion products with size/colour variants (footwear in EU sizes 38–45), stock, images |
 | `DemoOrdersSeeder` | 3 demo orders (pending/paid/delivered) for screenshots & reports |
 
 The catalogue seeder skips when products already exist, so footwear sizes only

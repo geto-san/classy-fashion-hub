@@ -99,3 +99,11 @@ needs a running install to verify. This trim has been checked statically
 only (PHP syntax, namespace and class references, lock/hash consistency) -
 run `composer install` and `php vendor/bin/pest tests/Feature` once to
 confirm on a real install.
+
+## Product photos
+The catalogue ships with generated **placeholder** images until real photos
+are supplied. Put photos of the shop's own stock in
+`store/database/seeders/product-images/` (file names are listed in the README
+there) and run `php artisan classy:import-photos`; Render does this on every
+boot. Photos are not downloaded from other retailers (Jumia, Kikuu, ...)
+because those images belong to the sellers.

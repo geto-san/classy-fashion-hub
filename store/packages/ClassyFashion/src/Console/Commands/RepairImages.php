@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Restore media missing from the (possibly ephemeral) local disk.
  *
- * Product images are regenerated as branded placeholders; the brand
+ * Product images are restored from the real photos in
+ * database/seeders/product-images when supplied, else regenerated as
+ * placeholders; the brand
  * logo/favicon are restored from the committed copies in public/images.
  * Safe to run on every boot: existing files are skipped.
  *
@@ -34,7 +36,7 @@ class RepairImages extends Command
                 $join->on('product_flat.product_id', '=', 'product_images.product_id')
                     ->where('product_flat.locale', 'en');
             })
-            ->select('product_images.path', 'product_flat.name')
+            ->select('product_images.path', 'product_images.position', 'product_flat.name')
             ->get();
 
         foreach ($images as $image) {
@@ -48,13 +50,20 @@ class RepairImages extends Command
                 continue;
             }
 
-            $tmp = tempnam(sys_get_temp_dir(), 'classy').'.png';
+            $photos = $image->name ? ProductImage::photos((string) $image->name) : [];
+            $photo = $photos[(int) $image->position] ?? ($photos[0] ?? null);
 
-            ProductImage::placeholder($tmp, (string) ($image->name ?: 'Classy Fashion Hub'));
+            if ($photo) {
+                $disk->put($image->path, file_get_contents($photo));
+            } else {
+                $tmp = tempnam(sys_get_temp_dir(), 'classy').'.png';
 
-            $disk->put($image->path, file_get_contents($tmp));
+                ProductImage::placeholder($tmp, (string) ($image->name ?: 'Classy Fashion Hub'));
 
-            @unlink($tmp);
+                $disk->put($image->path, file_get_contents($tmp));
+
+                @unlink($tmp);
+            }
 
             $restored++;
         }

@@ -52,6 +52,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
         $this->commands([
             \ClassyFashion\Console\Commands\RepairImages::class,
+            \ClassyFashion\Console\Commands\ImportProductPhotos::class,
             \ClassyFashion\Console\Commands\SecureAccounts::class,
             \ClassyFashion\Console\Commands\ExpirePayments::class,
             \ClassyFashion\Console\Commands\DescribeProducts::class,
