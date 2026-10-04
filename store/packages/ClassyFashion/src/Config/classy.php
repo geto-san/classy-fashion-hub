@@ -35,12 +35,23 @@ return [
     ],
 
     'momo' => [
-        // auto (default): MTN when its keys exist, else Flutterwave when its
-        // keys exist, else manual Till flow. Force with: mtn, flutterwave, manual.
+        // auto (default): Pesapal when its keys exist, else MTN for MTN
+        // numbers, else Flutterwave, else the manual Till flow.
+        // Force with: pesapal, mtn, flutterwave, manual.
         'provider' => env('MOMO_PROVIDER', 'auto'),
 
         // Shop's own Till/line for the manual flow (no signup needed).
         'till_number' => env('MOMO_TILL_NUMBER'),
+
+        'pesapal' => [
+            'consumer_key'    => env('PESAPAL_CONSUMER_KEY'),
+            'consumer_secret' => env('PESAPAL_CONSUMER_SECRET'),
+            'sandbox'         => filter_var(env('PESAPAL_SANDBOX', true), FILTER_VALIDATE_BOOLEAN),
+            'sandbox_base'    => env('PESAPAL_SANDBOX_BASE') ?: 'https://cybqa.pesapal.com/pesapalv3',
+            'live_base'       => env('PESAPAL_LIVE_BASE') ?: 'https://pay.pesapal.com/v3',
+            // Register once (dashboard form or API) and paste the IPN id.
+            'ipn_id'          => env('PESAPAL_IPN_ID'),
+        ],
 
         'mtn' => [
             'subscription_key' => env('MTN_SUBSCRIPTION_KEY'),

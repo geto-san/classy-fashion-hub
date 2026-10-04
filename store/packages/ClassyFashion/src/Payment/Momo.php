@@ -20,6 +20,7 @@ class Momo
 
         $mtn = new MtnMomoProvider;
         $flutterwave = new FlutterwaveProvider;
+        $pesapal = new PesapalProvider;
 
         if ($forced === 'mtn') {
             return $mtn->isConfigured() ? $mtn : null;
@@ -29,8 +30,18 @@ class Momo
             return $flutterwave->isConfigured() ? $flutterwave : null;
         }
 
+        if ($forced === 'pesapal') {
+            return $pesapal->isConfigured() ? $pesapal : null;
+        }
+
         if ($forced === 'manual') {
             return null;
+        }
+
+        // Auto: Pesapal first (own hosted page, both networks), then MTN for
+        // MTN numbers, then Flutterwave, then the manual Till flow.
+        if ($pesapal->isConfigured()) {
+            return $pesapal;
         }
 
         // Auto: MTN only speaks MTN; Flutterwave covers both networks.

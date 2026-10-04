@@ -114,6 +114,12 @@ class MobileMoneyController extends Controller
 
         $attempt->update(['gateway_tx_id' => (string) $result['gateway_tx_id']]);
 
+        // Redirect flows (Pesapal) leave for the gateway; prompt flows
+        // (MTN/Flutterwave) wait on the status page.
+        if (! empty($result['redirect_url'])) {
+            return redirect()->away($result['redirect_url']);
+        }
+
         return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]);
     }
 
@@ -205,6 +211,55 @@ class MobileMoneyController extends Controller
         }
 
         return response()->json(['message' => $this->checkAttempt($attempt)]);
+    }
+
+    /**
+     * Pesapal customer callback (browser redirect). Carries no status, so
+     * it only sends the customer to the status page, which verifies.
+     */
+    public function pesapalReturn(Request $request)
+    {
+        $provider = new \ClassyFashion\Payment\PesapalProvider;
+
+        $attempt = $provider->attemptFromCallback($request);
+
+        if (! $attempt) {
+            return redirect()->route('shop.checkout.cart.index');
+        }
+
+        return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]);
+    }
+
+    /**
+     * Pesapal IPN (server-to-server). Answers in Pesapal's own shape:
+     * status 200 received-and-processed, 500 received-but-failed.
+     */
+    public function pesapalIpn(Request $request)
+    {
+        $provider = new \ClassyFashion\Payment\PesapalProvider;
+
+        $attempt = $provider->attemptFromCallback($request);
+
+        $tracking = (string) ($request->input('OrderTrackingId') ?? '');
+        $merchant = (string) ($request->input('OrderMerchantReference') ?? '');
+
+        if (! $attempt || ! $attempt->isOpen()) {
+            return response()->json([
+                'orderNotificationType'  => 'IPNCHANGE',
+                'orderTrackingId'        => $tracking,
+                'orderMerchantReference' => $merchant,
+                'status'                 => 500,
+            ]);
+        }
+
+        $final = $this->checkAttempt($attempt);
+
+        return response()->json([
+            'orderNotificationType'  => 'IPNCHANGE',
+            'orderTrackingId'        => $tracking,
+            'orderMerchantReference' => $merchant,
+            'status'                 => $final === PaymentAttempt::STATUS_FAILED ? 500 : 200,
+        ]);
     }
 
     /**
@@ -382,6 +437,12 @@ class MobileMoneyController extends Controller
             Route::post('mtn-callback', [self::class, 'mtnCallback'])
                 ->withoutMiddleware(VerifyCsrfToken::class)
                 ->name('mtn-callback');
+
+            Route::get('pesapal-return', [self::class, 'pesapalReturn'])->name('pesapal-return');
+
+            Route::match(['get', 'post'], 'pesapal-ipn', [self::class, 'pesapalIpn'])
+                ->withoutMiddleware(VerifyCsrfToken::class)
+                ->name('pesapal-ipn');
 
             Route::post('claim/{attempt}', [self::class, 'claim'])->name('claim');
         });

@@ -27,7 +27,13 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
 
 ### Pay with mobile money (demo)
 1. Sandbox keys must be in `store/.env` (see README / .env.example).
-2. **MTN (self-service sandbox):** sign up at momodeveloper.mtn.com with
+2. **Pesapal (no separate API key exists):** the dashboard **Primary Key
+   IS the `consumer_key`** and the **Secondary Key IS the
+   `consumer_secret`** — put them in `PESAPAL_CONSUMER_KEY/_SECRET`.
+   Public sandbox demo keys (no account): developer.pesapal.com →
+   `api3-demo-keys.txt` (use the Ugandan pair). Register your IPN URL
+   once (Pesapal dashboard form) and paste the id as `PESAPAL_IPN_ID`.
+3. **MTN (self-service sandbox):** sign up at momodeveloper.mtn.com with
    just an email → subscribe to the Collection product → create an API
    user → copy the subscription key, user ID and API key into
    `MTN_SUBSCRIPTION_KEY/_API_USER_ID/_API_KEY`. No business documents.

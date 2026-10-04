@@ -52,6 +52,14 @@ services:
         sync: false
       - key: FLUTTERWAVE_SECRET_HASH
         sync: false
+      - key: PESAPAL_CONSUMER_KEY
+        sync: false
+      - key: PESAPAL_CONSUMER_SECRET
+        sync: false
+      - key: PESAPAL_SANDBOX
+        value: "true"
+      - key: PESAPAL_IPN_ID
+        sync: false
       - key: MOMO_PROVIDER
         value: auto
       - key: MOMO_TILL_NUMBER
