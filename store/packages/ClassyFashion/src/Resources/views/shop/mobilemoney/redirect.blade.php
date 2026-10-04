@@ -40,7 +40,9 @@
                     type="tel"
                     name="phone"
                     required
-                    maxlength="20"
+                    maxlength="16"
+                    pattern="(\+?256|0)7[0-9]{8}"
+                    inputmode="tel"
                     placeholder="0772000000"
                     class="rounded-lg border px-4 py-3"
                 >

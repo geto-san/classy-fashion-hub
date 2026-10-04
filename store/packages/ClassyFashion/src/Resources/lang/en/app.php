@@ -30,6 +30,9 @@ return [
         'check_status' => 'I Have Approved — Check Status',
         'ugx_only' => 'Mobile money is available for UGX orders only.',
         'charge_failed' => 'The payment could not be started. Please try again or choose another method.',
+        'phone_invalid' => 'Enter a Ugandan mobile money number, e.g. 0772000000 or +256772000000.',
+        'payment_expired' => 'The payment prompt timed out. If you were charged, contact us with reference :ref; otherwise try again.',
+        'payment_unfulfilled' => 'We received your payment but could not finish your order. We have been alerted: please contact us with reference :ref and do not pay again.',
         'payment_failed' => 'The payment failed or was cancelled. No order was created; your cart is unchanged.',
     ],
 

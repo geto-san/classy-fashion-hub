@@ -17,7 +17,7 @@
         </p>
 
         <a
-            href="{{ route('classy.mobilemoney.status', ['attempt' => $attempt->id]) }}"
+            href="{{ route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]) }}"
             class="primary-button mt-6 inline-block rounded-2xl px-11 py-3"
         >
             {{ __('classy-fashion::app.mobilemoney.check_status') }}

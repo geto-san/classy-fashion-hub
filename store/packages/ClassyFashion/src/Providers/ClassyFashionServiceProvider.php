@@ -43,9 +43,14 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/shop-routes.php');
 
+        $this->callAfterResolving(\Illuminate\Console\Scheduling\Schedule::class, function ($schedule) {
+            $schedule->command('classy:expire-payments')->everyTenMinutes();
+        });
+
         $this->commands([
             \ClassyFashion\Console\Commands\RepairImages::class,
             \ClassyFashion\Console\Commands\SecureAccounts::class,
+            \ClassyFashion\Console\Commands\ExpirePayments::class,
         ]);
     }
 
