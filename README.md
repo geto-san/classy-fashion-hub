@@ -107,6 +107,8 @@ Dispatched → Delivered with the “Mark as …” buttons.
 - `store/database/seeders/ClassyFashion*.php` — roles, accounts, UGX catalogue
 - `store/tests/Feature/*Test.php` — role enforcement, checkout, payments,
   order rules, reports, audit, notifications
+- Unused Bagisto modules (other payment gateways, social login) are disabled
+  and their source removed on setup/deploy - see `docs/KNOWN_LIMITATIONS.md`.
 - `deploy/` — Docker image, Render blueprint, boot script; `scripts/` — setup,
   backup, restore
 

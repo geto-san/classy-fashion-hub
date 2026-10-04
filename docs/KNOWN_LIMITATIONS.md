@@ -84,3 +84,18 @@ future work they map to.
   `store/packages/Webkul/...` with the same files in the v2.4.12 tag.
 - The admin order list is **not** edited: `ClassyFashion\DataGrids\OrderDataGrid`
   is bound over it so it can show the report statuses.
+
+## Trimmed Bagisto modules (cleanup)
+The report needs mobile money, cash on delivery, catalogue, orders, stock,
+reports and roles only. These stock Bagisto modules are therefore **not
+loaded**: Stripe, Razorpay, PayU, PayGlocal, PhonePe, PayPal and SocialLogin
+(`bootstrap/providers.php`, `config/concord.php`, `composer.json` and
+`composer.lock` no longer list them, and the Composer packages only they
+needed were dropped). `scripts/setup-local.sh` and `deploy/Dockerfile` delete
+their source folders after merging/overlaying Bagisto. Other stock modules
+(booking, RMA, GDPR, EU withdrawal, MagicAI, sitemap, social share) are kept
+because the Admin and Shop packages reference them directly; removing them
+needs a running install to verify. This trim has been checked statically
+only (PHP syntax, namespace and class references, lock/hash consistency) -
+run `composer install` and `php vendor/bin/pest tests/Feature` once to
+confirm on a real install.
