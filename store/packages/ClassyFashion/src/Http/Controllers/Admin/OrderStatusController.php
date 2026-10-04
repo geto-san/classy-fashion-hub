@@ -81,7 +81,7 @@ class OrderStatusController extends Controller
         );
 
         if ($refundDue) {
-            session()->flash('warning', "Order #{$order->increment_id} was paid by mobile money: refund ".core()->formatBasePrice($order->base_grand_total).' to the customer from the Flutterwave dashboard.');
+            session()->flash('warning', "Order #{$order->increment_id} was paid by mobile money: refund ".core()->formatBasePrice($order->base_grand_total).' to the customer from the MTN MoMo app.');
         }
 
         session()->flash('success', "Order #{$order->increment_id} is now {$order->status_label}.");

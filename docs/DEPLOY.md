@@ -2,7 +2,7 @@
 
 Architecture: Render **Docker** web service (Render has no native PHP
 runtime) + external **MySQL** (Render free has no MySQL; Bagisto 2.4
-needs MySQL/MariaDB) + sandbox Flutterwave keys.
+needs MySQL/MariaDB) + sandbox MTN MoMo keys.
 
 ## 0. What is already done (code side)
 
@@ -46,8 +46,9 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 3. Set environment variables (Render → Environment):
    - `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
      from step 1.
-   - `FLUTTERWAVE_PUBLIC_KEY`, `FLUTTERWAVE_SECRET_KEY`,
-     `FLUTTERWAVE_SECRET_HASH` (sandbox keys; empty = method hidden).
+   - `MTN_SUBSCRIPTION_KEY`, `MTN_API_USER_ID`, `MTN_API_KEY`
+     (sandbox keys; empty = MTN API off, Till/manual flow still works).
+     Optionally `MOMO_TILL_NUMBER` (shop Till for the manual flow).
    - `SEED_ADMIN_PASSWORD` (and optionally `SEED_ADMIN_EMAIL`): the admin
      login you want. Blank = a random password is printed **once** in the
      deploy log (search the log for `NEW admin password`).
@@ -59,8 +60,6 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
      `MAIL_MAILER=smtp`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`,
      `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`, and `ADMIN_MAIL_ADDRESS` for
      low-stock alerts. Leave `MAIL_MAILER=log` until you have a provider.
-   - Keep `FLUTTERWAVE_SANDBOX=true` with test keys; use `false` only with
-     live keys. A mismatch hides Mobile Money.
    - Leave the rest as in `render.yaml`.
    - **Set `SEED_ADMIN_PASSWORD` before the first deploy of this version.**
      On that boot the old `admin123` password is replaced; without the

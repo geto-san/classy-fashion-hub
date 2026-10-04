@@ -21,7 +21,7 @@ interface MobileMoneyProvider
     /**
      * @return array{ok: bool, gateway_tx_id: ?string, message: ?string, redirect_url?: ?string}
      *
-     * redirect_url is set by redirect flows (Pesapal): the browser must
+     * redirect_url is set by redirect flows: the browser must
      * leave for the gateway instead of waiting on the status page.
      */
     public function charge(PaymentAttempt $attempt, array $customer): array;

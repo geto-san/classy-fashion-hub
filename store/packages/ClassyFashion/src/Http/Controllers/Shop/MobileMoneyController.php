@@ -4,7 +4,6 @@ namespace ClassyFashion\Http\Controllers\Shop;
 
 use ClassyFashion\Models\PaymentAttempt;
 use ClassyFashion\Support\Audit;
-use ClassyFashion\Support\Flutterwave;
 use ClassyFashion\Support\Notify;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
@@ -17,10 +16,10 @@ use Webkul\Sales\Transformers\OrderResource;
 use Webkul\Shop\Http\Controllers\Controller;
 
 /**
- * Flutterwave mobile-money flow (report 9.6, sandbox-capable).
+ * MTN MoMo mobile-money flow (report 9.6) plus the manual Till fallback.
  *
- * The order is created ONLY after server-side verification (verify API
- * call on our status check, or signature-checked webhook). Returning
+ * The order is created ONLY after server-side verification (status query
+ * on our status check, or the MTN callback triggering one). Returning
  * from any payment page proves nothing and creates no order.
  */
 class MobileMoneyController extends Controller
@@ -114,8 +113,7 @@ class MobileMoneyController extends Controller
 
         $attempt->update(['gateway_tx_id' => (string) $result['gateway_tx_id']]);
 
-        // Redirect flows (Pesapal) leave for the gateway; prompt flows
-        // (MTN/Flutterwave) wait on the status page.
+        // Prompt flows (MTN, manual Till) wait on the status page.
         if (! empty($result['redirect_url'])) {
             return redirect()->away($result['redirect_url']);
         }
@@ -172,31 +170,6 @@ class MobileMoneyController extends Controller
     }
 
     /**
-     * Gateway webhook. Signature-checked for Flutterwave; MTN posts to its
-     * own route below. Amounts are always verified server-side.
-     */
-    public function webhook(Request $request)
-    {
-        $provider = new \ClassyFashion\Payment\FlutterwaveProvider;
-
-        if (! $provider->webhookIsValid($request)) {
-            return response()->json(['message' => 'Invalid signature.'], 403);
-        }
-
-        $attempt = $provider->attemptFromCallback($request);
-
-        if (! $attempt || ! $attempt->isOpen()) {
-            return response()->json(['message' => 'Nothing to do.']);
-        }
-
-        $data = (array) $request->input('data', []);
-
-        $final = $this->checkAttempt($attempt, ! empty($data['id']) ? (string) $data['id'] : null);
-
-        return response()->json(['message' => $final]);
-    }
-
-    /**
      * MTN status callback. Carries no signature, so the lookup key is only
      * a hint: the verify call is still the proof, as everywhere else.
      */
@@ -211,55 +184,6 @@ class MobileMoneyController extends Controller
         }
 
         return response()->json(['message' => $this->checkAttempt($attempt)]);
-    }
-
-    /**
-     * Pesapal customer callback (browser redirect). Carries no status, so
-     * it only sends the customer to the status page, which verifies.
-     */
-    public function pesapalReturn(Request $request)
-    {
-        $provider = new \ClassyFashion\Payment\PesapalProvider;
-
-        $attempt = $provider->attemptFromCallback($request);
-
-        if (! $attempt) {
-            return redirect()->route('shop.checkout.cart.index');
-        }
-
-        return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]);
-    }
-
-    /**
-     * Pesapal IPN (server-to-server). Answers in Pesapal's own shape:
-     * status 200 received-and-processed, 500 received-but-failed.
-     */
-    public function pesapalIpn(Request $request)
-    {
-        $provider = new \ClassyFashion\Payment\PesapalProvider;
-
-        $attempt = $provider->attemptFromCallback($request);
-
-        $tracking = (string) ($request->input('OrderTrackingId') ?? '');
-        $merchant = (string) ($request->input('OrderMerchantReference') ?? '');
-
-        if (! $attempt || ! $attempt->isOpen()) {
-            return response()->json([
-                'orderNotificationType'  => 'IPNCHANGE',
-                'orderTrackingId'        => $tracking,
-                'orderMerchantReference' => $merchant,
-                'status'                 => 500,
-            ]);
-        }
-
-        $final = $this->checkAttempt($attempt);
-
-        return response()->json([
-            'orderNotificationType'  => 'IPNCHANGE',
-            'orderTrackingId'        => $tracking,
-            'orderMerchantReference' => $merchant,
-            'status'                 => $final === PaymentAttempt::STATUS_FAILED ? 500 : 200,
-        ]);
     }
 
     /**
@@ -349,8 +273,7 @@ class MobileMoneyController extends Controller
     protected function providerFor(PaymentAttempt $attempt): ?\ClassyFashion\Payment\MobileMoneyProvider
     {
         $map = [
-            'mtn'         => \ClassyFashion\Payment\MtnMomoProvider::class,
-            'flutterwave' => \ClassyFashion\Payment\FlutterwaveProvider::class,
+            'mtn' => \ClassyFashion\Payment\MtnMomoProvider::class,
         ];
 
         $class = $map[$attempt->provider ?? ''] ?? null;
@@ -430,19 +353,9 @@ class MobileMoneyController extends Controller
             Route::get('status/{attempt}', [self::class, 'status'])->name('status');
             Route::get('return/{attempt}', [self::class, 'return'])->name('return');
 
-            Route::post('webhook', [self::class, 'webhook'])
-                ->withoutMiddleware(VerifyCsrfToken::class)
-                ->name('webhook');
-
             Route::post('mtn-callback', [self::class, 'mtnCallback'])
                 ->withoutMiddleware(VerifyCsrfToken::class)
                 ->name('mtn-callback');
-
-            Route::get('pesapal-return', [self::class, 'pesapalReturn'])->name('pesapal-return');
-
-            Route::match(['get', 'post'], 'pesapal-ipn', [self::class, 'pesapalIpn'])
-                ->withoutMiddleware(VerifyCsrfToken::class)
-                ->name('pesapal-ipn');
 
             Route::post('claim/{attempt}', [self::class, 'claim'])->name('claim');
         });

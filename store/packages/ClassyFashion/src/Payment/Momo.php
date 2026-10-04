@@ -8,9 +8,9 @@ use ClassyFashion\Support\Audit;
 /**
  * Picks the mobile-money provider and fulfils human-confirmed payments.
  *
- * Order: explicit MOMO_PROVIDER override, then MTN keys, then Flutterwave
- * keys, then the manual Till flow (shop's own number, no signup), else
- * nothing (the method hides itself at checkout).
+ * MTN MoMo API when its keys exist, otherwise the manual Till flow
+ * (shop's own number, no signup). Else nothing (the method hides itself
+ * at checkout).
  */
 class Momo
 {
@@ -19,40 +19,17 @@ class Momo
         $forced = strtolower((string) config('classy.momo.provider', 'auto'));
 
         $mtn = new MtnMomoProvider;
-        $flutterwave = new FlutterwaveProvider;
-        $pesapal = new PesapalProvider;
 
         if ($forced === 'mtn') {
             return $mtn->isConfigured() ? $mtn : null;
-        }
-
-        if ($forced === 'flutterwave') {
-            return $flutterwave->isConfigured() ? $flutterwave : null;
-        }
-
-        if ($forced === 'pesapal') {
-            return $pesapal->isConfigured() ? $pesapal : null;
         }
 
         if ($forced === 'manual') {
             return null;
         }
 
-        // Auto: Pesapal first (own hosted page, both networks), then MTN for
-        // MTN numbers, then Flutterwave, then the manual Till flow.
-        if ($pesapal->isConfigured()) {
-            return $pesapal;
-        }
-
-        // Auto: MTN only speaks MTN; Flutterwave covers both networks.
-        if ($network === 'MTN' && $mtn->isConfigured()) {
-            return $mtn;
-        }
-
-        if ($flutterwave->isConfigured()) {
-            return $flutterwave;
-        }
-
+        // Auto: MTN covers MTN numbers; anything else goes manual.
+        // (Airtel has no self-service sandbox, so it always uses the Till.)
         if ($network !== 'AIRTEL' && $mtn->isConfigured()) {
             return $mtn;
         }

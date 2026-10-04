@@ -8,11 +8,11 @@ use function Pest\Laravel\postJson;
 
 it('fits the Ugandan context: UGX only, local payments, no postcode', function () {
     config([
-        'classy.flutterwave.public_key' => 'FLWPUBK_TEST-xxx',
-        'classy.flutterwave.secret_key' => 'FLWSECK_TEST-xxx',
-        'classy.flutterwave.sandbox'    => true,
-        'classy.momo.mtn.subscription_key' => '',
-        'classy.momo.till_number'          => '',
+        'classy.momo.provider'           => 'auto',
+        'classy.momo.till_number'        => '0789001234',
+        'classy.momo.mtn.subscription_key' => 'test-sub-key',
+        'classy.momo.mtn.api_user_id'      => 'test-user-id',
+        'classy.momo.mtn.api_key'          => 'test-api-key',
     ]);
 
     $customer = Customer::where('email', 'customer@classy.local')->firstOrFail();

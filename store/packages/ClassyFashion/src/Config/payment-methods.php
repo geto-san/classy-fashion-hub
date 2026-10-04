@@ -7,7 +7,7 @@ return [
         'class'       => MobileMoney::class,
         'code'        => 'mobilemoney',
         'title'       => 'Mobile Money (MTN / Airtel)',
-        'description' => 'Pay with MTN Mobile Money or Airtel Money via Flutterwave.',
+        'description' => 'Pay with MTN Mobile Money.',
         'active'      => true,
         'sort'        => 3,
     ],

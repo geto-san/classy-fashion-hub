@@ -37,7 +37,7 @@ class ShopAssistant
             );
         }
 
-        if (self::wants($text, ['pay', 'payment', 'mtn', 'airtel', 'mobile money', 'cash', 'flutterwave', 'deposit'])) {
+        if (self::wants($text, ['pay', 'payment', 'mtn', 'airtel', 'mobile money', 'cash', 'deposit'])) {
             return self::reply(
                 "Pay with MTN Mobile Money or Airtel Money — approve the prompt on your phone and your order".
                 " turns Paid only after the network confirms. Cash on delivery is available too."

@@ -2,16 +2,15 @@
 
 namespace ClassyFashion\Payment;
 
-use ClassyFashion\Support\Flutterwave;
 use Webkul\Payment\Payment\Payment;
 
 /**
- * Mobile Money via Flutterwave (MTN / Airtel Uganda, report 9.6).
+ * Mobile Money via MTN MoMo (Uganda, report 9.6), plus the manual Till flow.
  *
  * Redirect-style method: the order is created only after server-side
  * verification. Gateway keys live exclusively in environment variables
  * (documented in .env.example) and are read through
- * config('classy.flutterwave'); the admin screen carries display
+ * config('classy.momo'); the admin screen carries display
  * settings only.
  */
 class MobileMoney extends Payment

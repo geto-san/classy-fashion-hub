@@ -68,8 +68,6 @@ function mtnKeys(): void
         'classy.momo.mtn.base_url'          => 'https://sandbox.momodeveloper.mtn.com',
         'classy.momo.mtn.environment'       => 'sandbox',
         'classy.momo.mtn.currency'          => 'UGX',
-        'classy.flutterwave.secret_key'     => '',
-        'classy.flutterwave.public_key'     => '',
     ]);
 }
 
@@ -157,8 +155,6 @@ it('runs the manual Till flow with zero gateway keys', function () {
     config([
         'classy.momo.till_number'       => '0789001234',
         'classy.momo.mtn.subscription_key' => '',
-        'classy.flutterwave.secret_key' => '',
-        'classy.flutterwave.public_key' => '',
     ]);
 
     expect(Momo::provider('MTN'))->toBeNull()

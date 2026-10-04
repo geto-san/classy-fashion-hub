@@ -46,22 +46,22 @@ Project seeders (idempotent, in `store/database/seeders/`):
 The catalogue seeder skips when products already exist, so footwear sizes only
 appear on a freshly seeded database (see `docs/KNOWN_LIMITATIONS.md`).
 
-## Mobile money sandbox (Flutterwave, MTN/Airtel)
+## Mobile money sandbox (MTN MoMo)
 
-1. Create a free Flutterwave account → sandbox (test) dashboard.
-2. Copy the test **public key**, **secret key**, and set/copy the webhook
-   **secret hash** (Dashboard → Settings → Webhooks).
+1. Sign up at **momodeveloper.mtn.com** (email only) → Products →
+   subscribe to **Collections** → Profile → Subscriptions → copy the
+   **Primary key**.
+2. Create an API user and key (see USER_GUIDE for the two curl calls).
 3. Put them in `store/.env` (names in `.env.example`, never committed):
-   `FLUTTERWAVE_PUBLIC_KEY`, `FLUTTERWAVE_SECRET_KEY`,
-   `FLUTTERWAVE_SECRET_HASH`, `FLUTTERWAVE_SANDBOX=true`.
-   Test keys (`FLWSECK_TEST-…`) require `FLUTTERWAVE_SANDBOX=true`; live keys
-   require `false`. A mismatch hides the payment method instead of using the
-   wrong mode.
+   `MTN_SUBSCRIPTION_KEY`, `MTN_API_USER_ID`, `MTN_API_KEY`.
+   Sandbox uses `MTN_TARGET_ENV=sandbox`; note the sandbox only accepts
+   its test currency (`MTN_CURRENCY`, production uses UGX).
 4. Enable the method: admin → Configuration → Sales → Payment Methods →
-   Mobile Money → Active. It appears at checkout only when the keys are valid.
-5. Localhost cannot receive webhooks: demo with the status page
+   Mobile Money → Active. It appears at checkout only when MTN keys exist
+   (or a Till number is set for the manual flow).
+5. Localhost cannot receive callbacks: demo with the status page
    (“I Have Approved — Check Status”); production needs a public URL
-   (ngrok/Render) registered in the Flutterwave dashboard.
+   (ngrok/Render) set as the callback host.
 
 ## Accounts
 
@@ -102,7 +102,7 @@ Dispatched → Delivered with the “Mark as …” buttons.
 
 ## Custom code (all outside core except six small edits)
 
-- `store/packages/ClassyFashion/` — payments (Flutterwave mobile money),
+- `store/packages/ClassyFashion/` — payments (MTN MoMo mobile money),
   order statuses and rules, cost/profit, audit log, notifications, admin pages
 - `store/database/seeders/ClassyFashion*.php` — roles, accounts, UGX catalogue
 - `store/tests/Feature/*Test.php` — role enforcement, checkout, payments,

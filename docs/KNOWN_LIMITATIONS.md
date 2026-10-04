@@ -3,19 +3,18 @@
 Honest list of what was cut, stubbed or simplified — and the report's
 future work they map to.
 
-## Payments: sandbox only
-- Mobile money runs against **Flutterwave test keys**. No live merchant
-  approval was sought, so no real UGX moves. Production switch: live keys
-  in `.env` + `FLUTTERWAVE_SANDBOX=false` + a public webhook URL
-  (localhost cannot receive Flutterwave webhooks; use ngrok/Render and set
-  the webhook URL + secret hash in the Flutterwave dashboard).
-- Sandbox demo without webhooks: the status page re-verifies server-side
+## Payments: sandbox only (MTN MoMo)
+- Mobile money runs against **MTN MoMo sandbox keys** (self-service,
+  momodeveloper.mtn.com). No live merchant approval was sought, so no
+  real UGX moves. Production switch: live MTN credentials +
+  `MTN_TARGET_ENV` live value + a public callback URL (localhost cannot
+  receive MTN callbacks; set the provider callback host).
+- Sandbox demo without callbacks: the status page re-verifies server-side
   (“I Have Approved — Check Status”) and finalizes identically.
 - The gateway sets Paid; staff cannot mark a mobile-money order Paid by hand.
   A paid order cancelled by staff is **not refunded automatically**: the
-  system flags it and the refund is made in the Flutterwave dashboard.
-- Sandbox vs live is `FLUTTERWAVE_SANDBOX`; test keys with `false` (or live
-  keys with `true`) leave the method hidden.
+  system flags it and the refund is made in the MTN MoMo app.
+- MTN sandbox uses its own test currency (`MTN_CURRENCY`); production uses UGX.
 
 ## Cut, in agreed order
 1. **Luganda locale** — English only (report 10.9 lists it as future work).

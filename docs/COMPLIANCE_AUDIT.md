@@ -62,8 +62,7 @@ status check cannot both create an order); attempts addressed by unguessable
 id and limited to the shopper's session; unapproved prompts expire (a late
 approval is still honoured); sandbox/live is enforced against the key prefix;
 admin "Mobile Money Payments" page lists every attempt. **No automatic
-refund**: cancelling a paid order flags it and staff refund in the Flutterwave
-dashboard.
+refund**: cancelling a paid order flags it and staff refund in the MTN MoMo app.
 
 **9.7 Delivery — Compliant.** Location, phone, instructions captured and shown
 to staff; a rider / delivery partner can be assigned to each order from the

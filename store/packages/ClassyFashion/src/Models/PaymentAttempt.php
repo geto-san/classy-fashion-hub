@@ -66,7 +66,7 @@ class PaymentAttempt extends Model
             }
 
             if (empty($attempt->expires_at)) {
-                $attempt->expires_at = now()->addMinutes((int) config('classy.flutterwave.pending_minutes', 30));
+                $attempt->expires_at = now()->addMinutes((int) config('classy.momo.pending_minutes', 30));
             }
         });
     }
