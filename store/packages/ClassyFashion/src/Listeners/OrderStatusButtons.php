@@ -27,7 +27,7 @@ class OrderStatusButtons
             return;
         }
 
-        $next = ClassyOrder::TRANSITIONS[$order->status] ?? [];
+        $next = $order->nextStatuses();
 
         if (empty($next)) {
             return;

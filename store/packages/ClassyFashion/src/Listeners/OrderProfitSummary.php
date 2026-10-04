@@ -16,7 +16,7 @@ class OrderProfitSummary
     {
         $item = $eventManager->getParam('item');
 
-        if (! $item) {
+        if (! $item || ! bouncer()->hasPermission('reporting.profit')) {
             return;
         }
 
@@ -31,6 +31,12 @@ class OrderProfitSummary
 
     public function showOrderProfit(ViewRenderEventManager $eventManager): void
     {
+        // Cost and profit are for the owner: staff without the profit
+        // permission (e.g. Worker) never see them.
+        if (! bouncer()->hasPermission('reporting.profit')) {
+            return;
+        }
+
         // This view event carries no params; resolve the order from the route.
         $order = $eventManager->getParam('order')
             ?? WebkulOrder::query()->find(request()->route('id'));

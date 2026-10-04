@@ -4,9 +4,11 @@ namespace ClassyFashion\Providers;
 
 use ClassyFashion\Listeners\CheckoutDeliveryField;
 use ClassyFashion\Listeners\OrderDeliveryInfo;
+use ClassyFashion\Listeners\OrderPaymentRecords;
 use ClassyFashion\Listeners\OrderProfitSummary;
 use ClassyFashion\Listeners\OrderStatusButtons;
 use ClassyFashion\Listeners\OrderStatusMapper;
+use ClassyFashion\Listeners\SnapshotOrderItemCost;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -16,8 +18,13 @@ class EventServiceProvider extends ServiceProvider
             [OrderStatusMapper::class, 'mapCompletedToDispatched'],
         ],
 
+        'checkout.order.orderitem.save.after' => [
+            [SnapshotOrderItemCost::class, 'handle'],
+        ],
+
         'bagisto.admin.sales.order.status_label.after' => [
             [OrderStatusButtons::class, 'addButtons'],
+            [OrderPaymentRecords::class, 'show'],
         ],
 
         'bagisto.admin.sales.order.billing_address.after' => [

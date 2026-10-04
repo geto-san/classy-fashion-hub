@@ -1,6 +1,7 @@
 <?php
 
 use ClassyFashion\Support\Profit;
+use Database\Seeders\ClassyFashionSeeder;
 use Webkul\Product\Models\Product;
 use Webkul\Sales\Models\Order;
 use Webkul\Sales\Models\OrderItem;
@@ -30,14 +31,62 @@ it('exports the profit report as CSV', function () {
         ->and($response->streamedContent())->toContain('Date,Transactions');
 });
 
-it('lets the worker open the profit report but refuses guests', function () {
+it('keeps the profit report away from the worker and from guests', function () {
+    $this->seed(ClassyFashionSeeder::class);
+
     $this->actingAs(Admin::where('email', 'worker@classy.local')->firstOrFail(), 'admin');
 
-    get(route('admin.classy.reports.profit'))->assertOk();
+    get(route('admin.classy.reports.profit'))->assertUnauthorized();
 
     auth()->logout();
 
     get(route('admin.classy.reports.profit'))->assertRedirect();
+});
+
+it('keeps the sale-time cost when the product cost changes later', function () {
+    $parent = Product::where('type', 'configurable')->firstOrFail();
+
+    $item = OrderItem::factory()->create([
+        'product_id'   => $parent->id,
+        'product_type' => Product::class,
+        'sku'          => $parent->sku,
+        'base_price'   => 50000,
+        'price'        => 50000,
+        'qty_ordered'  => 1,
+        'type'         => 'configurable',
+        'cost_price'   => 21000,
+    ]);
+
+    $original = (float) $parent->cost;
+
+    // Supplier raises the price after the sale.
+    $parent->cost = $original + 15000;
+    $parent->save();
+
+    expect(Profit::itemCost($item->fresh()))->toBe(21000.0)
+        ->and(Profit::itemProfit($item->fresh()))->toBe(29000.0);
+
+    $parent->cost = $original;
+    $parent->save();
+});
+
+it('snapshots the cost when an order item is created', function () {
+    $parent = Product::where('type', 'configurable')->firstOrFail();
+
+    $item = OrderItem::factory()->create([
+        'product_id'   => $parent->id,
+        'product_type' => Product::class,
+        'sku'          => $parent->sku,
+        'base_price'   => 50000,
+        'price'        => 50000,
+        'qty_ordered'  => 1,
+        'type'         => 'configurable',
+        'cost_price'   => null,
+    ]);
+
+    app(ClassyFashion\Listeners\SnapshotOrderItemCost::class)->handle($item);
+
+    expect((float) $item->fresh()->cost_price)->toBe((float) $parent->cost);
 });
 
 it('computes profit per item from variant cost with parent fallback', function () {

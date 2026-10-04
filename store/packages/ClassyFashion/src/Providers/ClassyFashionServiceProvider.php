@@ -12,6 +12,9 @@ class ClassyFashionServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
 
+        // Admin order list that renders/filters the report statuses.
+        $this->app->bind(\Webkul\Admin\DataGrids\Sales\OrderDataGrid::class, \ClassyFashion\DataGrids\OrderDataGrid::class);
+
         $this->mergeConfigFrom(__DIR__.'/../Config/classy.php', 'classy');
 
         $this->mergeConfigFrom(__DIR__.'/../Config/acl.php', 'acl');

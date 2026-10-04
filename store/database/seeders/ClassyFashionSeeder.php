@@ -29,7 +29,8 @@ class ClassyFashionSeeder extends Seeder
      * Permissions granted to the Worker role.
      *
      * Workers manage catalogue, stock and orders. They cannot manage
-     * users/roles, configuration, marketing content or delete records.
+     * users/roles, configuration, marketing content or delete records, and
+     * they do not see profit figures (reporting.profit is owner-only).
      */
     public const WORKER_PERMISSIONS = [
         'dashboard',
@@ -57,7 +58,6 @@ class ClassyFashionSeeder extends Seeder
 
         'reporting',
         'reporting.sales',
-        'reporting.profit',
     ];
 
     public function run(): void
