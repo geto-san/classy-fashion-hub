@@ -72,6 +72,8 @@ class ClassyFashionCatalogSeeder extends Seeder
             ->where('type', 'category_carousel')
             ->update(['status' => 0, 'draft_status' => 0]);
 
+        $this->pruneDeadHeroSlides();
+
         DB::table('categories')
             ->join('category_translations', function ($join) {
                 $join->on('category_translations.category_id', '=', 'categories.id')
@@ -124,6 +126,56 @@ class ClassyFashionCatalogSeeder extends Seeder
         }
 
         $this->command->info('CMS policy pages localized for Uganda.');
+    }
+
+    /**
+     * Drop hero slides pointing at removed demo categories (smart home,
+     * phones, laptops). Keeps slides whose link is a live category,
+     * product, CMS page or absolute URL. Idempotent.
+     */
+    protected function pruneDeadHeroSlides(): void
+    {
+        $rows = DB::table('theme_section_translations')
+            ->whereIn('section_id', function ($query) {
+                $query->select('id')->from('theme_sections')->where('type', 'image_carousel');
+            })
+            ->get(['id', 'options', 'draft_options']);
+
+        foreach ($rows as $row) {
+            foreach (['options', 'draft_options'] as $column) {
+                $data = json_decode((string) $row->{$column}, true);
+
+                if (empty($data['images']) || ! is_array($data['images'])) {
+                    continue;
+                }
+
+                $kept = array_values(array_filter($data['images'], function ($slide) {
+                    $link = (string) ($slide['link'] ?? '');
+
+                    if ($link === '' || str_starts_with($link, 'http')) {
+                        return true;
+                    }
+
+                    return DB::table('category_translations')->where('slug', $link)->exists()
+                        || DB::table('product_attribute_values as av')
+                            ->join('attributes as a', 'a.id', '=', 'av.attribute_id')
+                            ->where('a.code', 'url_key')
+                            ->where('av.text_value', $link)
+                            ->exists()
+                        || DB::table('cms_page_translations')->where('url_key', $link)->exists();
+                }));
+
+                if (count($kept) !== count($data['images'])) {
+                    $data['images'] = $kept;
+
+                    DB::table('theme_section_translations')
+                        ->where('id', $row->id)
+                        ->update([$column => json_encode($data)]);
+
+                    $this->command->info('Pruned dead hero slide(s).');
+                }
+            }
+        }
     }
 
     /**
