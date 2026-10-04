@@ -28,31 +28,25 @@
         "khaled.alshamaa/ar-php": "^6.0.0",
         "konekt/concord": "^1.16",
         "laravel/ai": "^0.2.2",
-        "laravel/cashier": "^16.0",
         "laravel/framework": "^12.0",
         "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
-        "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.10",
         "laravel/ui": "^4.0",
         "maatwebsite/excel": "^3.1.46",
         "mpdf/mpdf": "^8.2",
         "nesbot/carbon": "^3.0",
-        "paypal/paypal-server-sdk": "^2.0",
         "pragmarx/google2fa": "^8.0",
         "predis/predis": "^2.2",
         "prettus/l5-repository": "^2.6",
         "pusher/pusher-php-server": "^7.0",
-        "razorpay/razorpay": "^2.9",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-activitylog": "^4.12",
         "spatie/laravel-responsecache": "^7.4",
         "spatie/laravel-sitemap": "^7.3",
         "stevebauman/purify": "^6.3",
-        "stripe/stripe-php": "^17.3",
         "symfony/brevo-mailer": "^7.4",
-        "symfony/http-client": "^7.4",
-        "web-token/jwt-framework": "^4.1"
+        "symfony/http-client": "^7.4"
     },
     "require-dev": {
         "bagisto/laravel-datafaker": "2.3.*",
@@ -94,22 +88,15 @@
             "Webkul\\MagicAI\\": "packages/Webkul/MagicAI/src",
             "Webkul\\Marketing\\": "packages/Webkul/Marketing/src",
             "Webkul\\Notification\\": "packages/Webkul/Notification/src",
-            "Webkul\\PayGlocal\\": "packages/Webkul/PayGlocal/src",
-            "Webkul\\PayU\\": "packages/Webkul/PayU/src",
             "Webkul\\Payment\\": "packages/Webkul/Payment/src",
-            "Webkul\\Paypal\\": "packages/Webkul/Paypal/src",
-            "Webkul\\PhonePe\\": "packages/Webkul/PhonePe/src",
             "Webkul\\Product\\": "packages/Webkul/Product/src",
             "Webkul\\RMA\\": "packages/Webkul/RMA/src",
-            "Webkul\\Razorpay\\": "packages/Webkul/Razorpay/src",
             "Webkul\\Rule\\": "packages/Webkul/Rule/src",
             "Webkul\\Sales\\": "packages/Webkul/Sales/src",
             "Webkul\\Shipping\\": "packages/Webkul/Shipping/src",
             "Webkul\\Shop\\": "packages/Webkul/Shop/src",
             "Webkul\\Sitemap\\": "packages/Webkul/Sitemap/src",
-            "Webkul\\SocialLogin\\": "packages/Webkul/SocialLogin/src",
             "Webkul\\SocialShare\\": "packages/Webkul/SocialShare/src",
-            "Webkul\\Stripe\\": "packages/Webkul/Stripe/src",
             "Webkul\\Tax\\": "packages/Webkul/Tax/src",
             "Webkul\\Theme\\": "packages/Webkul/Theme/src",
             "Webkul\\User\\": "packages/Webkul/User/src"
@@ -125,12 +112,8 @@
             "Webkul\\EUWithdrawal\\Tests\\": "packages/Webkul/EUWithdrawal/tests",
             "Webkul\\FPC\\Tests\\": "packages/Webkul/FPC/tests",
             "Webkul\\Installer\\Tests\\": "packages/Webkul/Installer/tests",
-            "Webkul\\PayGlocal\\Tests\\": "packages/Webkul/PayGlocal/tests",
             "Webkul\\Payment\\Tests\\": "packages/Webkul/Payment/tests",
-            "Webkul\\PayU\\Tests\\": "packages/Webkul/PayU/tests",
-            "Webkul\\Razorpay\\Tests\\": "packages/Webkul/Razorpay/tests",
-            "Webkul\\Shop\\Tests\\": "packages/Webkul/Shop/tests",
-            "Webkul\\Stripe\\Tests\\": "packages/Webkul/Stripe/tests"
+            "Webkul\\Shop\\Tests\\": "packages/Webkul/Shop/tests"
         }
     },
     "scripts": {
@@ -146,8 +129,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "intervention/image",
-                "laravel/socialite"
+                "intervention/image"
             ]
         }
     },

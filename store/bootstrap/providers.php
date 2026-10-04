@@ -24,22 +24,15 @@ use Webkul\Inventory\Providers\InventoryServiceProvider;
 use Webkul\MagicAI\Providers\MagicAIServiceProvider;
 use Webkul\Marketing\Providers\MarketingServiceProvider;
 use Webkul\Notification\Providers\NotificationServiceProvider;
-use Webkul\PayGlocal\Providers\PayGlocalServiceProvider;
 use Webkul\Payment\Providers\PaymentServiceProvider;
-use Webkul\Paypal\Providers\PaypalServiceProvider;
-use Webkul\PayU\Providers\PayUServiceProvider;
-use Webkul\PhonePe\Providers\PhonePeServiceProvider;
 use Webkul\Product\Providers\ProductServiceProvider;
-use Webkul\Razorpay\Providers\RazorpayServiceProvider;
 use Webkul\RMA\Providers\RMAServiceProvider;
 use Webkul\Rule\Providers\RuleServiceProvider;
 use Webkul\Sales\Providers\SalesServiceProvider;
 use Webkul\Shipping\Providers\ShippingServiceProvider;
 use Webkul\Shop\Providers\ShopServiceProvider;
 use Webkul\Sitemap\Providers\SitemapServiceProvider;
-use Webkul\SocialLogin\Providers\SocialLoginServiceProvider;
 use Webkul\SocialShare\Providers\SocialShareServiceProvider;
-use Webkul\Stripe\Providers\StripeServiceProvider;
 use Webkul\Tax\Providers\TaxServiceProvider;
 use Webkul\Theme\Providers\ThemeServiceProvider;
 use ClassyFashion\Providers\ClassyFashionServiceProvider;
@@ -77,22 +70,15 @@ return [
     MagicAIServiceProvider::class,
     MarketingServiceProvider::class,
     NotificationServiceProvider::class,
-    PayGlocalServiceProvider::class,
-    PayUServiceProvider::class,
     PaymentServiceProvider::class,
-    PaypalServiceProvider::class,
-    PhonePeServiceProvider::class,
     ProductServiceProvider::class,
     RMAServiceProvider::class,
-    RazorpayServiceProvider::class,
     RuleServiceProvider::class,
     SalesServiceProvider::class,
     ShippingServiceProvider::class,
     ShopServiceProvider::class,
     SitemapServiceProvider::class,
-    SocialLoginServiceProvider::class,
     SocialShareServiceProvider::class,
-    StripeServiceProvider::class,
     TaxServiceProvider::class,
     ThemeServiceProvider::class,
     UserServiceProvider::class,

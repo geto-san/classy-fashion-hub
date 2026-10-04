@@ -221,9 +221,7 @@ class ClassyFashionCatalogSeeder extends Seeder
             );
         };
 
-        foreach (['stripe', 'razorpay', 'payu', 'phonepe', 'paypal_standard', 'paypal_smart_button', 'payglocal', 'moneytransfer'] as $method) {
-            $config("sales.payment_methods.{$method}.active", '0');
-        }
+        $config('sales.payment_methods.moneytransfer.active', '0');
 
         $config('sales.carriers.free.active', '0');
         $config('sales.carriers.flatrate.active', '1');

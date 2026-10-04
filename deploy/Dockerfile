@@ -63,7 +63,10 @@ RUN git clone --branch "$OVERLAY_REF" "$OVERLAY_REPO" /tmp/overlay \
 
 # Autoload our namespace, install our extra deps (activity log) from the
 # overlaid lock file, rebuild shop assets.
-RUN composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader \
+# Bagisto modules this shop does not use (other payment gateways, social login)
+# are not in composer.json/providers, so drop their source before autoloading.
+RUN for m in Stripe Razorpay PayU PayGlocal PhonePe Paypal SocialLogin; do rm -rf "packages/Webkul/$m"; done \
+    && composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader \
     && cd packages/Webkul/Shop && npm install --no-audit --no-fund && npm run build \
     && rm -rf /var/www/html/packages/Webkul/Shop/node_modules
 

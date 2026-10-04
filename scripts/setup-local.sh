@@ -65,6 +65,11 @@ else
   printf '    %s files added, %s project files kept as they are\n' "$added" "$skipped"
 fi
 
+say "Removing Bagisto modules this shop does not use (extra gateways, social login)"
+for m in Stripe Razorpay PayU PayGlocal PhonePe Paypal SocialLogin; do
+  rm -rf "$STORE/packages/Webkul/$m"
+done
+
 if [ -n "${SKIP_COMPOSER:-}" ]; then
   say "SKIP_COMPOSER set - stopping after the merge."
   exit 0
@@ -86,7 +91,7 @@ cat <<NEXT
 Done. Next steps:
 
   1. Edit store/.env: DB_DATABASE / DB_USERNAME / DB_PASSWORD (empty MySQL 8 or MariaDB database),
-     APP_URL, and the FLUTTERWAVE_* test keys if you want mobile money.
+     APP_URL, and the MTN_* sandbox keys if you want mobile money.
   2. cd store
      $PHP_BIN artisan bagisto:install --no-interaction --demo-samples
      $PHP_BIN artisan db:seed --class='Database\\Seeders\\ClassyFashionSeeder'
