@@ -83,8 +83,8 @@ return [
 
     'assistant' => [
         'title' => 'Shop Assistant',
-        'subtitle' => 'Ask about products, prices, sizes, delivery, payments or your order.',
-        'greeting' => 'Hello, and welcome to Classy Fashion Hub! Try “red dresses under 100000” or “where is my order?”.',
+        'subtitle' => 'Ask about products, prices, sizes, delivery, payments or your order status.',
+        'greeting' => 'Hello! Welcome to Classy Fashion Hub, Mbarara. Try asking “polo shirts under 30000”, “kitenge dresses in size M”, “how do I pay with MTN MoMo?” or “where is my order?”.',
         'placeholder' => 'Type your question…',
         'send' => 'Send',
     ],

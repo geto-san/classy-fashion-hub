@@ -44,24 +44,39 @@ class ClassyFashionCatalogSeeder extends Seeder
      */
     public const SHOE_SIZES = ['38', '39', '40', '41', '42', '43', '44', '45'];
 
+    public const EXTRA_COLORS = ['Navy', 'Maroon'];
+
     protected array $catalog = [
-        ['Classic White Cotton Shirt', 'configurable', [2, 6], 45000, 25, ['S', 'M', 'L', 'XL'], ['White', 'Blue']],
-        ['Ankara Print Shirt', 'configurable', [2, 6], 65000, 15, ['M', 'L', 'XL'], ['Red', 'Yellow', 'Green']],
-        ['Denim Jacket', 'configurable', [2, 6], 120000, 12, ['M', 'L', 'XL'], ['Blue', 'Black']],
-        ['Leather Jacket', 'configurable', [2], 250000, 8, ['M', 'L'], ['Black', 'Brown']],
-        ['Gomesi Traditional Dress', 'configurable', [4], 150000, 10, ['M', 'L', 'XL'], ['Red', 'Purple', 'Pink']],
-        ['Kitenge Wrap Dress', 'configurable', [4], 85000, 14, ['S', 'M', 'L'], ['Yellow', 'Green', 'Orange']],
-        ["Men's Formal Shirt", 'configurable', [2, 5], 55000, 20, ['S', 'M', 'L', 'XL'], ['White', 'Blue']],
-        ['Hooded Sweatshirt', 'configurable', [2, 6, 7], 75000, 18, ['M', 'L', 'XL'], ['Grey', 'Black', 'Blue']],
-        ['Running Sneakers', 'configurable', [8], 135000, 4, self::SHOE_SIZES, ['White', 'Black', 'Red']],
-        ['Leather Loafers', 'configurable', [8], 160000, 3, self::SHOE_SIZES, ['Black', 'Brown']],
-        ['Leather Belt', 'simple', [2], 35000, 30, [], []],
-        ['Silk Scarf', 'simple', [4], 25000, 40, [], []],
-        ['Canvas Tote Bag', 'simple', [4, 6], 30000, 35, [], []],
-        ['Baseball Cap', 'simple', [6], 20000, 50, [], []],
-        ['Wool Beanie', 'simple', [6, 7], 18000, 45, [], []],
-        ['Cotton Socks 3-Pack', 'simple', [2], 15000, 60, [], []],
+        // Shirts / Tops
+        ['Classic White Formal Shirt', 'configurable', [2, 6], 35000, 30, ['S', 'M', 'L', 'XL'], ['White', 'Blue']],
+        ['Ankara Print Casual Shirt', 'configurable', [2, 6], 55000, 20, ['S', 'M', 'L', 'XL'], ['Red', 'Yellow', 'Green']],
+        ['Plain Polo T-Shirt', 'configurable', [2, 6], 25000, 40, ['S', 'M', 'L', 'XL'], ['White', 'Black', 'Blue', 'Grey']],
+        ['Kitenge Print Shirt', 'configurable', [2, 5], 48000, 18, ['S', 'M', 'L', 'XL'], ['Blue', 'Red', 'Green']],
+
+        // Jackets / Outerwear
+        ['Denim Jacket', 'configurable', [2, 6], 95000, 15, ['M', 'L', 'XL'], ['Blue', 'Black']],
+        ['Hooded Sweatshirt', 'configurable', [2, 6, 7], 65000, 22, ['S', 'M', 'L', 'XL'], ['Grey', 'Black', 'Navy', 'Maroon']],
+        ['Fleece Hoodie', 'configurable', [2, 6, 7], 72000, 18, ['S', 'M', 'L', 'XL'], ['Black', 'Grey', 'Blue']],
+
+        // Dresses / Women's
+        ['Gomesi Traditional Dress', 'configurable', [4], 130000, 12, ['M', 'L', 'XL'], ['Red', 'Purple', 'Pink']],
+        ['Kitenge Wrap Dress', 'configurable', [4], 75000, 16, ['S', 'M', 'L'], ['Yellow', 'Green', 'Orange']],
+        ['Casual Midi Dress', 'configurable', [4], 60000, 18, ['S', 'M', 'L', 'XL'], ['Blue', 'Black', 'White']],
+
+        // Shoes / Footwear
+        ['Canvas Sneakers', 'configurable', [8], 85000, 5, self::SHOE_SIZES, ['White', 'Black', 'Red']],
+        ['Leather School Shoes', 'configurable', [8], 120000, 4, self::SHOE_SIZES, ['Black', 'Brown']],
+        ['Rubber Sandals', 'configurable', [8], 22000, 8, self::SHOE_SIZES, ['Black', 'Brown', 'Red']],
+
+        // Accessories
+        ['Student Backpack', 'simple', [4, 6], 55000, 25, [], []],
+        ['Leather Belt', 'simple', [2], 28000, 35, [], []],
+        ['Baseball Cap', 'simple', [6], 18000, 50, [], []],
+        ['Wool Beanie Hat', 'simple', [6, 7], 15000, 45, [], []],
+        ['Canvas Tote Bag', 'simple', [4, 6], 22000, 30, [], []],
+        ['Cotton Socks 3-Pack', 'simple', [2], 12000, 60, [], []],
     ];
+
 
     public function run(): void
     {
@@ -91,13 +106,14 @@ class ClassyFashionCatalogSeeder extends Seeder
             ])
             ->update(['categories.status' => 0]);
 
+        $this->ensureShoeSizeOptions();
+        $this->ensureExtraColorOptions();
+
         if (Product::whereNull('parent_id')->where('type', 'configurable')->exists()) {
             $this->command->info('Fashion catalog already present; skipping (redeploy-safe).');
 
             return;
         }
-
-        $this->ensureShoeSizeOptions();
 
         $this->wipeDemoProducts();
 
@@ -115,8 +131,8 @@ class ClassyFashionCatalogSeeder extends Seeder
     protected function seedCmsContent(): void
     {
         $pages = [
-            'about-us' => '<div class="static-container"><div class="mb-5"><h2>About Classy Fashion Hub</h2><p>Classy Fashion Hub is a fashion shop in Kampala, Uganda, serving students and adults with shirts, jackets, shoes and more. Our prices are fixed in Uganda Shillings — no bargaining — and you can pay with MTN Mobile Money, Airtel Money or cash on delivery.</p></div></div>',
-            'return-policy' => '<div class="static-container"><div class="mb-5"><h2>Return Policy</h2><p>Unworn items with tags can be returned within 7 days of delivery for exchange or refund to mobile money. Contact us with your order number to arrange a Kampala pickup or rider return.</p></div></div>',
+            'about-us' => '<div class="static-container"><div class="mb-5"><h2>About Classy Fashion Hub</h2><p>Classy Fashion Hub is a fashion shop based in Mbarara, Uganda, serving university students, high school students and adults across Uganda. We stock shirts, jackets, shoes, dresses and accessories at fixed prices in Uganda Shillings - no bargaining. Shop in-store in Mbarara or order online and pay with MTN Mobile Money, Airtel Money or cash on delivery. We deliver across Uganda including Kampala, Mbarara, Masaka and Entebbe.</p></div></div>',
+            'return-policy' => '<div class="static-container"><div class="mb-5"><h2>Return Policy</h2><p>Unworn items with tags attached can be returned within 7 days of delivery for exchange or refund to your mobile money line. Contact us with your order number to arrange a Mbarara or Kampala collection, or a rider return within our delivery zones.</p></div></div>',
             'refund-policy' => '<div class="static-container"><div class="mb-5"><h2>Refund Policy</h2><p>Approved refunds go back to your MTN or Airtel line within 3 working days, or as cash for cash-on-delivery orders.</p></div></div>',
             'payment-policy' => '<div class="static-container"><div class="mb-5"><h2>Payment Policy</h2><p>We accept MTN Mobile Money and Airtel Money (confirmed before your order is marked Paid) and cash on delivery within our delivery zones. All prices are in Uganda Shillings (UGX).</p></div></div>',
             'shipping-policy' => '<div class="static-container"><div class="mb-5"><h2>Shipping Policy</h2><p>Flat delivery fee of UGX 5,000 anywhere in Uganda. Kampala orders arrive within 24 hours; upcountry orders take 2–4 days. Add gate, landmark or call-on-arrival notes in the delivery instructions at checkout.</p></div></div>',
@@ -343,6 +359,41 @@ class ClassyFashionCatalogSeeder extends Seeder
     }
 
     /**
+     * Make sure extra colours used by the catalogue exist as options of
+     * the 'color' attribute. Idempotent.
+     */
+    protected function ensureExtraColorOptions(): void
+    {
+        $attribute = DB::table('attributes')->where('code', 'color')->first(['id']);
+
+        if (! $attribute) {
+            return;
+        }
+
+        $order = (int) DB::table('attribute_options')->where('attribute_id', $attribute->id)->max('sort_order');
+
+        foreach (self::EXTRA_COLORS as $color) {
+            $optionId = DB::table('attribute_options')
+                ->where('attribute_id', $attribute->id)
+                ->where('admin_name', $color)
+                ->value('id');
+
+            if (! $optionId) {
+                $optionId = DB::table('attribute_options')->insertGetId([
+                    'attribute_id' => $attribute->id,
+                    'admin_name'   => $color,
+                    'sort_order'   => ++$order,
+                ]);
+            }
+
+            DB::table('attribute_option_translations')->updateOrInsert(
+                ['attribute_option_id' => $optionId, 'locale' => $this->locale],
+                ['label' => $color]
+            );
+        }
+    }
+
+    /**
      * Remove installer demo products. Refuses when real orders exist.
      */
     protected function wipeDemoProducts(): void
@@ -445,8 +496,8 @@ class ClassyFashionCatalogSeeder extends Seeder
             'sku'                 => $sku,
             'name'                => $name,
             'url_key'             => Str::slug($name.' '.strtolower(Str::random(4))),
-            'short_description'   => $name.' - Classy Fashion Hub.',
-            'description'         => $name.' sold at a fixed price of UGX '.number_format($price).'.',
+            'short_description'   => $name.' — Available at Classy Fashion Hub, Mbarara. Fixed price UGX '.number_format($price).'.',
+            'description'         => $name.' available at a fixed price of UGX '.number_format($price).'. No bargaining — what you see is what you pay. Ideal for university students, high school students and anyone looking for quality fashion in Uganda. Pay with MTN Mobile Money, Airtel Money or cash on delivery. We deliver across Uganda.',
             'price'               => $price,
             'cost'                => (int) round($price * 0.6),
             'weight'              => 1,

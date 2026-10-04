@@ -41,7 +41,7 @@ class DemoOrdersSeeder extends Seeder
         foreach ($products as $i => $product) {
             $variant = $product->variants->first();
 
-            $order = $this->placeOrder($customer, $product, $variant);
+            $order = $this->placeOrder($customer, $product, $variant, $i);
 
             $this->transition($order, $statuses[$i]);
 
@@ -49,8 +49,9 @@ class DemoOrdersSeeder extends Seeder
         }
     }
 
-    protected function placeOrder(Customer $customer, Product $product, Product $variant): \Webkul\Sales\Models\Order
+    protected function placeOrder(Customer $customer, Product $product, Product $variant, int $i = 0): \Webkul\Sales\Models\Order
     {
+
         $price = (float) ($variant->price ?: $product->price);
 
         $cart = CartModel::factory()->create([
@@ -79,18 +80,39 @@ class DemoOrdersSeeder extends Seeder
 
         $source = CustomerAddress::factory()->create(['customer_id' => $customer->id]);
 
+        $addresses = [
+            [
+                'address' => 'Mbarara University of Science and Technology, Student Hostel Block A',
+                'city'    => 'Mbarara',
+                'phone'   => '+256772000002',
+            ],
+            [
+                'address' => 'Plot 45 Kampala Road, Wandegeya',
+                'city'    => 'Kampala',
+                'phone'   => '+256700000003',
+            ],
+            [
+                'address' => 'Makerere University, Mary Stuart Hall',
+                'city'    => 'Kampala',
+                'phone'   => '+256752000004',
+            ],
+        ];
+
+        $addressData = $addresses[$i % count($addresses)];
+
         $address = [
             'company_name' => $source->company_name,
             'first_name'   => $source->first_name,
             'last_name'    => $source->last_name,
             'email'        => $source->email,
-            'address'      => 'Plot 12 Kampala Road',
-            'country'      => $source->country,
+            'address'      => $addressData['address'],
+            'country'      => 'UG',
             'state'        => $source->state,
-            'city'         => $source->city,
+            'city'         => $addressData['city'],
             'postcode'     => $source->postcode,
-            'phone'        => '+256772000002',
+            'phone'        => $addressData['phone'],
         ];
+
 
         foreach ([CartAddress::ADDRESS_TYPE_BILLING, CartAddress::ADDRESS_TYPE_SHIPPING] as $type) {
             CartAddress::factory()->create(array_merge($address, [
