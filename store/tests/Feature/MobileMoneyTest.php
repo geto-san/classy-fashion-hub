@@ -58,11 +58,17 @@ function mobilemoneyCart(): Cart
 function mobilemoneyKeys(): void
 {
     // Settings are read from config('classy.flutterwave'), never env().
+    // MTN is cleared so local .env sandbox keys cannot leak into tests.
     config([
         'classy.flutterwave.public_key'  => 'FLWPUBK_TEST-xxx',
         'classy.flutterwave.secret_key'  => 'FLWSECK_TEST-xxx',
         'classy.flutterwave.secret_hash' => 'classy-test-hash',
         'classy.flutterwave.sandbox'     => true,
+        'classy.momo.provider'           => 'auto',
+        'classy.momo.mtn.subscription_key' => '',
+        'classy.momo.mtn.api_user_id'      => '',
+        'classy.momo.mtn.api_key'          => '',
+        'classy.momo.till_number'          => '',
     ]);
 }
 

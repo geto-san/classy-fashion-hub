@@ -107,7 +107,15 @@ it('places a configurable fashion order end to end', function () {
         ->and((float) $order->items->first()->price)->toBe((float) $variant->price)
         ->and(json_encode($order->items->first()->additional))->toContain((string) $variant->id);
 
-    get(route('shop.customers.account.orders.index'))->assertOk()->assertSee((string) $order->increment_id);
+    // The history page hydrates rows from the same route over AJAX.
+    get(route('shop.customers.account.orders.index'))->assertOk();
+
+    $grid = get(
+        route('shop.customers.account.orders.index'),
+        ['X-Requested-With' => 'XMLHttpRequest']
+    )->assertOk();
+
+    expect(json_encode($grid->json()))->toContain((string) $order->increment_id);
 
     // Delivery info (report 9.7) reached the order address.
     expect($order->shipping_address->delivery_instructions)

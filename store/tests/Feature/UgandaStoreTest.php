@@ -11,6 +11,8 @@ it('fits the Ugandan context: UGX only, local payments, no postcode', function (
         'classy.flutterwave.public_key' => 'FLWPUBK_TEST-xxx',
         'classy.flutterwave.secret_key' => 'FLWSECK_TEST-xxx',
         'classy.flutterwave.sandbox'    => true,
+        'classy.momo.mtn.subscription_key' => '',
+        'classy.momo.till_number'          => '',
     ]);
 
     $customer = Customer::where('email', 'customer@classy.local')->firstOrFail();
