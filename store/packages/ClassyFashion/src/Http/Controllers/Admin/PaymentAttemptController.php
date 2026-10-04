@@ -50,4 +50,24 @@ class PaymentAttemptController extends Controller
             'filters'   => $filters,
         ]);
     }
+
+    /**
+     * Staff confirms a customer-claimed Till payment after checking the
+     * money in the MTN/Airtel app. Creates the paid order through the
+     * same shared path as gateway payments.
+     */
+    public function confirm(PaymentAttempt $attempt)
+    {
+        abort_unless(bouncer()->hasPermission('sales.payments'), 401);
+
+        $result = \ClassyFashion\Payment\Momo::fulfillManual($attempt, auth('admin')->user());
+
+        if ($result === PaymentAttempt::STATUS_SUCCESS) {
+            session()->flash('success', __('classy-fashion::app.payments.confirmed'));
+        } else {
+            session()->flash('error', __('classy-fashion::app.payments.confirm_failed'));
+        }
+
+        return redirect()->back();
+    }
 }

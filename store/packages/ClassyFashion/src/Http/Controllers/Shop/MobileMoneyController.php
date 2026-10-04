@@ -71,43 +71,48 @@ class MobileMoneyController extends Controller
 
         $txRef = 'CFH-'.now()->format('YmdHis').'-'.strtoupper(Str::random(6));
 
+        $network = $request->input('network');
+
+        $provider = \ClassyFashion\Payment\Momo::provider($network);
+
         $attempt = PaymentAttempt::create([
             'cart_id'     => $cart->id,
             'customer_id' => $cart->customer_id,
             'tx_ref'   => $txRef,
             'amount'   => $cart->grand_total,
             'currency' => $cart->cart_currency_code,
-            'network'  => $request->input('network'),
+            'network'  => $network,
+            'provider' => $provider?->code(),
             'status'   => PaymentAttempt::STATUS_PENDING,
         ]);
 
         // Only this browser session may follow, poll or finalise the attempt.
         session()->push('classy.mobilemoney.attempts', $attempt->public_id);
 
-        $result = Flutterwave::chargeUgandaMobileMoney([
-            'tx_ref'       => $txRef,
-            'amount'       => (string) $cart->grand_total,
-            'currency'     => $cart->cart_currency_code,
-            'network'      => $request->input('network'),
+        // No API provider (or provider doesn't cover this network): the
+        // customer pays the shop Till by phone and claims the reference.
+        if (! $provider) {
+            return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]);
+        }
+
+        $result = $provider->charge($attempt, [
             'email'        => $cart->customer_email,
-            'phone_number' => $this->msisdn($request->input('phone')),
-            'fullname'     => trim($cart->customer_first_name.' '.$cart->customer_last_name),
+            'phone'        => $this->msisdn($request->input('phone')),
+            'name'         => trim($cart->customer_first_name.' '.$cart->customer_last_name),
             'redirect_url' => route('classy.mobilemoney.return', ['attempt' => $attempt->public_id]),
         ]);
 
-        $data = $result['data']['data'] ?? [];
-
-        if (! $result['ok'] || empty($data['id'])) {
+        if (! $result['ok'] || empty($result['gateway_tx_id'])) {
             $attempt->update([
                 'status'         => PaymentAttempt::STATUS_FAILED,
-                'failure_reason' => substr((string) ($result['data']['message'] ?? 'Charge rejected'), 0, 500),
+                'failure_reason' => substr((string) ($result['message'] ?? 'Charge rejected'), 0, 500),
             ]);
 
             return redirect()->route('shop.checkout.cart.index')
                 ->with('error', __('classy-fashion::app.mobilemoney.charge_failed'));
         }
 
-        $attempt->update(['gateway_tx_id' => (string) $data['id']]);
+        $attempt->update(['gateway_tx_id' => (string) $result['gateway_tx_id']]);
 
         return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]);
     }
@@ -143,7 +148,11 @@ class MobileMoneyController extends Controller
                 ->with('error', __("classy-fashion::app.mobilemoney.{$message}", ['ref' => $attempt->tx_ref]));
         }
 
-        return view('classy-fashion::shop.mobilemoney.status', ['attempt' => $attempt->fresh()]);
+        return view('classy-fashion::shop.mobilemoney.status', [
+            'attempt' => $attempt->fresh(),
+            'till'    => \ClassyFashion\Payment\Momo::tillNumber(),
+            'manual'  => $this->providerFor($attempt->fresh()) === null,
+        ]);
     }
 
     /**
@@ -157,25 +166,69 @@ class MobileMoneyController extends Controller
     }
 
     /**
-     * Gateway webhook. Signature-checked; amounts verified server-side.
+     * Gateway webhook. Signature-checked for Flutterwave; MTN posts to its
+     * own route below. Amounts are always verified server-side.
      */
     public function webhook(Request $request)
     {
-        if (! Flutterwave::webhookSignatureValid($request->header('verif-hash'))) {
+        $provider = new \ClassyFashion\Payment\FlutterwaveProvider;
+
+        if (! $provider->webhookIsValid($request)) {
             return response()->json(['message' => 'Invalid signature.'], 403);
         }
 
-        $data = (array) $request->input('data', []);
-
-        $attempt = PaymentAttempt::where('tx_ref', $data['tx_ref'] ?? null)->first();
+        $attempt = $provider->attemptFromCallback($request);
 
         if (! $attempt || ! $attempt->isOpen()) {
             return response()->json(['message' => 'Nothing to do.']);
         }
 
+        $data = (array) $request->input('data', []);
+
         $final = $this->checkAttempt($attempt, ! empty($data['id']) ? (string) $data['id'] : null);
 
         return response()->json(['message' => $final]);
+    }
+
+    /**
+     * MTN status callback. Carries no signature, so the lookup key is only
+     * a hint: the verify call is still the proof, as everywhere else.
+     */
+    public function mtnCallback(Request $request)
+    {
+        $provider = new \ClassyFashion\Payment\MtnMomoProvider;
+
+        $attempt = $provider->attemptFromCallback($request);
+
+        if (! $attempt || ! $attempt->isOpen()) {
+            return response()->json(['message' => 'Nothing to do.']);
+        }
+
+        return response()->json(['message' => $this->checkAttempt($attempt)]);
+    }
+
+    /**
+     * Customer submits their own Till transaction reference after paying
+     * by phone. Stored as a claim for staff to confirm; never an order.
+     */
+    public function claim(Request $request, PaymentAttempt $attempt)
+    {
+        abort_unless($this->owns($attempt), 404);
+
+        $request->validate([
+            'customer_claim' => ['required', 'string', 'max:100'],
+        ]);
+
+        $attempt->refresh();
+
+        if (! $attempt->isOpen()) {
+            return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]);
+        }
+
+        $attempt->update(['customer_claim' => $request->input('customer_claim')]);
+
+        return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id])
+            ->with('success', __('classy-fashion::app.mobilemoney.claim_saved'));
     }
 
     /**
@@ -210,26 +263,23 @@ class MobileMoneyController extends Controller
             return $attempt->status;
         }
 
-        $gatewayTxId ??= $attempt->gateway_tx_id;
+        $provider = $this->providerFor($attempt);
 
         if (! $gatewayTxId) {
+            $gatewayTxId = $attempt->gateway_tx_id;
+        }
+
+        if (! $provider || ! $gatewayTxId) {
             return $this->stillWaiting($attempt);
         }
 
-        $result = Flutterwave::verifyTransaction($gatewayTxId);
+        $result = $provider->verify($attempt->refresh());
 
-        $data = $result['ok'] ? (array) ($result['data']['data'] ?? []) : [];
-
-        $verified = ($data['status'] ?? null) === 'successful'
-            && ($data['tx_ref'] ?? null) === $attempt->tx_ref
-            && (float) ($data['amount'] ?? -1) === (float) $attempt->amount
-            && ($data['currency'] ?? null) === $attempt->currency;
-
-        if ($verified) {
-            return $this->finalize($attempt, $data);
+        if ($result['successful']) {
+            return $this->finalize($attempt, []);
         }
 
-        if (($data['status'] ?? null) === 'failed') {
+        if ($result['failed']) {
             $attempt->update([
                 'status'         => PaymentAttempt::STATUS_FAILED,
                 'failure_reason' => 'Gateway reported failure.',
@@ -238,12 +288,23 @@ class MobileMoneyController extends Controller
             return PaymentAttempt::STATUS_FAILED;
         }
 
-        if (($data['status'] ?? null) === 'successful') {
-            // Paid, but not for this reference/amount/currency: never an order.
-            Log::warning('Mobile money verification mismatch', ['attempt' => $attempt->id, 'tx_ref' => $attempt->tx_ref]);
+        return $this->stillWaiting($attempt);
+    }
+
+    protected function providerFor(PaymentAttempt $attempt): ?\ClassyFashion\Payment\MobileMoneyProvider
+    {
+        $map = [
+            'mtn'         => \ClassyFashion\Payment\MtnMomoProvider::class,
+            'flutterwave' => \ClassyFashion\Payment\FlutterwaveProvider::class,
+        ];
+
+        $class = $map[$attempt->provider ?? ''] ?? null;
+
+        if ($class) {
+            return app($class);
         }
 
-        return $this->stillWaiting($attempt);
+        return \ClassyFashion\Payment\Momo::provider($attempt->network);
     }
 
     protected function stillWaiting(PaymentAttempt $attempt): string
@@ -287,48 +348,14 @@ class MobileMoneyController extends Controller
 
     /**
      * Create the paid order from the cart. Runs only after verification and
-     * only for the request that won the claim.
+     * only for the request that won the claim. Shared with the manual Till
+     * path (see Momo::createPaidOrder).
      *
      * @return string success|paid_unfulfilled
      */
     protected function createPaidOrder(PaymentAttempt $attempt): string
     {
-        $cart = \Webkul\Checkout\Models\Cart::find($attempt->cart_id);
-
-        if (! $cart || $cart->is_active === false) {
-            return $this->unfulfilled($attempt, 'Cart no longer available after payment.');
-        }
-
-        try {
-            Cart::setCart($cart);
-            Cart::collectTotals();
-
-            $order = $this->orderRepository->create((new OrderResource($cart))->jsonSerialize());
-
-            $this->orderRepository->updateOrderStatus($order, \ClassyFashion\Models\Sales\Order::STATUS_PAID);
-        } catch (\Throwable $e) {
-            report($e);
-
-            return $this->unfulfilled($attempt, 'Order creation failed after payment.');
-        }
-
-        Audit::log(
-            $order->fresh(),
-            "Order #{$order->increment_id} paid via mobile money ({$attempt->network}, {$attempt->tx_ref})",
-            ['tx_ref' => $attempt->tx_ref, 'network' => $attempt->network, 'to' => 'paid'],
-            null,
-            'order.payment'
-        );
-
-        $attempt->update(['status' => PaymentAttempt::STATUS_SUCCESS, 'order_id' => $order->id]);
-
-        Cart::deActivateCart();
-
-        session()->flash('order_id', $order->id);
-
-        Notify::orderStatus($order->fresh(), \ClassyFashion\Models\Sales\Order::STATUS_PAID);
-
-        return PaymentAttempt::STATUS_SUCCESS;
+        return \ClassyFashion\Payment\Momo::createPaidOrder($attempt, null);
     }
 
     /**
@@ -337,20 +364,7 @@ class MobileMoneyController extends Controller
      */
     protected function unfulfilled(PaymentAttempt $attempt, string $reason): string
     {
-        $attempt->update([
-            'status'         => PaymentAttempt::STATUS_PAID_UNFULFILLED,
-            'failure_reason' => $reason,
-        ]);
-
-        Audit::log(
-            $attempt,
-            "Payment {$attempt->tx_ref} verified but no order was created: {$reason}",
-            ['tx_ref' => $attempt->tx_ref, 'amount' => $attempt->amount, 'network' => $attempt->network],
-            null,
-            'order.payment_unfulfilled'
-        );
-
-        return PaymentAttempt::STATUS_PAID_UNFULFILLED;
+        return \ClassyFashion\Payment\Momo::unfulfilled($attempt, $reason, null);
     }
 
     public static function routes(): void
@@ -364,6 +378,12 @@ class MobileMoneyController extends Controller
             Route::post('webhook', [self::class, 'webhook'])
                 ->withoutMiddleware(VerifyCsrfToken::class)
                 ->name('webhook');
+
+            Route::post('mtn-callback', [self::class, 'mtnCallback'])
+                ->withoutMiddleware(VerifyCsrfToken::class)
+                ->name('mtn-callback');
+
+            Route::post('claim/{attempt}', [self::class, 'claim'])->name('claim');
         });
     }
 }

@@ -43,11 +43,14 @@
                 <tr class="border-b text-gray-500">
                     <th class="px-4 py-3">{{ __('classy-fashion::app.reports.date') }}</th>
                     <th class="px-4 py-3">{{ __('classy-fashion::app.payments.reference') }}</th>
+                    <th class="px-4 py-3">{{ __('classy-fashion::app.payments.provider') }}</th>
                     <th class="px-4 py-3">{{ __('classy-fashion::app.mobilemoney.network') }}</th>
                     <th class="px-4 py-3">{{ __('classy-fashion::app.payments.amount') }}</th>
                     <th class="px-4 py-3">{{ __('classy-fashion::app.payments.status') }}</th>
+                    <th class="px-4 py-3">{{ __('classy-fashion::app.payments.claim') }}</th>
                     <th class="px-4 py-3">{{ __('classy-fashion::app.payments.order') }}</th>
                     <th class="px-4 py-3">{{ __('classy-fashion::app.payments.note') }}</th>
+                    <th class="px-4 py-3"></th>
                 </tr>
             </thead>
 
@@ -56,15 +59,31 @@
                     <tr class="border-b {{ $attempt->needsAttention() ? 'bg-red-50' : '' }}">
                         <td class="whitespace-nowrap px-4 py-3">{{ $attempt->created_at->format('d M Y H:i') }}</td>
                         <td class="px-4 py-3">{{ $attempt->tx_ref }}</td>
+                        <td class="px-4 py-3">{{ $attempt->provider ?? '—' }}</td>
                         <td class="px-4 py-3">{{ $attempt->network }}</td>
                         <td class="px-4 py-3">{{ core()->formatBasePrice($attempt->amount) }}</td>
                         <td class="px-4 py-3 font-semibold">{{ $attempt->status }}</td>
+                        <td class="px-4 py-3 font-mono">{{ $attempt->customer_claim ?? '—' }}</td>
                         <td class="px-4 py-3">
                             @if ($attempt->order_id)
                                 <a class="text-blue-600" href="{{ route('admin.sales.orders.view', $attempt->order_id) }}">#{{ $attempt->order_id }}</a>
                             @endif
                         </td>
                         <td class="px-4 py-3">{{ $attempt->failure_reason }}</td>
+                        <td class="whitespace-nowrap px-4 py-3">
+                            @if (in_array($attempt->status, ['pending', 'expired'], true) && filled($attempt->customer_claim))
+                                <form method="POST" action="{{ route('admin.classy.payments.confirm', $attempt->public_id) }}">
+                                    @csrf
+
+                                    <button
+                                        type="submit"
+                                        class="secondary-button text-sm"
+                                    >
+                                        {{ __('classy-fashion::app.payments.confirm') }}
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>

@@ -27,10 +27,17 @@ Live locally at `http://localhost:8000` (shop) and `http://localhost:8000/admin`
 
 ### Pay with mobile money (demo)
 1. Sandbox keys must be in `store/.env` (see README / .env.example).
-2. Check out with Mobile Money → approve on the phone → use
-   **“I Have Approved — Check Status”**. The order shows up with status
-   **Paid** once confirmed. Returning from any payment page without
-   approving creates **no order** — your cart is kept.
+2. **MTN (self-service sandbox):** sign up at momodeveloper.mtn.com with
+   just an email → subscribe to the Collection product → create an API
+   user → copy the subscription key, user ID and API key into
+   `MTN_SUBSCRIPTION_KEY/_API_USER_ID/_API_KEY`. No business documents.
+3. **No account at all:** set `MOMO_TILL_NUMBER` to the shop's Till or
+   line. Customers pay by phone, submit the SMS transaction ID, and staff
+   confirm it in Payments after checking the MTN/Airtel app.
+4. Check out with Mobile Money → approve on the phone (or use the Till
+   flow) → use **“I Have Approved — Check Status”**. The order shows up
+   with status **Paid** only after confirmation. Returning from any
+   payment page without approving creates **no order** — your cart is kept.
 
 ### Track an order
 - Account → Orders shows every order with its live status:

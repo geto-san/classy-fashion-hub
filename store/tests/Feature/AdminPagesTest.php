@@ -34,13 +34,15 @@ it('shows the audit log to the owner and exports it as CSV', function () {
     expect($csv->streamedContent())->toContain('When,Who,Event,What');
 });
 
-it('keeps the audit log and the payments list away from the worker', function () {
+it('keeps the audit log away from the worker, but shares the payments list', function () {
     $this->seed(ClassyFashionSeeder::class);
 
     $this->actingAs(Admin::where('email', 'worker@classy.local')->firstOrFail(), 'admin');
 
     get(route('admin.classy.reports.audit'))->assertUnauthorized();
-    get(route('admin.classy.payments.index'))->assertUnauthorized();
+
+    // Workers confirm Till payments, so they see the list (but not profit).
+    get(route('admin.classy.payments.index'))->assertOk();
 });
 
 it('lists payment attempts and warns about paid-but-unfulfilled ones', function () {

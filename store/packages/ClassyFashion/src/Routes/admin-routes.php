@@ -25,4 +25,7 @@ Route::group(['middleware' => ['web', 'admin', NoCacheMiddleware::class], 'prefi
 
     Route::get('classy/payments', [PaymentAttemptController::class, 'index'])
         ->name('admin.classy.payments.index');
+
+    Route::post('classy/payments/{attempt}/confirm', [PaymentAttemptController::class, 'confirm'])
+        ->name('admin.classy.payments.confirm');
 });

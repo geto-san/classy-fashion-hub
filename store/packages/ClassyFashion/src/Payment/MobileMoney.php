@@ -28,8 +28,14 @@ class MobileMoney extends Payment
             $this->setCart();
         }
 
-        return $this->cart?->cart_currency_code === 'UGX'
-            && Flutterwave::configured();
+        if ($this->cart?->cart_currency_code !== 'UGX') {
+            return false;
+        }
+
+        // Offered when any API provider is configured, or when the shop
+        // runs the manual Till flow (no signup needed).
+        return \ClassyFashion\Payment\Momo::provider() !== null
+            || \ClassyFashion\Payment\Momo::manualEnabled();
     }
 
     public function getRedirectUrl()

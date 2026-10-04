@@ -25,12 +25,31 @@ return [
 
     // Optional LLM for the shop assistant / product descriptions. Empty key =
     // rule-based answers only. Any OpenAI-compatible endpoint works.
+    // rule-based answers only. Any OpenAI-compatible endpoint works.
     'ai' => [
         'api_key'     => env('AI_LLM_API_KEY'),
         'base_url'    => env('AI_LLM_BASE_URL') ?: 'https://api.groq.com/openai/v1',
         'model'       => env('AI_LLM_MODEL') ?: 'llama-3.3-70b-versatile',
         'timeout'     => (int) env('AI_LLM_TIMEOUT', 20),
         'daily_limit' => (int) env('AI_ASSISTANT_DAILY_LIMIT', 200),
+    ],
+
+    'momo' => [
+        // auto (default): MTN when its keys exist, else Flutterwave when its
+        // keys exist, else manual Till flow. Force with: mtn, flutterwave, manual.
+        'provider' => env('MOMO_PROVIDER', 'auto'),
+
+        // Shop's own Till/line for the manual flow (no signup needed).
+        'till_number' => env('MOMO_TILL_NUMBER'),
+
+        'mtn' => [
+            'subscription_key' => env('MTN_SUBSCRIPTION_KEY'),
+            'api_user_id'      => env('MTN_API_USER_ID'),
+            'api_key'          => env('MTN_API_KEY'),
+            'base_url'         => env('MTN_BASE_URL') ?: 'https://sandbox.momodeveloper.mtn.com',
+            'environment'      => env('MTN_TARGET_ENV', 'sandbox'),
+            'currency'         => env('MTN_CURRENCY', 'UGX'),
+        ],
     ],
 
     'seed' => [

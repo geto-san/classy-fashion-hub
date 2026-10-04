@@ -52,6 +52,16 @@ services:
         sync: false
       - key: FLUTTERWAVE_SECRET_HASH
         sync: false
+      - key: MOMO_PROVIDER
+        value: auto
+      - key: MOMO_TILL_NUMBER
+        sync: false
+      - key: MTN_SUBSCRIPTION_KEY
+        sync: false
+      - key: MTN_API_USER_ID
+        sync: false
+      - key: MTN_API_KEY
+        sync: false
       - key: SEED_DEMO
         value: "true"
       # Production credentials (classy:secure-accounts). With SEED_DEMO=true the

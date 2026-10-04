@@ -22,7 +22,10 @@ return [
     ], [
         'key'   => 'sales.payments',
         'name'  => 'classy-fashion::acl.payments.view',
-        'route' => 'admin.classy.payments.index',
+        'route' => [
+            'admin.classy.payments.index',
+            'admin.classy.payments.confirm',
+        ],
         'sort'  => 6,
     ],
 ];

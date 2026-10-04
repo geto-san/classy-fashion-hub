@@ -23,6 +23,7 @@ return [
 
     'mobilemoney' => [
         'title' => 'Mobile Money Payment',
+        'claim_saved' => 'Reference saved. We shall confirm your payment and create your order.',
         'choose_network' => 'Pay :amount from your phone. Choose your network and enter the mobile money number.',
         'network' => 'Network',
         'phone' => 'Mobile Money Number',
@@ -37,6 +38,10 @@ return [
         'payment_expired' => 'The payment prompt timed out. If you were charged, contact us with reference :ref; otherwise try again.',
         'payment_unfulfilled' => 'We received your payment but could not finish your order. We have been alerted: please contact us with reference :ref and do not pay again.',
         'payment_failed' => 'The payment failed or was cancelled. No order was created; your cart is unchanged.',
+        'till_title' => 'Or pay to our Till by phone',
+        'till_body' => 'Send :amount to Till :till from your :network line, then enter the transaction ID from your SMS below.',
+        'till_ref' => 'Your MTN/Airtel transaction ID',
+        'till_save' => 'I Have Paid — Confirm',
     ],
 
     'timeline' => [
@@ -64,9 +69,14 @@ return [
         'title' => 'Mobile Money Payments',
         'status' => 'Status',
         'reference' => 'Reference',
+        'provider' => 'Provider',
         'amount' => 'Amount',
         'order' => 'Order',
         'note' => 'Note',
+        'claim' => 'Customer Claim',
+        'confirm' => 'Confirm Paid',
+        'confirmed' => 'Payment confirmed; the paid order was created.',
+        'confirm_failed' => 'Could not confirm: the attempt has no customer claim or is no longer open.',
         'none' => 'No payment attempts yet.',
         'attention' => ':count payment(s) need attention: money was received but no order exists (or finalising did not finish). Create the order by hand or refund the customer, quoting the reference.',
     ],
