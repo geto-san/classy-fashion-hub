@@ -11,18 +11,34 @@ future work they map to.
   the webhook URL + secret hash in the Flutterwave dashboard).
 - Sandbox demo without webhooks: the status page re-verifies server-side
   (“I Have Approved — Check Status”) and finalizes identically.
-- `pending` → `paid` is allowed for the gateway path; manual flow stays
-  pending → confirmed → paid.
+- The gateway sets Paid; staff cannot mark a mobile-money order Paid by hand.
+  A paid order cancelled by staff is **not refunded automatically**: the
+  system flags it and the refund is made in the Flutterwave dashboard.
+- Sandbox vs live is `FLUTTERWAVE_SANDBOX`; test keys with `false` (or live
+  keys with `true`) leave the method hidden.
 
 ## Cut, in agreed order
 1. **Luganda locale** — English only (report 10.9 lists it as future work).
 2. **Live payments** — sandbox as above.
-3. **Email notifications** — dashboard alerts only: threshold widget,
-   `stock.low` audit entries, admin new-order notification rows.
+3. **Proven e-mail delivery** — customer status e-mails, low-stock e-mail and
+   password reset are built, but `MAIL_MAILER=log` until real SMTP is set
+   (`docs/DEPLOY.md`), so none has been seen arriving.
 
 ## Simplifications to know
 - **Costs are illustrative** (60% of price, seeded). Enter real supplier
-  costs per product for true profit figures.
+  costs per product for true profit figures. Each sale keeps the cost it had
+  at the time; sales made before that was introduced were back-filled with
+  the cost on the day of migration.
+- **Footwear sizes** (EU 38–45) come from the catalogue seeder, which skips an
+  already-seeded database. On an existing site re-create the two shoe products
+  with a size option in admin, or reseed a fresh database.
+- **Workers can still see a product's cost** by opening the product edit page
+  (they need it to manage stock). They do not see profit reports or profit on
+  orders. Remove product-edit from the Worker role if that matters to the owner.
+- **Delivery partner** is stored in the shipment's Carrier Title / Tracking
+  Number fields, not a dedicated table.
+- **Not measured**: usability with real users, phone/weak-network behaviour,
+  load. **Backups** are manual scripts with no recorded restore drill.
 - **Delivery instructions** live on the shipping address only. If a
   customer reuses the billing address for shipping, no instructions field
   is offered. Overlong input (>500 chars) is stopped client-side and by
@@ -54,8 +70,12 @@ future work they map to.
   `classy:repair-images` instead (see DEPLOY.md).
 
 ## Small core touches (documented for upgrade reviews)
-- `Order` model: 4 status codes/labels (no extension seam exists).
+- `Order` model: 4 status codes/labels (no extension seam exists). All other
+  order behaviour lives in `ClassyFashion\Models\Sales\Order` (a subclass).
 - `Cart`: delivery_instructions allow-list (+1 key); `OrderAddressResource` (+1 key).
 - `tailwind.config.js`: primary token → plum (shop assets rebuilt).
 - `bootstrap/providers.php`, `config/concord.php`, root `composer.json`:
-  ClassyFashion package wiring. Full diff: `git log --stat`.
+  ClassyFashion package wiring. Exact diff against stock Bagisto: compare
+  `store/packages/Webkul/...` with the same files in the v2.4.12 tag.
+- The admin order list is **not** edited: `ClassyFashion\DataGrids\OrderDataGrid`
+  is bound over it so it can show the report statuses.

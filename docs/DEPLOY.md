@@ -7,10 +7,13 @@ needs MySQL/MariaDB) + sandbox Flutterwave keys.
 ## 0. What is already done (code side)
 
 - `deploy/Dockerfile` — PHP 8.3 + Apache, pinned `bagisto:2.4.12`,
-  our tracked customizations overlaid from this repo, shop assets rebuilt.
+  our tracked customizations overlaid from this repo (the exact commit Render
+  is deploying when it passes `RENDER_GIT_COMMIT`, otherwise `main`), shop
+  assets rebuilt.
 - `deploy/entrypoint.sh` — waits for DB, migrates, seeds **once** on a
-  fresh database (core data, roles, UGX catalog, brand logo), then serves.
-  Redeploys only migrate — **never wipes**.
+  fresh database (core data, roles, UGX catalog, brand logo), runs
+  `classy:secure-accounts`, then serves. Redeploys only migrate — **never
+  wipes**.
 - `deploy/render.yaml` — Render Blueprint with all env vars.
 - Health check: `/up`.
 
@@ -45,7 +48,18 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
      from step 1.
    - `FLUTTERWAVE_PUBLIC_KEY`, `FLUTTERWAVE_SECRET_KEY`,
      `FLUTTERWAVE_SECRET_HASH` (sandbox keys; empty = method hidden).
-   - Leave the rest as in `render.yaml` (`SEED_DEMO=false`).
+   - `SEED_ADMIN_PASSWORD` (and optionally `SEED_ADMIN_EMAIL`): the admin
+     login you want. Blank = a random password is printed **once** in the
+     deploy log (search the log for `NEW admin password`).
+   - `SEED_WORKER_PASSWORD` / `SEED_CUSTOMER_PASSWORD` only matter with
+     `SEED_DEMO=true`, which creates the demo worker/customer accounts.
+   - Mail (optional but needed for password reset and order e-mails):
+     `MAIL_MAILER=smtp`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`,
+     `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`, and `ADMIN_MAIL_ADDRESS` for
+     low-stock alerts. Leave `MAIL_MAILER=log` until you have a provider.
+   - Keep `FLUTTERWAVE_SANDBOX=true` with test keys; use `false` only with
+     live keys. A mismatch hides Mobile Money.
+   - Leave the rest as in `render.yaml`.
 4. Deploy. First boot runs migrations + seeding (several minutes) —
    watch Logs for `Classy Fashion Hub catalog seeded`.
 5. Set `APP_URL` to your `https://<name>.onrender.com` and redeploy
@@ -54,8 +68,9 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 ## 3. Verify (the Definition of Done, live)
 
 1. `/up` → 200. Homepage shows products with USh prices + brand logo.
-2. Log in as `admin@example.com / admin123` → **change the password
-   immediately**, create the worker/customer or confirm seeded ones.
+2. Log in as `admin@example.com` (or `SEED_ADMIN_EMAIL`) with the password
+   from step 2 (never `admin123` on production) → change it, then create real
+   worker accounts under Settings → Users.
 3. As customer: browse → variant → COD checkout → order history.
 4. As worker: confirm → paid → invoice → ship → delivered via buttons.
 5. Reporting → Sales totals + CSV export.
@@ -69,11 +84,15 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
   Credentials via `DB_*` env, same names as the app.
 - `scripts/restore.sh backups/<stamp>` — restores into an **empty**
   database (refuses otherwise) and unpacks media.
-- Cadence for grading: run `backup.sh` before any risky change and
-  nightly during the demo period; copy `backups/` off-machine.
-- Restore drill: dump content + media archive verified locally; run one
-  full drill on Railway (root can create the empty target DB) before
-  grading day.
+- These are **manual** scripts: nothing schedules them and **no restore drill
+  has been recorded**. Run `backup.sh` before any risky change and nightly
+  during the demo period (e.g. a cron line `0 2 * * * cd /path/to/repo &&
+  ./scripts/backup.sh` on any machine that can reach the database), and copy
+  `backups/` off-machine.
+- Restore drill (do once before grading, then fill in the line below):
+  create an empty database, run `scripts/restore.sh backups/<stamp>`, open the
+  shop and check the product count and the latest order.
+  `Last successful restore drill: ____ (date, who, backup stamp)`
 
 ## 5. Free-tier caveats (accepted for the demo)
 
@@ -90,6 +109,7 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 - **No queue worker / scheduler:** `QUEUE_CONNECTION=sync` (mail +
   indexing run inline); date-bound prices need the cron entry from the
   Bagisto deployment docs (VPS step-up).
-- **Mail:** `MAIL_MAILER=log` until real SMTP is configured (order emails
-  go to the log; admin dashboard notices still work).
+- **Mail:** `MAIL_MAILER=log` until real SMTP is configured (customer
+  status e-mails, password reset and low-stock alerts go to the log instead
+  of being sent).
 - **HTTPS** is provided by Render; `SESSION_SECURE_COOKIE=true` is set.

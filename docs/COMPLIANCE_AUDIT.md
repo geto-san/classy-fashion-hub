@@ -1,103 +1,107 @@
-# Compliance Audit — Implementation vs `Blair_Fashion_Hub report.docx`
+# Compliance Audit — Implementation vs `Blair_Fashion_Hub_report.docx`
 
-Method: every requirement below was checked against the running code,
-routes, DB state or automated tests (suite: 27 passing). Verdicts:
-**Compliant**, **Partial**, **Missing**, **Unverified**, **N/A** (doc-level
-or physical-world, no software duty).
+**How to read this.** Verdicts: **Compliant**, **Partial**, **Not done**,
+**Unverified**, **N/A**. A verdict is only "Compliant" where code *and* an
+automated test back it. This revision follows an independent review of the
+repository against the report; where that review changed a verdict, the
+reason is given.
+
+**Test status — read first.** `store/tests/Feature` holds **68 test cases**.
+The original 31 were passing when this audit was first written. The other
+**37 were added alongside the review fixes and have not been run yet** (no
+PHP/MySQL/Bagisto vendor was available where they were written). Run
+`php vendor/bin/pest tests/Feature` and treat any red test as a defect to fix
+before relying on the rows below that cite it.
 
 ## 7. SMART objectives
 
-| # | Objective | Verdict | Evidence |
+| # | Objective | Verdict | Evidence / what is left |
 |---|---|---|---|
-| 1 | Digital catalogue (name, category, size, colour, description, price, availability) | Compliant | 16 products, configurable variants, UGX prices, availability flags; category/search verified |
-| 2 | Inventory + records (dates, items, amounts, profits) + basic reports | Partial | Records, profit-per-order and sales reports done; **profit aggregated per period missing** (only per order) |
-| 3 | Ordering workflow (select, submit, view, status updates) | Compliant | E2E test: cart → COD → history with live status |
-| 4 | Payment + delivery info for remote purchase | Compliant (sandbox) | Flutterwave sandbox; delivery fields end to end; live approval pending |
-| 5 | Role-based access, transactions tied to users | Compliant | Admin/Worker/customer split; 401 enforcement tested; audit log records who/when |
-| 6 | Evaluate usability, reliability, security, performance with users | Partial | 27 automated tests + guides done; **representative-user testing and phone test pending (owner-side)** |
+| 1 | Digital catalogue (name, category, size, colour, description, price, availability) | Compliant | 16 products, variants, UGX prices. Footwear now carries EU sizes 38–45 **on a freshly seeded database**; an already-seeded catalogue keeps colour-only shoes until re-created in admin |
+| 2 | Inventory + records (dates, items, amounts, profits) + basic reports | Compliant | Per-order and per-period profit report with CSV. Cost is now stored on each sale (`order_items.cost_price`), so past profit no longer changes when a supplier price does. Seed costs are still illustrative (60% of price): enter real ones |
+| 3 | Ordering workflow (select, submit, view, status updates) | Compliant | Cart → order → statuses Pending→Confirmed→Paid→Processing→Dispatched→Delivered; cash on delivery follows Confirmed→Processing and records the cash at delivery; customer order page shows a progress timeline |
+| 4 | Payment + delivery info for remote purchase | Compliant (sandbox) | Mobile money marks an order Paid only after server-side verification; one order per payment is enforced; a verified payment with no order is flagged for staff. Live merchant approval pending |
+| 5 | Role-based access, transactions tied to users | Compliant | Admin/Worker/customer; 401 tests; audit log of stock, status, payment and (new) user/role changes with an admin viewer. Workers no longer see cost or profit |
+| 6 | Evaluate usability, reliability, security, performance with users | **Not done** | No representative-user testing, load test or real-phone test has been carried out. This needs people, not code (scripted in DEMO_SCRIPT) |
 
-## 8. Scope — Compliant
-Customer side (register/login/browse/search/cart/orders/history/status),
-admin side (products/images/prices/inventory/orders/users/reports),
-limited worker side, and payment/delivery all present. AI recommendations,
-virtual fitting and marketplace correctly absent (future work).
+## 8. Scope
+Customer, admin and limited worker sides plus payment/delivery are present.
+AI recommendations, virtual fitting and marketplace are correctly absent
+(future work, `KNOWN_LIMITATIONS.md`).
 
 ## 9. Functional requirements
 
-**9.1 Accounts — Partial.**
-Registration, login/logout, admin/worker/customer roles, worker
-management by admin, and minimal profiles all work. Password recovery
-routes exist for shop and admin, but **reset emails cannot send until
-SMTP is configured** (`MAIL_MAILER=log`).
+**9.1 Accounts — Partial.** Registration, login, roles, worker management and
+profiles work; user/role changes are now audit-logged. Password-reset e-mails
+send only once real SMTP is configured (`MAIL_MAILER=smtp` + provider
+credentials); until then they go to the log.
 
-**9.2 Catalogue — Compliant.** CRUD with size/colour variants, fixed UGX
-prices, images, search/filters; deactivation toggle instead of delete
-(workers cannot delete at all).
+**9.2 Catalogue — Compliant** (see objective 1 for the shoe-size note).
+Deactivation instead of delete; workers cannot delete. The storefront search
+page's "in stock only" filter is **unverified** — confirm in the running shop.
 
-**9.3 Inventory — Compliant.** Quantities per variant; oversell blocked
-(back-orders off by default); worker edits allowed; every change logged
-with user and timestamp; low-stock threshold (5) with dashboard widget
-and crossing alerts.
+**9.3 Inventory — Compliant.** Oversell blocked; staff stock edits logged
+with user and time; threshold 5. Low-stock alert is now e-mailed to
+`ADMIN_MAIL_ADDRESS` for any drop below the threshold, including one caused
+by a customer's checkout (again: needs SMTP to leave the log).
 
-**9.4 Records — Partial.** Date/item/amount/profit per sale recorded;
-transaction search and period reports with CSV export work; historical
-prices snapshot on order items. **Missing: profit totals for a selected
-period** (dashboard shows sales totals, not profit totals).
+**9.4 Records — Compliant.** Date/item/amount/cost/profit per sale recorded;
+cost is a snapshot per sale; period reports and CSV export. Sales made before
+the snapshot column existed were backfilled with the cost at migration time.
 
-**9.5 Cart & ordering — Compliant.** Cart editing, availability checks,
-delivery info at checkout, full status chain
-(Pending→Confirmed→Paid→Processing→Dispatched→Delivered), customer
-history, customer cancel route. Extra legacy codes (completed/closed/
-fraud) retained harmlessly.
+**9.5 Cart & ordering — Compliant.** Status flow enforced on every path:
+core invoicing/shipping is blocked until an order is paid (or COD-confirmed);
+mobile-money orders cannot be marked Paid by hand; "Paid" by hand is recorded
+with who/when; customers can cancel only before payment, staff cancel paid
+orders (which returns stock and flags the refund). Admin order list now
+renders and filters all report statuses (core showed a blank status).
 
-**9.6 Payments — Compliant (sandbox).** Flutterwave MTN/Airtel method;
-pending/success/failed distinguished with stored tx refs; Paid is set
-only after webhook signature + server-side verify (tested, incl.
-mismatch and bad-signature rejection). Live merchant approval pending.
+**9.6 Payments — Compliant (sandbox).** Verified-only Paid with signature,
+reference, amount and currency checks; atomic finalisation (webhook and
+status check cannot both create an order); attempts addressed by unguessable
+id and limited to the shopper's session; unapproved prompts expire (a late
+approval is still honoured); sandbox/live is enforced against the key prefix;
+admin "Mobile Money Payments" page lists every attempt. **No automatic
+refund**: cancelling a paid order flags it and staff refund in the Flutterwave
+dashboard.
 
-**9.7 Delivery — Partial.** Location, contact phone and instructions
-collected and visible in admin; staff update delivery progress through
-order statuses; customers see live status. **Missing: assigning a
-delivery partner/rider to an order.**
+**9.7 Delivery — Partial.** Location, phone, instructions captured and shown
+to staff. A delivery partner/rider is recorded with the shipment's *Carrier
+Title* and *Tracking Number* fields (the customer sees the tracking number, so
+put the rider's name and phone there). No dedicated rider table.
 
-**9.8 Notifications — Partial.** Admin new-order notices and low-stock
-alerts work (dashboard-only, per the agreed cut). **Customer order-event
-emails are built-in but unsent** (no SMTP; same cut).
+**9.8 Notifications — Partial.** Customers are e-mailed on Confirmed, Paid,
+Processing, Dispatched, Delivered and Canceled; the owner on low stock. All
+of it is **unproven end to end until SMTP is configured**.
 
-**9.9 Reports — Compliant.** Dashboard stats, sales/customer/product
-reports over date ranges, CSV export verified.
+**9.9 Reports — Compliant.** Dashboard, sales/customer/product reports, sales
+and profit CSV exports.
 
 ## 10. Non-functional requirements
 
-- **10.1 Usability — Compliant.** Simple flows + USER_GUIDE; mobile layout built-in.
-- **10.2 Security — Partial.** Hashed passwords, server-side RBAC (401-tested),
-  CSRF on, secrets in `.env`, audit logging of stock/status/payment.
-  Gaps: **user/role-management changes are not audit-logged**; no
-  penetration test; HTTPS only in production.
-- **10.3 Performance — Unverified.** Snappy locally with sync queue; **no
-  load test** under concurrent users.
-- **10.4 Availability — Non-compliant on free tier.** Render free sleeps
-  (cold starts) and has no failure alerting beyond the `/up` health check.
-  Needs paid/no-sleep hosting for genuine 24/7.
-- **10.5 Reliability — Partial.** Accurate stock, consistent statuses,
-  FK-safe deletes. **Missing: a backup/restore procedure** (neither
-  Railway nor Render free backups are configured).
-- **10.6 Scalability — Compliant (for scope).** Modular ClassyFashion
-  package; single-seller architecture as required.
-- **10.7 Maintainability — Compliant.** Package isolation, docs, error
-  logging, 27 automated tests.
-- **10.8 Compatibility — Unverified.** Responsive theme built-in, but
-  **real-phone test and weak-network check are owner-side pending**.
-- **10.9 Accessibility/Luganda — Partial (cut as agreed).** Clear labels
-  and instructions; English only, no Luganda locale or bilingual guide.
-- **10.10 Integrity/privacy — Compliant.** Minimal collection, guarded
-  access, profile/address self-correction, history preserved.
+- **10.1 Usability — Compliant** in design; **unverified** with real users.
+- **10.2 Security — Partial.** Hashed passwords, CSRF, server-side RBAC,
+  secrets in env, audit log with viewer. Published default passwords are no
+  longer usable on production (`classy:secure-accounts`). Not done: penetration
+  test; HTTPS only in production.
+- **10.3 Performance — Unverified.** No load test.
+- **10.4 Availability — Not met on the free tier.** Render free sleeps.
+- **10.5 Reliability — Partial.** `scripts/backup.sh` / `restore.sh` exist but
+  are run by hand, are not scheduled, and **no restore drill has been recorded**
+  (see `docs/DEPLOY.md` §4).
+- **10.6 Scalability / 10.7 Maintainability — Compliant** for scope (package
+  isolation, docs, tests — subject to the test status above).
+- **10.8 Compatibility — Unverified.** No real-phone or weak-network test.
+- **10.9 Accessibility / Luganda — Partial.** English only (report: "where
+  resources permit").
+- **10.10 Integrity / privacy — Compliant.**
 
-## Non-compliances to fix before grading (prioritized)
+## What still needs a person (cannot be closed by code)
 
-1. **Backups (10.5)** — define and test a dump/restore routine.
-2. **SMTP (9.1, 9.8)** — configure a sender so recovery + order emails work.
-3. **Phone + user testing (SMART 6, 10.8)** — owner-side, scripted in DEMO_SCRIPT.
-4. **Profit per period (obj. 2/9.4)** — small reporting addition if time allows.
-5. **Delivery-partner field, user-admin audit rows** — nice-to-have extensions.
-6. **Availability wording** — present Render free honestly (sleep + cold start).
+1. Run the test suite and fix anything red (37 tests are new and unrun).
+2. Configure SMTP and prove reset + order e-mails arrive (9.1, 9.8).
+3. Real-user, phone/weak-network and load testing (objective 6, 10.3, 10.8).
+4. Schedule backups and record one successful restore drill (10.5).
+5. Enter real supplier costs (9.4) and decide whether workers should keep
+   product-edit access, which still exposes the cost field.
+6. Present Render free hosting honestly (sleeps) or move to always-on (10.4).

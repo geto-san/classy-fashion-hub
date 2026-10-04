@@ -1,6 +1,6 @@
 # Demo Script — six SMART objectives
 
-Run on `http://localhost:8000` + `/admin`. Demo accounts in README.md.
+Run on `http://localhost:8000` + `/admin`. Demo accounts (local only) in README.md.
 
 ## 1. Digital product catalogue
 - **Show:** `/womens` (4 products), open Gomesi → size/colour selectors,
@@ -37,14 +37,15 @@ Run on `http://localhost:8000` + `/admin`. Demo accounts in README.md.
   gone; paste `/admin/settings/roles` as worker → **401**. Worker
   confirms an order (Pending → Confirmed) with “Mark as …” buttons.
 - **Say:** admins vs workers, every stock/status change stamped with the
-  user (objective 5). Show latest `classy-fashion` audit rows if asked
-  (DB `activity_log`, log_name filter).
+  user (objective 5). Admin → Reporting → **Audit Log** shows the entries;
+  as worker the same page returns 401, and no profit figures are visible.
 - **Screenshot:** worker 401 page; order status buttons.
 
 ## 6. Usability, reliability, security, performance
-- **Show:** terminal run `php-legacy vendor/bin/pest tests/Feature/`
-  (27 passing: roles, checkout, statuses, audit, profit, payments,
-  reports); phone view of the shop (responsive layout, thumb-sized
+- **Show:** terminal run `php vendor/bin/pest tests/Feature/`
+  (68 test cases: roles, checkout, statuses, order rules, audit, profit,
+  payments, notifications, reports — quote the number from your actual run);
+  phone view of the shop (responsive layout, thumb-sized
   buttons, readable prices).
 - **Say:** tested end to end before submission (objective 6); passwords
   hashed, CSRF on, secrets in `.env` only, server-side permission checks.
