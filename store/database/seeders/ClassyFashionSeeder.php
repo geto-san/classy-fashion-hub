@@ -39,6 +39,7 @@ class ClassyFashionSeeder extends Seeder
         'catalog.products',
         'catalog.products.create',
         'catalog.products.edit',
+        'catalog.categories',
 
         'sales',
         'sales.orders',
