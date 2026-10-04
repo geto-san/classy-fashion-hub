@@ -54,3 +54,13 @@ services:
         sync: false
       - key: SEED_DEMO
         value: "false"
+      # Production credentials. Leave blank to get random passwords printed
+      # once in the deploy log (classy:secure-accounts).
+      - key: SEED_ADMIN_EMAIL
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+      - key: SEED_WORKER_PASSWORD
+        sync: false
+      - key: SEED_CUSTOMER_PASSWORD
+        sync: false

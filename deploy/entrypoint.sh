@@ -43,6 +43,12 @@ if [ "${ADMINS:-0}" = "0" ]; then
   php artisan indexer:index --mode=full || true
 fi
 
+# Replace any published default password (admin123/worker123/customer123),
+# including on databases seeded before this check existed. Idempotent;
+# prints a new random password once in this log unless SEED_*_PASSWORD is set.
+php artisan classy:secure-accounts \
+  || echo "WARNING: classy:secure-accounts failed - default credentials may still be active"
+
 php artisan optimize
 chown -R www-data:www-data storage bootstrap/cache || true
 
