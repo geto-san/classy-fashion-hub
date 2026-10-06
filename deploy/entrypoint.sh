@@ -62,6 +62,10 @@ if [ "${ADMINS:-0}" = "0" ]; then
   php artisan indexer:index --mode=full || true
 fi
 
+# Single Classy brand on every boot (idempotent): footer, e-mail sender,
+# invoice footer, admin logo, channel logo_alt and SEO.
+php artisan db:seed --class='Database\Seeders\ClassyBrandSeeder' --force || true
+
 # Replace any published default password (admin123/worker123/customer123),
 # including on databases seeded before this check existed. Idempotent;
 # prints a new random password once in this log unless SEED_*_PASSWORD is set.

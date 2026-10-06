@@ -2,7 +2,16 @@
 
 namespace ClassyFashion\Providers;
 
+use ClassyFashion\Console\Commands\DescribeProducts;
+use ClassyFashion\Console\Commands\ExpirePayments;
+use ClassyFashion\Console\Commands\ImportProductPhotos;
+use ClassyFashion\Console\Commands\RepairImages;
+use ClassyFashion\Console\Commands\SecureAccounts;
+use ClassyFashion\DataGrids\OrderDataGrid;
+use ClassyFashion\Http\Middleware\ApplyClassyBrand;
 use ClassyFashion\Observers\ProductInventoryObserver;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Product\Models\ProductInventory as WebkulProductInventory;
 
@@ -13,7 +22,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
         $this->app->register(EventServiceProvider::class);
 
         // Admin order list that renders/filters the report statuses.
-        $this->app->bind(\Webkul\Admin\DataGrids\Sales\OrderDataGrid::class, \ClassyFashion\DataGrids\OrderDataGrid::class);
+        $this->app->bind(\Webkul\Admin\DataGrids\Sales\OrderDataGrid::class, OrderDataGrid::class);
 
         $this->mergeConfigFrom(__DIR__.'/../Config/classy.php', 'classy');
 
@@ -34,6 +43,8 @@ class ClassyFashionServiceProvider extends ServiceProvider
          */
         config(['app.default_country' => config('app.default_country') ?: 'UG']);
 
+        $this->app->make(Router::class)->pushMiddlewareToGroup('web', ApplyClassyBrand::class);
+
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
 
         WebkulProductInventory::observe(ProductInventoryObserver::class);
@@ -46,17 +57,16 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/shop-routes.php');
 
-        $this->callAfterResolving(\Illuminate\Console\Scheduling\Schedule::class, function ($schedule) {
+        $this->callAfterResolving(Schedule::class, function ($schedule) {
             $schedule->command('classy:expire-payments')->everyTenMinutes();
         });
 
         $this->commands([
-            \ClassyFashion\Console\Commands\RepairImages::class,
-            \ClassyFashion\Console\Commands\ImportProductPhotos::class,
-            \ClassyFashion\Console\Commands\SecureAccounts::class,
-            \ClassyFashion\Console\Commands\ExpirePayments::class,
-            \ClassyFashion\Console\Commands\DescribeProducts::class,
+            RepairImages::class,
+            ImportProductPhotos::class,
+            SecureAccounts::class,
+            ExpirePayments::class,
+            DescribeProducts::class,
         ]);
     }
-
 }

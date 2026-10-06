@@ -65,6 +65,8 @@ class ClassyFashionSeeder extends Seeder
 
     public function run(): void
     {
+        $this->call(ClassyBrandSeeder::class);
+
         $validKeys = array_column(config('acl'), 'key');
 
         $permissions = array_values(array_intersect(self::WORKER_PERMISSIONS, $validKeys));
@@ -78,27 +80,27 @@ class ClassyFashionSeeder extends Seeder
         $role = Role::updateOrCreate(
             ['name' => 'Worker'],
             [
-                'description'   => 'Shop worker: catalogue, stock and order processing. No user management, configuration or deletes.',
+                'description' => 'Shop worker: catalogue, stock and order processing. No user management, configuration or deletes.',
                 'permission_type' => 'custom',
-                'permissions'     => $permissions,
+                'permissions' => $permissions,
             ]
         );
 
         if (AccountSecurity::demoAccountsAllowed()) {
             $this->upsert(Admin::class, 'worker', [
-                'name'    => 'Shop Worker',
+                'name' => 'Shop Worker',
                 'role_id' => $role->id,
-                'status'  => 1,
+                'status' => 1,
             ]);
 
             $this->upsert(Customer::class, 'customer', [
-                'first_name'        => 'Test',
-                'last_name'         => 'Customer',
-                'phone'             => '+256700000001',
+                'first_name' => 'Test',
+                'last_name' => 'Customer',
+                'phone' => '+256700000001',
                 'customer_group_id' => 2,
-                'channel_id'        => 1,
-                'status'            => 1,
-                'is_verified'       => 1,
+                'channel_id' => 1,
+                'status' => 1,
+                'is_verified' => 1,
             ]);
         } else {
             $this->command?->info('Production: demo worker/customer accounts skipped (set SEED_DEMO=true to create them).');

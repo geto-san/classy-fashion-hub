@@ -5,13 +5,13 @@ namespace ClassyFashion\Providers;
 use ClassyFashion\Listeners\AuditStaffChanges;
 use ClassyFashion\Listeners\BrandHeadAssets;
 use ClassyFashion\Listeners\CheckoutDeliveryField;
-use ClassyFashion\Listeners\ProductRecommendations;
 use ClassyFashion\Listeners\OrderDeliveryInfo;
 use ClassyFashion\Listeners\OrderPaymentRecords;
 use ClassyFashion\Listeners\OrderProfitSummary;
 use ClassyFashion\Listeners\OrderStatusButtons;
 use ClassyFashion\Listeners\OrderStatusMapper;
 use ClassyFashion\Listeners\OrderTimeline;
+use ClassyFashion\Listeners\ProductRecommendations;
 use ClassyFashion\Listeners\SnapshotOrderItemCost;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -25,9 +25,9 @@ class EventServiceProvider extends ServiceProvider
         'user.admin.create.after' => [[AuditStaffChanges::class, 'adminCreated']],
         'user.admin.update.after' => [[AuditStaffChanges::class, 'adminUpdated']],
         'user.admin.delete.after' => [[AuditStaffChanges::class, 'adminDeleted']],
-        'user.role.create.after'  => [[AuditStaffChanges::class, 'roleCreated']],
-        'user.role.update.after'  => [[AuditStaffChanges::class, 'roleUpdated']],
-        'user.role.delete.after'  => [[AuditStaffChanges::class, 'roleDeleted']],
+        'user.role.create.after' => [[AuditStaffChanges::class, 'roleCreated']],
+        'user.role.update.after' => [[AuditStaffChanges::class, 'roleUpdated']],
+        'user.role.delete.after' => [[AuditStaffChanges::class, 'roleDeleted']],
 
         'checkout.order.orderitem.save.after' => [
             [SnapshotOrderItemCost::class, 'handle'],
@@ -64,6 +64,10 @@ class EventServiceProvider extends ServiceProvider
 
         'bagisto.shop.layout.head.after' => [
             [BrandHeadAssets::class, 'addAssets'],
+        ],
+
+        'bagisto.admin.layout.head.after' => [
+            [BrandHeadAssets::class, 'addAdminAssets'],
         ],
 
         'bagisto.shop.products.view.after' => [

@@ -6,11 +6,21 @@ use Webkul\Theme\ViewRenderEventManager;
 
 /**
  * Brand Guidelines v1.0 head assets: favicons, share card, fonts and
- * brand stylesheets on every storefront page.
+ * brand stylesheets on every storefront and admin page.
  */
 class BrandHeadAssets
 {
     public function addAssets(ViewRenderEventManager $eventManager): void
+    {
+        $eventManager->addTemplate($this->html());
+    }
+
+    public function addAdminAssets(ViewRenderEventManager $eventManager): void
+    {
+        $eventManager->addTemplate($this->html());
+    }
+
+    protected function html(): string
     {
         $ogImage = url('og-image.png');
 
@@ -34,6 +44,6 @@ class BrandHeadAssets
         <link rel="stylesheet" href="/css/classy-brand.css">
         HTML;
 
-        $eventManager->addTemplate($html);
+        return $html;
     }
 }
