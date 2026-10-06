@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use ClassyFashion\Support\ProductImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\File;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Models\AttributeOption;
+use Webkul\Category\Models\Category;
+use Webkul\Installer\Database\Seeders\Category\CategoryTableSeeder;
 use Webkul\Product\Models\Product;
 use Webkul\Product\Repositories\ProductRepository;
 
@@ -44,7 +47,7 @@ class ClassyFashionCatalogSeeder extends Seeder
      */
     public const SHOE_SIZES = ['38', '39', '40', '41', '42', '43', '44', '45'];
 
-    public const EXTRA_COLORS = ['Navy', 'Maroon'];
+    public const EXTRA_COLORS = ['Navy', 'Maroon', 'Blue', 'Grey', 'Orange', 'Pink', 'Purple', 'Brown'];
 
     protected array $catalog = [
         // Shirts / Tops
@@ -77,7 +80,6 @@ class ClassyFashionCatalogSeeder extends Seeder
         ['Cotton Socks 3-Pack', 'simple', [2], 12000, 60, [], []],
     ];
 
-
     public function run(): void
     {
         $this->products = app(ProductRepository::class);
@@ -87,6 +89,8 @@ class ClassyFashionCatalogSeeder extends Seeder
         $this->setupUgandaStore();
 
         $this->seedCmsContent();
+
+        $this->ensureSampleCategories();
 
         $this->pruneDemoCategories();
 
@@ -246,9 +250,9 @@ class ClassyFashionCatalogSeeder extends Seeder
         DB::table('currencies')->updateOrInsert(
             ['code' => 'UGX'],
             [
-                'name'              => 'Ugandan Shilling',
-                'symbol'            => 'UGX',
-                'decimal'           => 0,
+                'name' => 'Ugandan Shilling',
+                'symbol' => 'UGX',
+                'decimal' => 0,
                 'currency_position' => 'left_with_space',
             ]
         );
@@ -263,6 +267,23 @@ class ClassyFashionCatalogSeeder extends Seeder
         );
 
         $this->command->info('Currency UGX ready (channel base currency). Low-stock threshold set to 5.');
+    }
+
+    /**
+     * The catalogue assigns products to category ids 2/4/5/6/8, which the
+     * installer only creates through its sample-category pass - a database
+     * seeded without demo samples holds just the Root row. Seed that tree
+     * when it is missing so those ids resolve. Idempotent.
+     */
+    protected function ensureSampleCategories(): void
+    {
+        if (DB::table('categories')->where('id', '>', 1)->exists()) {
+            return;
+        }
+
+        (new CategoryTableSeeder)->sampleCategories();
+
+        $this->command->info('Sample category tree seeded for the fashion catalogue.');
     }
 
     /**
@@ -301,7 +322,7 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $deleteIds = array_diff($ids, $withProducts);
 
-        \Webkul\Category\Models\Category::whereIn('id', $deleteIds)->get()->each->delete();
+        Category::whereIn('id', $deleteIds)->get()->each->delete();
 
         $removed = count($roots) - count(array_intersect($roots, $withProducts));
 
@@ -312,7 +333,7 @@ class ClassyFashionCatalogSeeder extends Seeder
                 ->get(['id', 'options', 'draft_options'])
                 ->each(function ($row) use ($old, $new) {
                     DB::table('theme_section_translations')->where('id', $row->id)->update([
-                        'options'       => str_replace('href=\\"'.$old, 'href=\\"'.$new, $row->options),
+                        'options' => str_replace('href=\\"'.$old, 'href=\\"'.$new, $row->options),
                         'draft_options' => $row->draft_options ? str_replace('href=\\"'.$old, 'href=\\"'.$new, $row->draft_options) : $row->draft_options,
                     ]);
                 });
@@ -344,8 +365,8 @@ class ClassyFashionCatalogSeeder extends Seeder
             if (! $optionId) {
                 $optionId = DB::table('attribute_options')->insertGetId([
                     'attribute_id' => $attributeId,
-                    'admin_name'   => $size,
-                    'sort_order'   => ++$order,
+                    'admin_name' => $size,
+                    'sort_order' => ++$order,
                 ]);
             }
 
@@ -379,8 +400,8 @@ class ClassyFashionCatalogSeeder extends Seeder
             if (! $optionId) {
                 $optionId = DB::table('attribute_options')->insertGetId([
                     'attribute_id' => $attribute->id,
-                    'admin_name'   => $color,
-                    'sort_order'   => ++$order,
+                    'admin_name' => $color,
+                    'sort_order' => ++$order,
                 ]);
             }
 
@@ -465,12 +486,15 @@ class ClassyFashionCatalogSeeder extends Seeder
         $optionId = fn (string $code, string $adminName): int => AttributeOption::query()
             ->whereHas('attribute', fn ($q) => $q->where('code', $code))
             ->where('admin_name', $adminName)
-            ->value('id');
+            ->value('id')
+            ?? throw new \RuntimeException(
+                "Missing {$code} option [{$adminName}]. Add it to EXTRA_COLORS, or create it in admin before seeding."
+            );
 
         $data = [
-            'type'               => $type,
+            'type' => $type,
             'attribute_family_id' => 1,
-            'sku'                => $sku,
+            'sku' => $sku,
         ];
 
         if ($type === 'configurable') {
@@ -491,20 +515,20 @@ class ClassyFashionCatalogSeeder extends Seeder
         $product = $this->guarded(fn () => $this->products->create($data));
 
         $payload = [
-            'sku'                 => $sku,
-            'name'                => $name,
-            'url_key'             => Str::slug($name.' '.strtolower(Str::random(4))),
-            'short_description'   => $name.' — Available at Classy Fashion Hub, Mbarara. Fixed price UGX '.number_format($price).'.',
-            'description'         => $name.' available at a fixed price of UGX '.number_format($price).'. No bargaining — what you see is what you pay. Ideal for university students, high school students and anyone looking for quality fashion in Uganda. Pay with MTN Mobile Money, Airtel Money or cash on delivery. We deliver across Uganda.',
-            'price'               => $price,
-            'cost'                => (int) round($price * 0.6),
-            'weight'              => 1,
-            'status'              => 1,
+            'sku' => $sku,
+            'name' => $name,
+            'url_key' => Str::slug($name.' '.strtolower(Str::random(4))),
+            'short_description' => $name.' — Available at Classy Fashion Hub, Mbarara. Fixed price UGX '.number_format($price).'.',
+            'description' => $name.' available at a fixed price of UGX '.number_format($price).'. No bargaining — what you see is what you pay. Ideal for university students, high school students and anyone looking for quality fashion in Uganda. Pay with MTN Mobile Money, Airtel Money or cash on delivery. We deliver across Uganda.',
+            'price' => $price,
+            'cost' => (int) round($price * 0.6),
+            'weight' => 1,
+            'status' => 1,
             'visible_individually' => 1,
-            'categories'          => $categoryIds,
-            'channels'            => [$this->channelId],
-            'locale'              => $this->locale,
-            'channel'             => 'default',
+            'categories' => $categoryIds,
+            'channels' => [$this->channelId],
+            'locale' => $this->locale,
+            'channel' => 'default',
         ];
 
         if ($type === 'configurable') {
@@ -516,11 +540,11 @@ class ClassyFashionCatalogSeeder extends Seeder
                 $variant->loadMissing('attribute_values');
 
                 $row = [
-                    'sku'         => $variant->sku,
-                    'name'        => $name,
-                    'price'       => $price,
-                    'weight'      => 1,
-                    'status'      => 1,
+                    'sku' => $variant->sku,
+                    'name' => $name,
+                    'price' => $price,
+                    'weight' => 1,
+                    'status' => 1,
                     'inventories' => [$this->inventorySourceId => $qty],
                 ];
 
@@ -556,7 +580,7 @@ class ClassyFashionCatalogSeeder extends Seeder
      */
     protected function attachImages(Product $product, string $name): void
     {
-        $photos = \ClassyFashion\Support\ProductImage::photos($name);
+        $photos = ProductImage::photos($name);
 
         if ($photos !== []) {
             foreach ($photos as $position => $photo) {
@@ -564,10 +588,10 @@ class ClassyFashionCatalogSeeder extends Seeder
 
                 if ($path) {
                     DB::table('product_images')->insert([
-                        'type'       => null,
-                        'path'       => $path,
+                        'type' => null,
+                        'path' => $path,
                         'product_id' => $product->id,
-                        'position'   => $position,
+                        'position' => $position,
                     ]);
                 }
             }
@@ -577,7 +601,7 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         $tmp = tempnam(sys_get_temp_dir(), 'classy').'.png';
 
-        \ClassyFashion\Support\ProductImage::placeholder($tmp, $name);
+        ProductImage::placeholder($tmp, $name);
 
         $path = Storage::putFile('product/'.$product->id, new File($tmp));
 
@@ -585,10 +609,10 @@ class ClassyFashionCatalogSeeder extends Seeder
 
         if ($path) {
             DB::table('product_images')->insert([
-                'type'       => null,
-                'path'       => $path,
+                'type' => null,
+                'path' => $path,
                 'product_id' => $product->id,
-                'position'   => 0,
+                'position' => 0,
             ]);
         }
     }

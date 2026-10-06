@@ -11,8 +11,20 @@ cd /var/www/html
 : "${DB_USERNAME:?set DB_USERNAME}"
 : "${DB_PASSWORD:?set DB_PASSWORD}"
 
+# APP_KEY must be "base64:<32 raw bytes>" for Laravel's AES-256-CBC encrypter.
+# Render's `generateValue: true` produces a BARE base64 string with no prefix,
+# which makes every request fail with "Unsupported cipher or incorrect key
+# length" - the /up health check passes while real pages 500. Repair the
+# prefix here so either style works, and fall back to key:generate when the
+# variable is missing entirely.
 if [ -z "${APP_KEY:-}" ]; then
   php artisan key:generate --force
+else
+  case "$APP_KEY" in
+    base64:*) ;;
+    *) export APP_KEY="base64:$APP_KEY" ;;
+  esac
+  echo "APP_KEY length: ${#APP_KEY} (expects base64: + 44 chars = 51)"
 fi
 
 # Render (and most PaaS) injects $PORT; Apache must listen on it,

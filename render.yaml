@@ -3,6 +3,7 @@ services:
     name: classy-fashion-hub
     runtime: docker
     plan: free
+    region: oregon
     dockerfilePath: ./deploy/Dockerfile
     dockerContext: ./deploy
     healthCheckPath: /up
@@ -20,6 +21,8 @@ services:
         value: https://classy-fashion-hub.onrender.com
       - key: APP_TIMEZONE
         value: Africa/Kampala
+      # Render's generateValue emits a BARE base64 string. Laravel needs the
+      # "base64:" prefix or every page 500s, so entrypoint.sh adds the prefix.
       - key: APP_KEY
         generateValue: true
       - key: DB_CONNECTION
@@ -68,6 +71,11 @@ services:
       - key: SEED_WORKER_PASSWORD
         sync: false
       - key: SEED_CUSTOMER_PASSWORD
+        sync: false
+      # Locked out of the admin panel? Set this to "true", redeploy once, sign
+      # in with SEED_ADMIN_PASSWORD, then delete it - otherwise it re-runs the
+      # reset on every single boot.
+      - key: RESET_ADMIN_PASSWORD
         sync: false
       # Optional shop-assistant LLM (blank = rule-based answers only).
       - key: AI_LLM_API_KEY

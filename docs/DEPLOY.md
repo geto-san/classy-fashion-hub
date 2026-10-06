@@ -14,7 +14,7 @@ needs MySQL/MariaDB) + sandbox MTN MoMo keys.
   fresh database (core data, roles, UGX catalog, brand logo), runs
   `classy:secure-accounts`, then serves. Redeploys only migrate — **never
   wipes**.
-- `deploy/render.yaml` — Render Blueprint with all env vars.
+- `render.yaml` (repo root) — Render Blueprint with all env vars.
 - Health check: `/up`.
 
 ## 1. Create the database (~10 min, your clicks)
@@ -42,7 +42,8 @@ Render free offers PostgreSQL only — Bagisto 2.4 cannot use it. Use the
 1. Push this repo (done: `main`).
 2. Render Dashboard → New → **Web Service** → connect
    `geto-san/classy-fashion-hub` → runtime **Docker**.
-   (Or New → Blueprint → select the repo; `deploy/render.yaml` is used.)
+   (Or New → Blueprint → select the repo; Render reads `render.yaml` at the
+   repo root.)
 3. Set environment variables (Render → Environment):
    - `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
      from step 1.
