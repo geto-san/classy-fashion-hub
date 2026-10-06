@@ -100,13 +100,16 @@ Dispatched → Delivered with the “Mark as …” buttons.
 > `php artisan optimize:clear && php artisan responsecache:clear`.
 > Users also need a hard refresh (Ctrl+Shift+R) after a rebuild.
 
-## Custom code (all outside core except six small edits)
+## Custom code (a package of our own, plus a few Bagisto core files)
 
 - `store/packages/ClassyFashion/` — payments (MTN MoMo mobile money),
   order statuses and rules, cost/profit, audit log, notifications, admin pages
 - `store/database/seeders/ClassyFashion*.php` — roles, accounts, UGX catalogue
 - `store/tests/Feature/*Test.php` — role enforcement, checkout, payments,
   order rules, reports, audit, notifications
+- Bagisto core files we edit: product types (downloadable and booking are not
+  offered), catalog/admin routes, ACL and menus, product view, one-page
+  checkout, breadcrumbs
 - Unused Bagisto modules (other payment gateways, social login) are disabled
   and their source removed on setup/deploy - see `docs/KNOWN_LIMITATIONS.md`.
 - `deploy/` — Docker image, Render blueprint, boot script; `scripts/` — setup,

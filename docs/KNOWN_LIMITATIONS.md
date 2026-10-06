@@ -44,8 +44,7 @@ future work they map to.
   the column limit, not by a friendly 422 (core checkout validator has
   no hook for extra fields).
 - **Completed → Dispatched auto-map**: core marks fully shipped orders
-  “completed”; we record “dispatched”. Digital/downloadable orders would
-  also show Dispatched — fine for a fashion shop, wrong for digital goods.
+  “completed”; we record “dispatched”.
 - **Prices in tests vs display**: API `min_price` once showed decimals;
   fixed via UGX `currency_position` (UGX 150,000).
 - **Dependency advisories**: `composer audit` flags league/commonmark
@@ -93,12 +92,16 @@ loaded**: Stripe, Razorpay, PayU, PayGlocal, PhonePe, PayPal and SocialLogin
 `composer.lock` no longer list them, and the Composer packages only they
 needed were dropped). `scripts/setup-local.sh` and `deploy/Dockerfile` delete
 their source folders after merging/overlaying Bagisto. Other stock modules
-(booking, RMA, GDPR, EU withdrawal, MagicAI, sitemap, social share) are kept
+(RMA, GDPR, EU withdrawal, MagicAI, sitemap, social share) are kept
 because the Admin and Shop packages reference them directly; removing them
-needs a running install to verify. This trim has been checked statically
-only (PHP syntax, namespace and class references, lock/hash consistency) -
-run `composer install` and `php vendor/bin/pest tests/Feature` once to
-confirm on a real install.
+needs a running install to verify. The downloadable and booking product
+types are switched off too: their product-type option, routes, admin pages
+and customer pages are gone, so only simple, configurable, grouped, bundle
+and virtual can be created. Their tables and type classes stay, because
+migrations, importers and price indexers still reference them. This trim is
+checked statically (PHP syntax, namespace and class references, lock/hash
+consistency) and by `php vendor/bin/pest tests/Feature` (73 passed) on a
+full install.
 
 ## Product photos
 The catalogue ships with generated **placeholder** images until real photos
