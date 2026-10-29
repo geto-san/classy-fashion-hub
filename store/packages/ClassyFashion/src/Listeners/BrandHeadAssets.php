@@ -12,7 +12,7 @@ class BrandHeadAssets
 {
     public function addAssets(ViewRenderEventManager $eventManager): void
     {
-        $eventManager->addTemplate($this->html());
+        $eventManager->addTemplate($this->html().$this->shopTheme());
     }
 
     public function addAdminAssets(ViewRenderEventManager $eventManager): void
@@ -45,5 +45,21 @@ class BrandHeadAssets
         HTML;
 
         return $html;
+    }
+
+    /**
+     * Storefront-only theme (fonts + stylesheet). Never added to admin pages.
+     */
+    protected function shopTheme(): string
+    {
+        $version = @filemtime(public_path('css/classy-theme.css')) ?: 1;
+
+        return <<<HTML
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Belleza&family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap">
+        <link rel="stylesheet" href="/css/classy-theme.css?v={$version}">
+        HTML;
     }
 }
