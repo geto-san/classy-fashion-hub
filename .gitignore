@@ -2,7 +2,21 @@
 # Project customizations inside store/ are tracked explicitly with
 # `git add -f` (seeders, tests, ClassyFashion package, docs hooks) and
 # are listed in README.md under "Custom code".
-/store/
+/store/*
+!/store/packages/
+/store/packages/*
+!/store/packages/ClassyFashion/
+!/store/packages/Webkul/
+/store/packages/Webkul/*
+!/store/packages/Webkul/Shop/
+/store/packages/Webkul/Shop/*
+!/store/packages/Webkul/Shop/src/
+/store/packages/Webkul/Shop/src/*
+!/store/packages/Webkul/Shop/src/Http/
+/store/packages/Webkul/Shop/src/Http/*
+!/store/packages/Webkul/Shop/src/Http/Requests/
+/store/packages/Webkul/Shop/src/Http/Requests/*
+!/store/packages/Webkul/Shop/src/Http/Requests/CartAddressRequest.php
 
 # Secrets and local environment — never commit.
 .env
@@ -30,3 +44,12 @@ Thumbs.db
 .~lock.*
 
 backups/
+
+# Cancellation must not load the disabled booking module for fashion items.
+!/store/packages/Webkul/Sales/
+/store/packages/Webkul/Sales/*
+!/store/packages/Webkul/Sales/src/
+/store/packages/Webkul/Sales/src/*
+!/store/packages/Webkul/Sales/src/Models/
+/store/packages/Webkul/Sales/src/Models/*
+!/store/packages/Webkul/Sales/src/Models/OrderItem.php

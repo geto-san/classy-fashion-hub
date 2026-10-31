@@ -3,6 +3,7 @@
 namespace ClassyFashion\Http\Controllers\Admin;
 
 use ClassyFashion\Models\ManualPayment;
+use ClassyFashion\Models\PaymentAttempt;
 use ClassyFashion\Models\Sales\Order as ClassyOrder;
 use ClassyFashion\Support\Audit;
 use ClassyFashion\Support\Notify;
@@ -69,7 +70,8 @@ class OrderStatusController extends Controller
         Notify::orderStatus($order, $target);
 
         $refundDue = $target === ClassyOrder::STATUS_CANCELED
-            && $from === ClassyOrder::STATUS_PAID
+            && ($from === ClassyOrder::STATUS_PAID
+                || PaymentAttempt::where('order_id', $order->id)->where('status', PaymentAttempt::STATUS_SUCCESS)->exists())
             && $order->usesMobileMoney();
 
         Audit::log(

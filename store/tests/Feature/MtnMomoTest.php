@@ -103,7 +103,7 @@ it('charges MTN and finalises on a successful status query', function () {
             }
 
             return Http::response([
-                'status' => 'SUCCESSFUL', 'externalId' => $cart->fresh()->id ? PaymentAttempt::where('cart_id', $cart->id)->firstOrFail()->tx_ref : '',
+                'currency' => 'UGX', 'status' => 'SUCCESSFUL', 'externalId' => $cart->fresh()->id ? PaymentAttempt::where('cart_id', $cart->id)->firstOrFail()->tx_ref : '',
                 'amount' => (string) (float) $cart->grand_total,
             ]);
         },
@@ -140,7 +140,7 @@ it('accepts the MTN callback and verifies server-side', function () {
 
     Http::fake([
         'sandbox.momodeveloper.mtn.com/collection/v1_0/requesttopay/*' => Http::response([
-            'status' => 'SUCCESSFUL', 'externalId' => 'CFH-MTN-CB-1', 'amount' => (string) (float) $attempt->amount,
+            'currency' => 'UGX', 'status' => 'SUCCESSFUL', 'externalId' => 'CFH-MTN-CB-1', 'amount' => (string) (float) $attempt->amount,
         ]),
     ]);
 
@@ -200,4 +200,52 @@ it('runs the manual Till flow with zero gateway keys', function () {
         ->where('event', 'order.payment')
         ->where('subject_id', $order->id)
         ->count())->toBe(1);
+});
+
+it('rejects successful gateway responses in a different currency', function () {
+    mtnKeys();
+
+    $attempt = new PaymentAttempt(['tx_ref' => 'currency-regression', 'amount' => 10000, 'gateway_tx_id' => 'gateway-reference']);
+
+    Http::fake([
+        '*/collection/token*' => Http::response(['access_token' => 'token']),
+        '*/collection/v1_0/requesttopay/*' => Http::response([
+            'status' => 'SUCCESSFUL',
+            'externalId' => 'currency-regression',
+            'amount' => '10000',
+            'currency' => 'EUR',
+        ]),
+    ]);
+
+    expect((new \ClassyFashion\Payment\MtnMomoProvider)->verify($attempt)['successful'])->toBeFalse();
+});
+
+it('detects changed checkout contents even when the total stays unchanged', function () {
+    mtnKeys();
+
+    $cart = mtnCart();
+    $original = \ClassyFashion\Support\CheckoutFingerprint::forCart($cart);
+    $item = $cart->items()->firstOrFail();
+    $item->update(['quantity' => $item->quantity + 1]);
+
+    expect(\ClassyFashion\Support\CheckoutFingerprint::forCart($cart))->not->toBe($original);
+});
+
+it('keeps delivery instructions when billing is reused for shipping and rejects overlong notes', function () {
+    mtnKeys();
+    $cart = mtnCart();
+    $billing = $cart->billing_address->toArray();
+    $billing['address'] = ['Test delivery road'];
+    $billing['use_for_shipping'] = true;
+    $billing['delivery_instructions'] = 'Call at the blue gate';
+
+    postJson(route('shop.checkout.onepage.addresses.store'), ['billing' => $billing])->assertOk();
+
+    expect($cart->fresh()->shipping_address->delivery_instructions)->toBe('Call at the blue gate');
+
+    $billing['delivery_instructions'] = str_repeat('x', 501);
+
+    postJson(route('shop.checkout.onepage.addresses.store'), ['billing' => $billing])
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('billing.delivery_instructions');
 });

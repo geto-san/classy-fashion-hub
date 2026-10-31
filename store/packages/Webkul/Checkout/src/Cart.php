@@ -445,6 +445,7 @@ class Cart
         $params = collect($params)
             ->only([
                 'use_for_shipping',
+                'delivery_instructions',
                 'default_address',
                 'company_name',
                 'first_name',

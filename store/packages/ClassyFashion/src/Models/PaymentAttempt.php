@@ -50,6 +50,7 @@ class PaymentAttempt extends Model
         'verified_at',
         'expires_at',
         'gateway_payload',
+        'checkout_fingerprint',
     ];
 
     protected $casts = [
@@ -61,6 +62,12 @@ class PaymentAttempt extends Model
     protected static function booted(): void
     {
         static::creating(function (self $attempt) {
+            $cart = \Webkul\Checkout\Models\Cart::find($attempt->cart_id);
+
+            if ($cart) {
+                $attempt->checkout_fingerprint = \ClassyFashion\Support\CheckoutFingerprint::forCart($cart);
+            }
+
             if (empty($attempt->public_id)) {
                 $attempt->public_id = (string) Str::uuid();
             }

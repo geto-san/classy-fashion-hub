@@ -1,3 +1,34 @@
+# Current verification update — 31 October 2026
+
+Implementation now checks MTN response currency, payment-time stock validation,
+checkout totals and a checkout-content fingerprint. An atomic cart claim prevents
+competing payment attempts from creating multiple orders from one active cart.
+Pre-migration payment attempts without fingerprints require staff reconciliation.
+
+Completed-sales reporting excludes pending/unpaid orders, subtracts refunded
+order totals, and adjusts gross product profit for discounted, canceled and
+refunded units. Date selection currently refers to the original order date,
+not the payment or delivery date. This is gross product margin, not net profit.
+
+Workers have a quantity-only stock screen; migration removes product creation
+and edit permissions from the standard Worker role. Custom roles require review.
+Delivery instructions now survive billing-address reuse and have server-side
+500-character validation. Assistant labels and live announcements were added.
+
+Docker verification uses PHP 8.4 and an isolated MySQL 8 database. Storefront
+and admin login return HTTP 200. The full project feature suite passes: **79 tests, 333 assertions**
+(36.78 seconds). PHP syntax checks pass for 75 checked files. The Bagisto
+translation gate fails and remains unresolved; browser/device accessibility
+and performance checks have not been run. No external merchant, SMTP or storage
+credentials were used; live payments/email and physical-device evaluation
+remain unverified. No deployment to Render or a VPS has been performed.
+
+The historical assessment below predates these changes and must not be treated
+as current proof of full compliance. In particular its signature, test-count,
+financial correctness and unconditional privacy/usability claims are superseded.
+
+---
+
 # Compliance Audit — Implementation vs `Blair_Fashion_Hub_report.docx`
 
 **How to read this.** Verdicts: **Compliant**, **Partial**, **Not done**,

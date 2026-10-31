@@ -43,7 +43,7 @@ else
     trap 'rm -rf "$TMP"' EXIT
     say "Downloading Bagisto $BAGISTO_VERSION (files only, no install yet)"
     composer create-project bagisto/bagisto "$TMP/app" "$BAGISTO_VERSION" \
-      --no-install --no-scripts --no-interaction --prefer-dist
+      --no-install --no-scripts --no-interaction --prefer-dist --ignore-platform-reqs
     SRC="$TMP/app"
   fi
 
@@ -65,8 +65,8 @@ else
   printf '    %s files added, %s project files kept as they are\n' "$added" "$skipped"
 fi
 
-say "Removing Bagisto modules this shop does not use (extra gateways, social login)"
-for m in Stripe Razorpay PayU PayGlocal PhonePe Paypal SocialLogin; do
+say "Removing Bagisto modules this shop does not use (extra gateways, social login, demo booking features)"
+for m in Stripe Razorpay PayU PayGlocal PhonePe Paypal SocialLogin BookingProduct; do
   rm -rf "$STORE/packages/Webkul/$m"
 done
 
@@ -80,7 +80,7 @@ cd "$STORE"
 [ -f .env ] || { cp .env.example .env; say "Created store/.env from .env.example"; }
 
 say "Installing PHP dependencies"
-composer install --no-interaction --prefer-dist
+composer install --no-interaction --prefer-dist --ignore-platform-reqs
 
 if ! grep -q '^APP_KEY=.\+' .env; then
   "$PHP_BIN" artisan key:generate
@@ -93,7 +93,7 @@ Done. Next steps:
   1. Edit store/.env: DB_DATABASE / DB_USERNAME / DB_PASSWORD (empty MySQL 8 or MariaDB database),
      APP_URL, and the MTN_* sandbox keys if you want mobile money.
   2. cd store
-     $PHP_BIN artisan bagisto:install --no-interaction --demo-samples
+     $PHP_BIN artisan bagisto:install --no-interaction
      $PHP_BIN artisan db:seed --class='Database\\Seeders\\ClassyFashionSeeder'
      $PHP_BIN artisan db:seed --class='Database\\Seeders\\ClassyFashionCatalogSeeder'
      $PHP_BIN artisan serve --port=8000

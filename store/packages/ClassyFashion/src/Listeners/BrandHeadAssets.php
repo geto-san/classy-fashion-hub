@@ -44,6 +44,10 @@ class BrandHeadAssets
         <link rel="stylesheet" href="/css/classy-brand.css">
         HTML;
 
+        if (! request()->routeIs('shop.home.index')) {
+            $html = preg_replace('/<meta (?:name="(?:description|twitter:card)"|property="og:(?:type|title|description|image)")[^>]*>\s*/', '', $html);
+        }
+
         return $html;
     }
 }

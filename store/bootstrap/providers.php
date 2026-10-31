@@ -3,7 +3,6 @@
 use App\Providers\AppServiceProvider;
 use Webkul\Admin\Providers\AdminServiceProvider;
 use Webkul\Attribute\Providers\AttributeServiceProvider;
-use Webkul\BookingProduct\Providers\BookingProductServiceProvider;
 use Webkul\CartRule\Providers\CartRuleServiceProvider;
 use Webkul\CatalogRule\Providers\CatalogRuleServiceProvider;
 use Webkul\Category\Providers\CategoryServiceProvider;
@@ -49,7 +48,6 @@ return [
      */
     AdminServiceProvider::class,
     AttributeServiceProvider::class,
-    BookingProductServiceProvider::class,
     CMSServiceProvider::class,
     CartRuleServiceProvider::class,
     CatalogRuleServiceProvider::class,

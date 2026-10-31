@@ -47,7 +47,10 @@ class Profit
 
     public static function itemProfit(OrderItem $item): float
     {
-        return ((float) $item->base_price - self::itemCost($item)) * (float) $item->qty_ordered;
+        $quantity = max(0, (float) $item->qty_ordered - (float) $item->qty_canceled - (float) $item->qty_refunded);
+        $discount = (float) $item->base_discount_amount * ($quantity / max(1, (float) $item->qty_ordered));
+
+        return ((float) $item->base_price - self::itemCost($item)) * $quantity - $discount;
     }
 
     public static function orderProfit(Order $order): float

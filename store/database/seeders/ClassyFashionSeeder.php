@@ -37,8 +37,7 @@ class ClassyFashionSeeder extends Seeder
 
         'catalog',
         'catalog.products',
-        'catalog.products.create',
-        'catalog.products.edit',
+        'catalog.stock',
         'catalog.categories',
 
         'sales',

@@ -98,7 +98,8 @@ class MtnMomoProvider implements MobileMoneyProvider
             'ok'         => true,
             'successful' => $status === 'SUCCESSFUL'
                 && (string) ($response->json('externalId') ?? '') === $attempt->tx_ref
-                && (float) ($response->json('amount') ?? -1) === (float) $attempt->amount,
+                && (float) ($response->json('amount') ?? -1) === (float) $attempt->amount
+                && strtoupper((string) $response->json('currency')) === strtoupper((string) config('classy.momo.mtn.currency', 'UGX')),
             'failed'     => $status === 'FAILED',
         ];
     }

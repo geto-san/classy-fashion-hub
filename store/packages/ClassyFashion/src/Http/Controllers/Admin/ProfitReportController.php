@@ -11,8 +11,8 @@ use Webkul\Admin\Http\Controllers\Controller;
 /**
  * Profit summary for a selected period (report 9.4).
  *
- * Totals: sales, transactions, profit. Canceled orders excluded.
- * Costs come from current product costs (illustrative seed data).
+ * Totals: sales, transactions, profit. Only completed sales are included.
+ * Costs use sale-time snapshots; historical estimates remain estimates.
  */
 class ProfitReportController extends Controller
 {
@@ -32,7 +32,7 @@ class ProfitReportController extends Controller
             ->with(['items.product'])
             ->whereDate('created_at', '>=', $start)
             ->whereDate('created_at', '<=', $end)
-            ->where('status', '!=', ClassyOrder::STATUS_CANCELED)
+            ->whereIn('status', [ClassyOrder::STATUS_DELIVERED, ClassyOrder::STATUS_COMPLETED])
             ->orderBy('created_at')
             ->get();
 
@@ -41,14 +41,14 @@ class ProfitReportController extends Controller
             ->map(fn ($day, $date) => [
                 'date'         => $date,
                 'transactions' => $day->count(),
-                'sales'        => $day->sum('base_grand_total'),
+                'sales'        => $day->sum(fn ($order) => (float) $order->base_grand_total - (float) $order->base_grand_total_refunded),
                 'profit'       => $day->sum(fn ($order) => Profit::orderProfit($order)),
             ])
             ->values();
 
         $totals = [
             'transactions' => $orders->count(),
-            'sales'        => $orders->sum('base_grand_total'),
+            'sales'        => $orders->sum(fn ($order) => (float) $order->base_grand_total - (float) $order->base_grand_total_refunded),
             'profit'       => $orders->sum(fn ($order) => Profit::orderProfit($order)),
         ];
 
@@ -71,7 +71,7 @@ class ProfitReportController extends Controller
         return response()->streamDownload(function () use ($rows, $totals) {
             $out = fopen('php://output', 'w');
 
-            fputcsv($out, ['Date', 'Transactions', 'Sales (UGX)', 'Profit (UGX)']);
+            fputcsv($out, ['Date', 'Transactions', 'Sales (UGX)', 'Gross Product Profit (UGX)']);
 
             foreach ($rows as $row) {
                 fputcsv($out, [$row['date'], $row['transactions'], $row['sales'], round($row['profit'], 2)]);

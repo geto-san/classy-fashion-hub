@@ -97,7 +97,31 @@ class Momo
 
         try {
             \Webkul\Checkout\Facades\Cart::setCart($cart);
+            if (! \Webkul\Checkout\Facades\Cart::validateItems()) {
+                return self::unfulfilled($attempt, 'Products are no longer available after payment.', $causer);
+            }
+
             \Webkul\Checkout\Facades\Cart::collectTotals();
+
+            $cart->refresh();
+
+            if (round((float) $cart->grand_total, 2) !== round((float) $attempt->amount, 2)
+                || $cart->cart_currency_code !== $attempt->currency) {
+                return self::unfulfilled($attempt, 'Checkout total or currency changed after payment.', $causer);
+            }
+
+            if (! $attempt->checkout_fingerprint || ! hash_equals($attempt->checkout_fingerprint, \ClassyFashion\Support\CheckoutFingerprint::forCart($cart))) {
+                return self::unfulfilled($attempt, 'Checkout contents changed or predate payment snapshots; staff reconciliation required.', $causer);
+            }
+
+            $claimed = \Webkul\Checkout\Models\Cart::query()
+                ->whereKey($cart->id)
+                ->where('is_active', 1)
+                ->update(['is_active' => 0]);
+
+            if ($claimed !== 1) {
+                return self::unfulfilled($attempt, 'Another payment already claimed this cart; staff reconciliation required.', $causer);
+            }
 
             $repository = app(\Webkul\Sales\Repositories\OrderRepository::class);
 

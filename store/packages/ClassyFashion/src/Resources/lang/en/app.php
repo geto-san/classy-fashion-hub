@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'stock' => ['title' => 'Stock quantities', 'source' => 'Inventory source', 'quantity' => 'Quantity', 'save' => 'Save quantity'],
     'orders' => [
         'mark_as' => 'Mark as :status',
         'delivery_instructions' => 'Delivery Instructions',
@@ -90,14 +91,14 @@ return [
     ],
 
     'reports' => [
-        'profit_title' => 'Profit Report',
+        'profit_title' => 'Completed Sales and Gross Product Profit',
         'start' => 'Start Date',
         'end' => 'End Date',
         'apply' => 'Apply',
         'export_csv' => 'Export CSV',
         'total_sales' => 'Total Sales',
         'transactions' => 'Transactions',
-        'total_profit' => 'Total Profit',
+        'total_profit' => 'Gross Product Profit',
         'date' => 'Date',
         'no_data' => 'No orders in this period.',
     ],

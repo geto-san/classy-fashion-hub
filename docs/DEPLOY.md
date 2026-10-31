@@ -1,3 +1,5 @@
+> **Current target: Railway.** Use [RAILWAY_DEPLOY.md](RAILWAY_DEPLOY.md) for the prepared deployment. The Render instructions below are historical and have not been revalidated.
+
 # Deploy — Classy Fashion Hub to Render (free tier)
 
 Architecture: Render **Docker** web service (Render has no native PHP

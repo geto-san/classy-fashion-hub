@@ -31,8 +31,8 @@ it('shows the profit report for a selected period', function () {
 
     get(route('admin.classy.reports.profit', ['start' => $start, 'end' => $end]))
         ->assertOk()
-        ->assertSee('Profit Report', false)
-        ->assertSee('Total Profit', false);
+        ->assertSee('Completed Sales and Gross Product Profit', false)
+        ->assertSee('Gross Product Profit', false);
 });
 
 it('exports the profit report as CSV', function () {
@@ -183,4 +183,29 @@ it('shows profit on the admin order view', function () {
         ->assertOk()
         ->assertSee('Order Profit', false)
         ->assertSee($profit, false);
+});
+
+it('deducts discounts and excludes returned and canceled units from gross product profit', function () {
+    $item = new OrderItem([
+        'base_price' => 10000,
+        'cost_price' => 6000,
+        'qty_ordered' => 4,
+        'qty_canceled' => 1,
+        'qty_refunded' => 1,
+        'base_discount_amount' => 4000,
+    ]);
+
+    expect(Profit::itemProfit($item))->toBe(6000.0);
+});
+
+it('excludes unpaid orders from completed sales totals', function () {
+    $this->actingAs(Admin::where('email', 'admin@example.com')->firstOrFail(), 'admin');
+
+    Order::factory()->create(['status' => 'pending', 'base_grand_total' => 50000])->forceFill(['created_at' => '2030-01-01 12:00:00'])->save();
+    Order::factory()->create(['status' => 'delivered', 'base_grand_total' => 20000])->forceFill(['created_at' => '2030-01-01 12:00:00'])->save();
+
+    $response = get(route('admin.classy.reports.profit', ['start' => '2030-01-01', 'end' => '2030-01-01', 'export' => 'csv']))
+        ->assertOk();
+
+    expect($response->streamedContent())->toContain('Total,1,20000');
 });

@@ -1,3 +1,25 @@
+# Verification and remaining work — 31 October 2026
+
+- Docker PHP 8.4/MySQL 8 feature suite: 79 passed, 333 assertions.
+- Local Apache storefront and admin login: HTTP 200 at localhost:8088.
+- Translation verification fails; no browser/device accessibility or load test completed.
+- New worker stock screen replaces product creation/editing in the standard Worker role.
+- Pending payments created before checkout fingerprints were introduced require manual reconciliation.
+- Reporting shows completed orders by original order date and gross product margin,
+  excluding unpaid orders and adjusting for discounts/refunds; this is not net profit.
+- A canceled order with a recorded successful mobile payment is flagged for refund,
+  including after processing begins. Full refund reconciliation remains manual.
+- SMTP delivery/retry handling, live merchant integration, persistent media,
+  scheduled off-site backups/restore drills and always-on hosting remain outstanding.
+- Replace placeholder photos and illustrative supplier costs with owner-provided data.
+- Shipping/returns/refund promises were softened pending owner approval. Existing
+  databases need an intentional CMS content update; catalog seeding may skip them.
+- No remote deployment or external service account changes were made.
+
+The historical notes below are retained for context and may describe superseded behavior.
+
+---
+
 # Known Limitations & Next Steps
 
 Honest list of what was cut, stubbed or simplified — and the report's

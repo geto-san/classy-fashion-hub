@@ -2,6 +2,12 @@
 
 return [
     [
+        'key' => 'catalog.stock',
+        'name' => 'classy-fashion::app.stock.title',
+        'route' => ['admin.classy.stock.index', 'admin.classy.stock.update'],
+        'sort' => 10,
+    ],
+    [
         'key'   => 'sales.orders.status',
         'name'  => 'classy-fashion::acl.orders.status',
         'route' => [

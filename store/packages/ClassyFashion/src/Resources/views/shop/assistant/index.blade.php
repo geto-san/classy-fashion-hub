@@ -18,6 +18,9 @@
 
         <div
             id="cfh-chat"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
             class="mt-6 flex h-[420px] flex-col gap-3 overflow-y-auto rounded-lg border border-zinc-200 bg-white p-4"
         >
             <div class="max-w-[85%] rounded-lg bg-white p-3 text-sm shadow-sm">
@@ -31,6 +34,7 @@
         >
             <input
                 id="cfh-chat-input"
+                aria-label="{{ __('classy-fashion::app.assistant.placeholder') }}"
                 type="text"
                 maxlength="500"
                 required

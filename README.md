@@ -29,7 +29,7 @@ scripts/setup-local.sh          # downloads Bagisto 2.4.12, merges it under stor
 cd store
 # Edit .env: DB_DATABASE / DB_USERNAME / DB_PASSWORD (an empty database), APP_URL.
 # Secrets live ONLY in .env and are never committed.
-php artisan bagisto:install --no-interaction --demo-samples
+php artisan bagisto:install --no-interaction
 php artisan db:seed --class='Database\Seeders\ClassyFashionSeeder'
 php artisan db:seed --class='Database\Seeders\ClassyFashionCatalogSeeder'
 php artisan serve --port=8000
@@ -118,3 +118,5 @@ Dispatched → Delivered with the “Mark as …” buttons.
 Docs: `docs/USER_GUIDE.md`, `docs/DEMO_SCRIPT.md`, `docs/DEPLOY.md`,
 `docs/KNOWN_LIMITATIONS.md`, `docs/COMPLIANCE_AUDIT.md`. Live deploy needs an
 external MySQL for Render (free tier has no MySQL); see `docs/DEPLOY.md`.
+
+Railway deployment preparation and required variables: [docs/RAILWAY_DEPLOY.md](docs/RAILWAY_DEPLOY.md).

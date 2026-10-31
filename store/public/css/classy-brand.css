@@ -2,6 +2,6 @@
  * sale tags use brand gold instead of stock red. Fonts, text colours and
  * buttons are Bagisto's own.
  */
-[class*="bg-red-600"] {
+[class~="bg-red-600"][class~="rounded-[44px]"] {
     background-color: #8A6A3B !important;
 }

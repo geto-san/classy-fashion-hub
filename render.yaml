@@ -58,7 +58,7 @@ services:
       - key: MTN_API_KEY
         sync: false
       - key: SEED_DEMO
-        value: "true"
+        value: "false"
       # Production credentials (classy:secure-accounts). With SEED_DEMO=true the
       # demo worker/customer accounts exist, so SET the three passwords below to
       # the ones you will hand to testers; blank = random, printed ONCE in the

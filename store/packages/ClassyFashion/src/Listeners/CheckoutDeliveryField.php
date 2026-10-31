@@ -20,9 +20,9 @@ class CheckoutDeliveryField
         $html = <<<HTML
         <div
             class="mt-2 max-md:mt-3"
-            v-if="controlName === 'shipping'"
+            v-if="controlName === 'shipping' || (controlName === 'billing' && address.use_for_shipping)"
         >
-            <label class="mb-1.5 block text-sm font-medium text-zinc-500 ltr:pl-0 rtl:pr-0 max-sm:text-xs">
+            <label :for="controlName + '-delivery-instructions'" class="mb-1.5 block text-sm font-medium text-zinc-500 ltr:pl-0 rtl:pr-0 max-sm:text-xs">
                 {$label}
             </label>
 
@@ -33,6 +33,7 @@ class CheckoutDeliveryField
                 rules="max:500"
             >
                 <textarea
+                    :id="controlName + '-delivery-instructions'"
                     :name="controlName + '.delivery_instructions'"
                     v-bind="field"
                     maxlength="500"

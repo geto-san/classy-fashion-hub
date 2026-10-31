@@ -35,3 +35,14 @@ it('still allows the administrator everywhere the worker is refused', function (
     get(route('admin.settings.roles.index'))->assertOk();
     get(route('admin.settings.users.index'))->assertOk();
 });
+
+it('allows quantity-only stock access while refusing product creation and editing', function () {
+    $this->actingAs($this->worker, 'admin');
+
+    get(route('admin.classy.stock.index'))->assertOk();
+    \Pest\Laravel\post(route('admin.catalog.products.store'), [])->assertUnauthorized();
+
+    $product = \Webkul\Product\Models\Product::firstOrFail();
+
+    get(route('admin.catalog.products.edit', $product->id))->assertUnauthorized();
+});

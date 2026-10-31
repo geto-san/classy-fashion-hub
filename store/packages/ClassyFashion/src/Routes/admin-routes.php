@@ -11,6 +11,9 @@ use Webkul\Core\Http\Middleware\NoCacheMiddleware;
  * Classy Fashion Hub admin routes (report customizations).
  */
 Route::group(['middleware' => ['web', 'admin', NoCacheMiddleware::class], 'prefix' => config('app.admin_url')], function () {
+    Route::get('classy/stock', [\ClassyFashion\Http\Controllers\Admin\StockController::class, 'index'])->name('admin.classy.stock.index');
+    Route::put('classy/stock/{id}', [\ClassyFashion\Http\Controllers\Admin\StockController::class, 'update'])->name('admin.classy.stock.update');
+
     Route::post('classy/orders/{id}/status', [OrderStatusController::class, 'update'])
         ->name('admin.classy.orders.status.update');
 

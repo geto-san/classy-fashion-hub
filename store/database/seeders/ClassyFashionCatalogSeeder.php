@@ -136,14 +136,14 @@ class ClassyFashionCatalogSeeder extends Seeder
     {
         $pages = [
             'about-us' => '<div class="static-container"><div class="mb-5"><h2>About Classy Fashion Hub</h2><p>Classy Fashion Hub is a fashion shop based in Mbarara, Uganda, serving university students, high school students and adults across Uganda. We stock shirts, jackets, shoes, dresses and accessories at fixed prices in Uganda Shillings - no bargaining. Shop in-store in Mbarara or order online and pay with MTN Mobile Money, Airtel Money or cash on delivery. We deliver across Uganda including Kampala, Mbarara, Masaka and Entebbe.</p></div></div>',
-            'return-policy' => '<div class="static-container"><div class="mb-5"><h2>Return Policy</h2><p>Unworn items with tags attached can be returned within 7 days of delivery for exchange or refund to your mobile money line. Contact us with your order number to arrange a Mbarara or Kampala collection, or a rider return within our delivery zones.</p></div></div>',
-            'refund-policy' => '<div class="static-container"><div class="mb-5"><h2>Refund Policy</h2><p>Approved refunds go back to your MTN or Airtel line within 3 working days, or as cash for cash-on-delivery orders.</p></div></div>',
+            'return-policy' => '<div class="static-container"><div class="mb-5"><h2>Return Policy</h2><p>Contact the shop with your order number before returning an item. Confirm eligibility, the return location and any transport costs with staff.</p></div></div>',
+            'refund-policy' => '<div class="static-container"><div class="mb-5"><h2>Refund Policy</h2><p>Contact the shop to confirm refund eligibility, amount, payment method and timing. Refunds are reviewed and processed by staff; canceling an order does not automatically send money back.</p></div></div>',
             'payment-policy' => '<div class="static-container"><div class="mb-5"><h2>Payment Policy</h2><p>We accept MTN Mobile Money and Airtel Money (confirmed before your order is marked Paid) and cash on delivery within our delivery zones. All prices are in Uganda Shillings (UGX).</p></div></div>',
-            'shipping-policy' => '<div class="static-container"><div class="mb-5"><h2>Shipping Policy</h2><p>Flat delivery fee of UGX 5,000 anywhere in Uganda. Kampala orders arrive within 24 hours; upcountry orders take 2–4 days. Add gate, landmark or call-on-arrival notes in the delivery instructions at checkout.</p></div></div>',
+            'shipping-policy' => '<div class="static-container"><div class="mb-5"><h2>Shipping Policy</h2><p>Check the delivery charge shown at checkout and confirm that your location is served with the shop before paying. Delivery timing must be confirmed for your order. Add gate, landmark or call-on-arrival notes in the delivery instructions at checkout.</p></div></div>',
             'privacy-policy' => '<div class="static-container"><div class="mb-5"><h2>Privacy Policy</h2><p>We keep only what your order needs: name, contact, delivery location and transaction records. Your details are never sold and only staff who handle your order can see them.</p></div></div>',
             'terms-conditions' => '<div class="static-container"><div class="mb-5"><h2>Terms &amp; Conditions</h2><p>Displayed UGX prices are final. Orders are confirmed subject to stock availability; mobile-money orders are fulfilled after payment confirmation.</p></div></div>',
             'terms-of-use' => '<div class="static-container"><div class="mb-5"><h2>Terms of Use</h2><p>Use accurate contact and delivery details so our riders can reach you. Misuse of accounts may lead to suspension.</p></div></div>',
-            'customer-service' => '<div class="static-container"><div class="mb-5"><h2>Customer Service</h2><p>Questions about sizes, orders or delivery? Message us with your order number and we shall help — we reply within one working day.</p></div></div>',
+            'customer-service' => '<div class="static-container"><div class="mb-5"><h2>Customer Service</h2><p>Questions about sizes, orders or delivery? Message us with your order number and we shall help — staff can assist you.</p></div></div>',
             'whats-new' => '<div class="static-container"><div class="mb-5"><h2>What&apos;s New</h2><p>New kitenge and ankara arrivals every month. Follow our catalogue for the latest Kampala fashion.</p></div></div>',
         ];
 
@@ -290,7 +290,8 @@ class ClassyFashionCatalogSeeder extends Seeder
      * Remove installer demo categories outside a fashion shop (Wellness,
      * Bookings, Electronics, Household, Books & Stationery) with their
      * subtrees, and repoint homepage section links at fashion categories.
-     * Skips any category holding products. Idempotent.
+     * Removes demo products first so future --demo-samples runs do not keep
+     * stale categories alive. Idempotent.
      */
     protected function pruneDemoCategories(): void
     {
@@ -318,13 +319,26 @@ class ClassyFashionCatalogSeeder extends Seeder
             $queue = $children;
         }
 
-        $withProducts = DB::table('product_categories')->whereIn('category_id', $ids)->distinct()->pluck('category_id')->all();
+        $ids = array_values(array_unique($ids));
 
-        $deleteIds = array_diff($ids, $withProducts);
+        $productIds = DB::table('product_categories')
+            ->whereIn('category_id', $ids)
+            ->distinct()
+            ->pluck('product_id')
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
 
-        Category::whereIn('id', $deleteIds)->get()->each->delete();
+        if (! empty($productIds)) {
+            foreach (['product_attribute_values', 'product_images', 'product_inventories', 'product_ordered_inventories', 'product_inventory_indices', 'product_price_indices', 'product_flat', 'product_super_attributes', 'product_categories', 'product_channels', 'product_customer_group_prices', 'product_up_sells', 'product_cross_sells', 'product_relations', 'product_grouped_products', 'product_reviews', 'products'] as $table) {
+                $column = $table === 'products' ? 'id' : 'product_id';
 
-        $removed = count($roots) - count(array_intersect($roots, $withProducts));
+                DB::table($table)->whereIn($column, $productIds)->delete();
+            }
+        }
+
+        Category::whereIn('id', $ids)->get()->each->delete();
 
         foreach (['electronics' => 'mens', 'wellness' => 'womens'] as $old => $new) {
             DB::table('theme_section_translations')
@@ -339,7 +353,7 @@ class ClassyFashionCatalogSeeder extends Seeder
                 });
         }
 
-        $this->command->info("Pruned {$removed} demo category tree(s); homepage links repointed to fashion.");
+        $this->command->info('Pruned demo category tree(s); homepage links repointed to fashion.');
     }
 
     /**
