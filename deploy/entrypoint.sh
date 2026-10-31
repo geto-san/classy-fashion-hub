@@ -28,6 +28,11 @@ PORT="${PORT:-80}"
 printf 'Listen %s\n' "$PORT" > /etc/apache2/ports.conf
 sed -i "s/<VirtualHost \*:80>/<VirtualHost *:$PORT>/" /etc/apache2/sites-available/000-default.conf
 
+# mod_php requires prefork; refuse ambiguous Apache module configuration.
+a2dismod mpm_event mpm_worker >/dev/null
+a2enmod mpm_prefork >/dev/null
+apache2ctl -t
+
 # Wait for the database (max ~2 minutes), then fail fast with a clear
 # message instead of cascading into migrate/seed errors.
 DB_OK=0
