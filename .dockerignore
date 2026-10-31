@@ -330,7 +330,7 @@ store/packages/Webkul/Shop/src/Resources/views/checkout/onepage/address/*
 **/.env
 **/.env.*
 !store/.env.example
-**/vendor
+store/vendor
 **/node_modules
 **/*.log
 **/.git
