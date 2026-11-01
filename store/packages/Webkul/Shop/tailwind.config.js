@@ -3,8 +3,8 @@ module.exports = {
     content: [
         "./src/Resources/**/*.blade.php",
         "./src/Resources/**/*.js",
-        "../ClassyFashion/src/Resources/**/*.blade.php",
-        "../ClassyFashion/src/Listeners/*.php",
+        "../../ClassyFashion/src/Resources/**/*.blade.php",
+        "../../ClassyFashion/src/Listeners/*.php",
     ],
 
     theme: {

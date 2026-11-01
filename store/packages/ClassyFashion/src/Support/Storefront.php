@@ -1,0 +1,118 @@
+<?php
+
+namespace ClassyFashion\Support;
+
+use Illuminate\Support\Facades\Storage;
+
+/**
+ * Client-editable storefront content, with shipped photography as a reliable fallback.
+ */
+class Storefront
+{
+    /**
+     * The fields available to the shop owner.
+     */
+    public static function fields(): array
+    {
+        return [
+            'hero_title' => 'text',
+            'hero_text' => 'textarea',
+            'hero_button' => 'text',
+            'hero_link' => 'link',
+            'hero_image' => 'image',
+            'hero_alt' => 'text',
+            'collection_title' => 'text',
+            'collection_text' => 'textarea',
+            'dresses_title' => 'text',
+            'dresses_link' => 'link',
+            'dresses_image' => 'image',
+            'dresses_alt' => 'text',
+            'caps_title' => 'text',
+            'caps_link' => 'link',
+            'caps_image' => 'image',
+            'caps_alt' => 'text',
+            'everyday_title' => 'text',
+            'everyday_link' => 'link',
+            'everyday_image' => 'image',
+            'everyday_alt' => 'text',
+            'assistant_enabled' => 'boolean',
+        ];
+    }
+
+    /**
+     * Read saved content without coupling the hero to seeded carousel slides.
+     */
+    public static function get(string $field): mixed
+    {
+        $value = core()->getConfigData('general.content.storefront.'.$field);
+
+        if ($value !== null && str_ends_with($field, '_link') && ! self::validLink((string) $value)) {
+            return '/search';
+        }
+
+        if ($value !== null) {
+            return $field === 'assistant_enabled'
+                ? filter_var($value, FILTER_VALIDATE_BOOLEAN)
+                : $value;
+        }
+
+        return match ($field) {
+            'assistant_enabled' => true,
+            'hero_link' => '/search',
+            'hero_image' => '/images/storefront/classy-collection-campaign-1672w.webp',
+            'dresses_link' => '/search?query=dress',
+            'caps_link' => '/search?query=cap',
+            'everyday_link' => '/search',
+            'dresses_image' => '/images/storefront/shop-dresses.webp',
+            'caps_image' => '/images/storefront/shop-caps.webp',
+            'everyday_image' => '/images/storefront/shop-collection.webp',
+            default => trans('classy-fashion::storefront.content.'.$field),
+        };
+    }
+
+    /**
+     * Uploaded media uses the storage disk; bundled media survives ephemeral deployments.
+     */
+    public static function image(string $field): string
+    {
+        $path = (string) self::get($field);
+
+        return str_starts_with($path, '/') ? $path : Storage::disk('public')->url($path);
+    }
+
+    /**
+     * Explicit collection content keeps uploaded photographs attached to their subjects.
+     */
+    public static function collections(): array
+    {
+        return array_map(fn ($key) => [
+            'src' => self::image($key.'_image'),
+            'title' => self::get($key.'_title'),
+            'alt' => self::get($key.'_alt'),
+            'link' => self::get($key.'_link'),
+        ], ['dresses', 'caps', 'everyday']);
+    }
+
+    /**
+     * Collection destinations use merchandise visible in the owner's shop photographs.
+     */
+    public static function editorialCollections(): array
+    {
+        return array_merge(self::collections(), array_map(fn ($key) => [
+            'src' => self::image('everyday_image'),
+            'title' => trans('classy-fashion::storefront.editorial.'.$key),
+            'alt' => self::get('everyday_alt'),
+            'link' => '/search?query='.$key,
+        ], ['bags', 'shoes', 'shirts']));
+    }
+
+    /**
+     * Only same-site paths can be used for collection and hero links.
+     */
+    public static function validLink(string $value): bool
+    {
+        return str_starts_with($value, '/')
+            && ! str_starts_with($value, '//')
+            && ! preg_match('/[\\\\\x00-\x20]/', $value);
+    }
+}

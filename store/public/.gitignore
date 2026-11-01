@@ -1,0 +1,7 @@
+
+# Ship the Classy storefront stylesheet while keeping generated CSS ignored.
+!css/
+css/*
+!css/classy-ethereal.css
+!css/classy-ethereal-footer.css
+!css/classy-ethereal-product.css

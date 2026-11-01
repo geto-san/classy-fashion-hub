@@ -7,6 +7,7 @@ use ClassyFashion\Console\Commands\ExpirePayments;
 use ClassyFashion\Console\Commands\ImportProductPhotos;
 use ClassyFashion\Console\Commands\RepairImages;
 use ClassyFashion\Console\Commands\SecureAccounts;
+use ClassyFashion\Console\Commands\SetupUgandaHomepage;
 use ClassyFashion\DataGrids\OrderDataGrid;
 use ClassyFashion\Http\Middleware\ApplyClassyBrand;
 use ClassyFashion\Observers\ProductInventoryObserver;
@@ -53,6 +54,30 @@ class ClassyFashionServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'classy-fashion');
 
+        $this->app->booted(function () {
+            $this->app['view']->prependNamespace('shop', __DIR__.'/../Resources/views/overrides/shop');
+
+            if (config('classy.client_admin', true)) {
+                $this->app['view']->prependNamespace('admin', __DIR__.'/../Resources/views/overrides/admin');
+
+                config(['debugbar.enabled' => false]);
+                config(['menu.admin' => array_values(array_filter(
+                    config('menu.admin', []),
+                    fn ($item) => ! str_starts_with($item['key'], 'appearance')
+                ))]);
+
+                config(['core' => array_values(array_filter(
+                    config('core', []),
+                    fn ($item) => ! str_starts_with($item['key'], 'magic_ai')
+                        && ! in_array($item['key'], [
+                            'general.content.custom_scripts',
+                            'general.content.speculation_rules',
+                            'general.content.header_offer',
+                        ])
+                ))]);
+            }
+        });
+
         $this->loadRoutesFrom(__DIR__.'/../Routes/admin-routes.php');
 
         $this->loadRoutesFrom(__DIR__.'/../Routes/shop-routes.php');
@@ -67,6 +92,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
             SecureAccounts::class,
             ExpirePayments::class,
             DescribeProducts::class,
+            SetupUgandaHomepage::class,
         ]);
     }
 }

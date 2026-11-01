@@ -4,6 +4,8 @@ use ClassyFashion\Http\Controllers\Admin\AuditLogController;
 use ClassyFashion\Http\Controllers\Admin\OrderStatusController;
 use ClassyFashion\Http\Controllers\Admin\PaymentAttemptController;
 use ClassyFashion\Http\Controllers\Admin\ProfitReportController;
+use ClassyFashion\Http\Controllers\Admin\StockController;
+use ClassyFashion\Http\Controllers\Admin\StorefrontController;
 use Illuminate\Support\Facades\Route;
 use Webkul\Core\Http\Middleware\NoCacheMiddleware;
 
@@ -11,8 +13,11 @@ use Webkul\Core\Http\Middleware\NoCacheMiddleware;
  * Classy Fashion Hub admin routes (report customizations).
  */
 Route::group(['middleware' => ['web', 'admin', NoCacheMiddleware::class], 'prefix' => config('app.admin_url')], function () {
-    Route::get('classy/stock', [\ClassyFashion\Http\Controllers\Admin\StockController::class, 'index'])->name('admin.classy.stock.index');
-    Route::put('classy/stock/{id}', [\ClassyFashion\Http\Controllers\Admin\StockController::class, 'update'])->name('admin.classy.stock.update');
+    Route::get('classy/storefront', [StorefrontController::class, 'index'])->name('admin.classy.storefront.index');
+    Route::put('classy/storefront', [StorefrontController::class, 'update'])->name('admin.classy.storefront.update');
+
+    Route::get('classy/stock', [StockController::class, 'index'])->name('admin.classy.stock.index');
+    Route::put('classy/stock/{id}', [StockController::class, 'update'])->name('admin.classy.stock.update');
 
     Route::post('classy/orders/{id}/status', [OrderStatusController::class, 'update'])
         ->name('admin.classy.orders.status.update');

@@ -3,6 +3,7 @@
 namespace ClassyFashion\Http\Controllers\Shop;
 
 use ClassyFashion\Support\ShopAssistant;
+use ClassyFashion\Support\Storefront;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
@@ -19,11 +20,15 @@ class AssistantController extends Controller
 {
     public function index()
     {
+        abort_unless(Storefront::get('assistant_enabled'), 404);
+
         return view('classy-fashion::shop.assistant.index');
     }
 
     public function chat(Request $request)
     {
+        abort_unless(Storefront::get('assistant_enabled'), 404);
+
         $validated = $request->validate([
             'message' => ['required', 'string', 'max:500'],
         ]);
@@ -34,7 +39,7 @@ class AssistantController extends Controller
 
         if (RateLimiter::tooManyAttempts($key, $limit)) {
             return response()->json([
-                'reply'    => 'You have reached today’s assistant limit. Please try again tomorrow — or browse the catalogue.',
+                'reply' => 'You have reached today’s assistant limit. Please try again tomorrow — or browse the catalogue.',
                 'products' => [],
             ], 429);
         }

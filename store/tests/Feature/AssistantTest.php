@@ -116,7 +116,7 @@ it('shows recommendations on the product page', function () {
 
     get('/'.$urlKey)
         ->assertOk()
-        ->assertSee('You may also like', false);
+        ->assertSee(trans('shop::app.products.view.related-product-title'), false);
 });
 
 it('fills missing descriptions without a key', function () {

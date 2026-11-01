@@ -78,6 +78,7 @@ if [ "${ADMINS:-0}" = "0" ]; then
 fi
 
 # Restore any media missing from the (ephemeral) disk. Idempotent.
+php artisan classy:setup-homepage
 php artisan classy:repair-images || true
 # Attach real product photos (database/seeders/product-images) when supplied.
 php artisan classy:import-photos || true
@@ -97,6 +98,8 @@ if [ "${RESET_ADMIN_PASSWORD:-}" = "true" ]; then
   php artisan classy:secure-accounts --reset-admin
 fi
 
+php artisan optimize:clear
+php artisan responsecache:clear
 php artisan optimize
 chown -R www-data:www-data storage bootstrap/cache || true
 

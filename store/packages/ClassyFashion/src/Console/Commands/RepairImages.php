@@ -68,6 +68,23 @@ class RepairImages extends Command
             $restored++;
         }
 
+        foreach (['shop-dresses.webp', 'shop-caps.webp', 'shop-collection.webp'] as $file) {
+            $path = 'storefront/'.$file;
+
+            if ($disk->exists($path)) {
+                continue;
+            }
+
+            if ($this->option('dry-run')) {
+                $missingUploads++;
+
+                continue;
+            }
+
+            $disk->put($path, file_get_contents(public_path('images/storefront/'.$file)));
+            $restored++;
+        }
+
         foreach (['logo' => 'brand-logo.png', 'favicon' => 'brand-favicon.png'] as $column => $file) {
             $channel = DB::table('channels')->where('id', 1)->first();
 

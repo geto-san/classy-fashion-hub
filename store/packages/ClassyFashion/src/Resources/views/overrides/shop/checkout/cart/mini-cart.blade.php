@@ -1,0 +1,480 @@
+
+<v-mini-cart>
+    <span
+        class="icon-cart cursor-pointer text-2xl"
+        role="button"
+        aria-label="@lang('shop::app.checkout.cart.mini-cart.shopping-cart')"
+    ></span>
+</v-mini-cart>
+
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-mini-cart-template"
+    >
+        {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.before') !!}
+
+        @if (core()->getConfigData('sales.checkout.mini_cart.display_mini_cart'))
+            <x-shop::drawer width="408px" class="cfh-mini-cart">
+
+                <x-slot:toggle>
+                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.toggle.before') !!}
+
+                    <button type="button" class="cfh-cart-toggle" aria-label="{{ trans('shop::app.checkout.cart.mini-cart.shopping-cart') }}" @click="getCart">
+                        <span class="cfh-cart-label">{{ trans('shop::app.checkout.cart.index.cart') }} <span>(@{{ cart?.items_qty || 0 }})</span></span>
+                        <span class="icon-cart" aria-hidden="true"></span>
+                        <span class="cfh-cart-mobile-count" v-if="cart?.items_qty">@{{ cart.items_qty }}</span>
+                    </button>
+
+                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.toggle.after') !!}
+                </x-slot>
+
+
+                <x-slot:header class="cfh-mini-cart-header">
+                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.header.before') !!}
+
+                    <div class="flex items-center justify-between">
+                        <p class="cfh-mini-cart-title">
+                            @lang('shop::app.checkout.cart.mini-cart.shopping-cart')
+                        </p>
+                    </div>
+
+
+                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.header.after') !!}
+                </x-slot>
+
+
+                <x-slot:content class="cfh-mini-cart-content">
+                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.before') !!}
+
+
+                    <div
+                        class="cfh-mini-cart-items"
+                        v-if="cart?.items?.length"
+                    >
+                        <div
+                            class="cfh-mini-cart-item"
+                            v-for="item in cart?.items"
+                        >
+
+                            {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.image.before') !!}
+
+                            <div class="">
+                                <a :href="'{{ route('shop.product_or_category.index', ':slug') }}'.replace(':slug', item.product_url_key)">
+                                    <img
+                                        :src="item.base_image.small_image_url"
+                                        :alt="item.base_image.alt"
+                                        class="cfh-mini-cart-image"
+                                        width="96" height="118"
+                                    />
+                                </a>
+                            </div>
+
+                            {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.image.after') !!}
+
+
+                            <div class="cfh-mini-cart-info">
+                                <div class="cfh-mini-cart-name-price">
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.name.before') !!}
+
+                                    <a
+                                        class="max-w-4/5 max-md:w-full"
+                                        :href="'{{ route('shop.product_or_category.index', ':slug') }}'.replace(':slug', item.product_url_key)"
+                                    >
+                                        <p class="cfh-mini-cart-name">
+                                            @{{ item.name }}
+                                        </p>
+                                    </a>
+
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.name.after') !!}
+
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.price.before') !!}
+
+                                    <template v-if="displayTax.prices == 'including_tax'">
+                                        <p class="text-lg max-md:font-semibold max-sm:text-sm">
+                                            @{{ item.formatted_price_incl_tax }}
+                                        </p>
+                                    </template>
+
+                                    <template v-else-if="displayTax.prices == 'both'">
+                                        <p class="flex flex-col text-lg max-md:font-semibold max-sm:text-sm">
+                                            @{{ item.formatted_price_incl_tax }}
+
+                                            <span class="text-xs font-normal text-zinc-500">
+                                                @lang('shop::app.checkout.cart.mini-cart.excl-tax')
+
+                                                <span class="font-medium text-black">@{{ item.formatted_price }}</span>
+                                            </span>
+                                        </p>
+                                    </template>
+
+                                    <template v-else>
+                                        <p class="text-lg max-md:font-semibold max-sm:text-sm">
+                                            @{{ item.formatted_price }}
+                                        </p>
+                                    </template>
+
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.price.after') !!}
+                                </div>
+
+
+                                <div
+                                    class="grid select-none gap-x-2.5 gap-y-1.5 max-sm:gap-y-0.5"
+                                    v-if="item.options.length"
+                                >
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.product_details.before') !!}
+
+
+                                    <div class="">
+                                        <p
+                                            class="flex cursor-pointer items-center gap-x-4 text-base max-md:gap-x-1.5 max-md:text-sm max-sm:text-xs"
+                                            @click="item.option_show = ! item.option_show"
+                                        >
+                                            @lang('shop::app.checkout.cart.mini-cart.see-details')
+
+                                            <span
+                                                class="text-2xl max-md:text-xl max-sm:text-lg"
+                                                :class="{'icon-arrow-up': item.option_show, 'icon-arrow-down': ! item.option_show}"
+                                            ></span>
+                                        </p>
+                                    </div>
+
+
+                                    <div
+                                        class="grid gap-2"
+                                        v-show="item.option_show"
+                                    >
+                                        <template v-for="attribute in item.options">
+                                            <div class="max-md:grid max-md:gap-0.5">
+                                                <p class="text-sm font-medium text-zinc-500 max-md:font-normal max-sm:text-xs">
+                                                    @{{ attribute.attribute_name + ':' }}
+                                                </p>
+
+                                                <p class="text-sm max-sm:text-xs">
+                                                    <template v-if="attribute?.attribute_type === 'file'">
+                                                        <a
+                                                            :href="attribute.file_url"
+                                                            class="text-blue-700"
+                                                            target="_blank"
+                                                            :download="attribute.file_name"
+                                                        >
+                                                            @{{ attribute.file_name }}
+                                                        </a>
+                                                    </template>
+
+                                                    <template v-else>
+                                                        @{{ attribute.option_label }}
+                                                    </template>
+                                                </p>
+                                            </div>
+                                        </template>
+                                    </div>
+
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.product_details.after') !!}
+                                </div>
+
+                                <div class="cfh-mini-cart-controls">
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.quantity_changer.before') !!}
+
+
+                                    <span class="cfh-mini-cart-quantity-label">{{ trans('classy-fashion::storefront.cart_quantity') }}</span>
+                                    <x-shop::quantity-changer
+                                        v-if="item.can_change_qty"
+                                        ::key="'qty-' + item.id + '-' + refreshKey"
+                                        class="cfh-mini-cart-quantity"
+                                        name="quantity"
+                                        ::value="item?.quantity"
+                                        :removable="true"
+                                        @change="updateItem($event, item)"
+                                        @remove="removeItem(item.id)"
+                                    />
+
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.quantity_changer.after') !!}
+
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.remove_button.before') !!}
+
+
+                                    <button
+                                        type="button"
+                                        class="cfh-mini-cart-remove icon-bin"
+                                        aria-label="{{ trans('shop::app.checkout.cart.mini-cart.remove') }}"
+                                        @click="removeItem(item.id)"
+                                    >
+                                    </button>
+
+                                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.remove_button.after') !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div
+                        class="mt-32 pb-8 max-md:mt-32"
+                        v-else
+                    >
+                        <div class="b-0 grid place-items-center gap-y-5 max-md:gap-y-0">
+                            <img
+                                class="max-md:h-[100px] max-md:w-[100px]"
+                                src="{{ bagisto_asset('images/thank-you.png') }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
+
+                            <p
+                                class="text-xl max-md:text-sm"
+                                role="heading"
+                            >
+                                @lang('shop::app.checkout.cart.mini-cart.empty-cart')
+                            </p>
+                        </div>
+                    </div>
+
+                    {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.content.after') !!}
+                </x-slot>
+
+
+                <x-slot:footer class="cfh-mini-cart-footer">
+                    <div
+                        v-if="cart?.items?.length"
+                        class="grid-col-1 grid gap-5 max-md:gap-2.5"
+                    >
+                        <div
+                            class="cfh-mini-cart-subtotal"
+                            :class="{'!justify-end': isLoading}"
+                        >
+                            {!! view_render_event('bagisto.shop.checkout.mini-cart.subtotal.before') !!}
+
+                            <template v-if="! isLoading">
+                                <p class="text-sm font-medium text-zinc-500">
+                                    @lang('shop::app.checkout.cart.mini-cart.subtotal')
+                                </p>
+
+                                <template v-if="displayTax.subtotal == 'including_tax'">
+                                    <p class="cfh-mini-cart-subtotal-amount">
+                                        @{{ cart.formatted_sub_total_incl_tax }}
+                                    </p>
+                                </template>
+
+                                <template v-else-if="displayTax.subtotal == 'both'">
+                                    <p class="cfh-mini-cart-subtotal-amount flex flex-col">
+                                        @{{ cart.formatted_sub_total_incl_tax }}
+
+                                        <span class="text-sm font-normal text-zinc-500 max-sm:text-xs">
+                                            @lang('shop::app.checkout.cart.mini-cart.excl-tax')
+
+                                            <span class="font-medium text-black">@{{ cart.formatted_sub_total }}</span>
+                                        </span>
+                                    </p>
+                                </template>
+
+                                <template v-else>
+                                    <p class="cfh-mini-cart-subtotal-amount">
+                                        @{{ cart.formatted_sub_total }}
+                                    </p>
+                                </template>
+                            </template>
+
+                            <template v-else>
+
+                                <svg
+                                    class="text-blue h-8 w-8 animate-spin text-[5px] font-semibold max-md:h-7 max-md:w-7 max-sm:h-4 max-sm:w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    aria-hidden="true"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <circle
+                                        class="opacity-25"
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        stroke="currentColor"
+                                        stroke-width="4"
+                                    ></circle>
+
+                                    <path
+                                        class="opacity-75"
+                                        fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                    ></path>
+                                </svg>
+                            </template>
+
+                            {!! view_render_event('bagisto.shop.checkout.mini-cart.subtotal.after') !!}
+                        </div>
+
+                        {!! view_render_event('bagisto.shop.checkout.mini-cart.action.before') !!}
+
+
+                        <div class="cfh-mini-cart-actions">
+                            {!! view_render_event('bagisto.shop.checkout.mini-cart.continue_to_checkout.before') !!}
+
+                            <a
+                                href="{{ route('shop.checkout.onepage.index') }}"
+                                class="primary-button cfh-mini-cart-checkout"
+                            >
+                                @lang('shop::app.checkout.cart.mini-cart.continue-to-checkout')
+                            </a>
+
+                            {!! view_render_event('bagisto.shop.checkout.mini-cart.continue_to_checkout.after') !!}
+
+                            <div class="cfh-mini-cart-view">
+                                <a href="{{ route('shop.checkout.cart.index') }}" class="secondary-button">
+                                    @lang('shop::app.checkout.cart.mini-cart.view-cart')
+                                </a>
+                            </div>
+                        </div>
+
+                        {!! view_render_event('bagisto.shop.checkout.mini-cart.action.after') !!}
+                    </div>
+                </x-slot>
+            </x-shop::drawer>
+        @else
+            <a href="{{ route('shop.checkout.onepage.index') }}">
+                {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.toggle.before') !!}
+
+                    <span class="relative">
+                        <span
+                            class="icon-cart cursor-pointer text-2xl"
+                            role="button"
+                            aria-label="@lang('shop::app.checkout.cart.mini-cart.shopping-cart')"
+                            tabindex="0"
+                        ></span>
+
+                        <span
+                            class="absolute -top-4 rounded-[44px] bg-navyBlue px-2 py-1.5 text-xs font-semibold leading-[9px] text-white ltr:left-5 rtl:right-5 max-md:px-2 max-md:py-1.5 max-md:ltr:left-4 max-md:rtl:right-4"
+                            v-if="cart?.items_qty"
+                        >
+                            @{{ cart.items_qty }}
+                        </span>
+                    </span>
+
+                {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.toggle.after') !!}
+            </a>
+        @endif
+
+        {!! view_render_event('bagisto.shop.checkout.mini-cart.drawer.after') !!}
+    </script>
+
+    @php
+        $hasCartItems = (bool) \Webkul\Checkout\Facades\Cart::getCart()?->items->isNotEmpty();
+
+        $willResponseBeCached = \Webkul\FPC\FullPageCache::willCache();
+    @endphp
+
+    <script type="module">
+        app.component("v-mini-cart", {
+            template: '#v-mini-cart-template',
+
+            data() {
+                @if ($willResponseBeCached)
+                    let miniCart = '<bagisto-response-cache-mini-cart>';
+                @else
+                    let miniCart = {!! $hasCartItems ? 'null' : json_encode(['items_qty' => 0, 'items' => []]) !!};
+                @endif
+
+                return  {
+                    refreshKey: 0,
+
+                    cart: miniCart,
+
+                    isLoading:false,
+
+                    displayTax: {
+                        prices: "{{ core()->getConfigData('sales.taxes.shopping_cart.display_prices') }}",
+                        subtotal: "{{ core()->getConfigData('sales.taxes.shopping_cart.display_subtotal') }}",
+                    },
+                };
+            },
+
+            mounted() {
+                if (typeof this.cart === 'string') {
+                    this.cart = null;
+                }
+
+                if (! this.cart) {
+                    this.getCart();
+                }
+
+                /**
+                 * Action.
+                 */
+                this.$emitter.on('update-mini-cart', (cart) => {
+                    this.cart = cart;
+                });
+            },
+
+            methods: {
+                getCart() {
+                    this.$axios.get('{{ route('shop.api.checkout.cart.index') }}')
+                        .then(response => {
+                            this.cart = response.data.data;
+                        })
+                        .catch(error => {});
+                },
+
+                updateItem(quantity, item) {
+                    this.isLoading = true;
+
+                    let qty = {};
+
+                    qty[item.id] = quantity;
+
+                    this.$axios.put('{{ route('shop.api.checkout.cart.update') }}', { qty })
+                        .then(response => {
+                            this.isLoading = false;
+
+                            const payload = response.data.data;
+
+                            if (payload && payload.items !== undefined) {
+                                this.cart = payload;
+                            } else {
+                                this.$emitter.emit('add-flash', {
+                                    type: 'warning',
+                                    message: payload?.message || response.data.message,
+                                });
+                            }
+
+                            this.refreshKey++;
+                        })
+                        .catch(error => {
+                            this.isLoading = false;
+
+                            this.$emitter.emit('add-flash', {
+                                type: 'error',
+                                message: error.response?.data?.message || error.message,
+                            });
+
+                            this.refreshKey++;
+                        });
+                },
+
+                removeItem(itemId) {
+                    this.$emitter.emit('open-confirm-modal', {
+                        agree: () => {
+                            this.isLoading = true;
+
+                            this.$axios.post('{{ route('shop.api.checkout.cart.destroy') }}', {
+                                '_method': 'DELETE',
+                                'cart_item_id': itemId,
+                            })
+                            .then(response => {
+                                this.cart = response.data.data;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                                this.isLoading = false;
+                            })
+                            .catch(error => {
+                                this.$emitter.emit('add-flash', { type: 'error', message: response.data.message });
+
+                                this.isLoading = false;
+                            });
+                        }
+                    });
+                },
+            },
+        });
+    </script>
+@endpushOnce

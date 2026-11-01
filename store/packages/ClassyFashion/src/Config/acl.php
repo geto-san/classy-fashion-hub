@@ -2,36 +2,43 @@
 
 return [
     [
+        'key' => 'settings.storefront',
+        'name' => 'classy-fashion::storefront.editor_title',
+        'route' => ['admin.classy.storefront.index', 'admin.classy.storefront.update'],
+        'sort' => 0,
+        'icon' => '',
+    ],
+    [
         'key' => 'catalog.stock',
         'name' => 'classy-fashion::app.stock.title',
         'route' => ['admin.classy.stock.index', 'admin.classy.stock.update'],
         'sort' => 10,
     ],
     [
-        'key'   => 'sales.orders.status',
-        'name'  => 'classy-fashion::acl.orders.status',
+        'key' => 'sales.orders.status',
+        'name' => 'classy-fashion::acl.orders.status',
         'route' => [
             'admin.classy.orders.status.update',
             'admin.classy.orders.partner.update',
         ],
-        'sort'  => 5,
+        'sort' => 5,
     ], [
-        'key'   => 'reporting.profit',
-        'name'  => 'classy-fashion::acl.reports.profit',
+        'key' => 'reporting.profit',
+        'name' => 'classy-fashion::acl.reports.profit',
         'route' => 'admin.classy.reports.profit',
-        'sort'  => 4,
+        'sort' => 4,
     ], [
-        'key'   => 'reporting.audit',
-        'name'  => 'classy-fashion::acl.reports.audit',
+        'key' => 'reporting.audit',
+        'name' => 'classy-fashion::acl.reports.audit',
         'route' => 'admin.classy.reports.audit',
-        'sort'  => 5,
+        'sort' => 5,
     ], [
-        'key'   => 'sales.payments',
-        'name'  => 'classy-fashion::acl.payments.view',
+        'key' => 'sales.payments',
+        'name' => 'classy-fashion::acl.payments.view',
         'route' => [
             'admin.classy.payments.index',
             'admin.classy.payments.confirm',
         ],
-        'sort'  => 6,
+        'sort' => 6,
     ],
 ];

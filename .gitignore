@@ -53,3 +53,27 @@ backups/
 !/store/packages/Webkul/Sales/src/Models/
 /store/packages/Webkul/Sales/src/Models/*
 !/store/packages/Webkul/Sales/src/Models/OrderItem.php
+
+# Shipped shop photography and storefront coverage.
+!/store/public/
+/store/public/*
+!/store/public/images/
+/store/public/images/*
+!/store/public/images/storefront/
+!/store/tests/
+/store/tests/*
+!/store/tests/Feature/
+/store/tests/Feature/*
+!/store/tests/Feature/StorefrontTest.php
+
+# Ethereal storefront sources must travel with the checkout.
+!/store/public/css/
+/store/public/css/*
+!/store/public/css/classy-ethereal.css
+!/store/packages/Webkul/Shop/tailwind.config.js
+!/store/public/.gitignore
+!/store/public/fonts/
+/store/public/fonts/*
+!/store/public/fonts/work-sans/
+!/store/public/css/classy-ethereal-footer.css
+!/store/public/css/classy-ethereal-product.css

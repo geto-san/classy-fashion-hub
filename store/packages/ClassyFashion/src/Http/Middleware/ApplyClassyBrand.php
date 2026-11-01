@@ -18,6 +18,24 @@ class ApplyClassyBrand
 {
     public function handle(Request $request, Closure $next): Response
     {
+        if (config('classy.client_admin', true) && app()->bound('debugbar')) {
+            app('debugbar')->disable();
+        }
+
+        if (config('classy.client_admin', true) && $request->routeIs('admin.appearance.*', 'admin.help.*')) {
+            return redirect()->route('admin.classy.storefront.index');
+        }
+
+        if (config('classy.client_admin', true) && $request->routeIs('admin.configuration.store')) {
+            abort_if(
+                $request->has('magic_ai')
+                || $request->has('general.content.custom_scripts')
+                || $request->has('general.content.speculation_rules')
+                || $request->has('general.content.header_offer'),
+                403
+            );
+        }
+
         /** @var Response $response */
         $response = $next($request);
 
@@ -38,6 +56,10 @@ class ApplyClassyBrand
 
         if (! is_string($content) || $content === '') {
             return $response;
+        }
+
+        if ($request->routeIs('shop.*', 'classy.*')) {
+            $content = str_replace('<body>', '<body class="cfh-store">', $content);
         }
 
         $response->setContent(Brand::apply($content));

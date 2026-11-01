@@ -10,19 +10,30 @@ use Webkul\Theme\ViewRenderEventManager;
  */
 class BrandHeadAssets
 {
+    /**
+     * Load the storefront identity and its visual system.
+     */
     public function addAssets(ViewRenderEventManager $eventManager): void
     {
         $eventManager->addTemplate($this->html());
+        $eventManager->addTemplate('classy-fashion::ethereal-head');
     }
 
+    /**
+     * Keep administrative identity separate from the storefront styling.
+     */
     public function addAdminAssets(ViewRenderEventManager $eventManager): void
     {
         $eventManager->addTemplate($this->html());
     }
 
+    /**
+     * Shared brand metadata and existing identity assets.
+     */
     protected function html(): string
     {
         $ogImage = url('og-image.png');
+        $styleVersion = filemtime(public_path('css/classy-brand.css')) ?: 1;
 
         $html = <<<HTML
         <meta name="description" content="Classy Fashion Hub — shirts, jackets, shoes and more. Clear prices, easy ordering.">
@@ -41,7 +52,7 @@ class BrandHeadAssets
         <meta property="og:image" content="{$ogImage}">
         <meta name="twitter:card" content="summary_large_image">
         <link rel="stylesheet" href="/brand.css">
-        <link rel="stylesheet" href="/css/classy-brand.css">
+        <link rel="stylesheet" href="/css/classy-brand.css?v={$styleVersion}">
         HTML;
 
         if (! request()->routeIs('shop.home.index')) {
