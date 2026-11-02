@@ -2,12 +2,17 @@
 
 namespace ClassyFashion\Providers;
 
+use ClassyFashion\Console\Commands\AssertDeploymentReady;
+use ClassyFashion\Console\Commands\AuditMedia;
+use ClassyFashion\Console\Commands\CheckStorage;
+use ClassyFashion\Console\Commands\CopyMedia;
 use ClassyFashion\Console\Commands\DescribeProducts;
 use ClassyFashion\Console\Commands\ExpirePayments;
 use ClassyFashion\Console\Commands\ImportProductPhotos;
 use ClassyFashion\Console\Commands\RepairImages;
 use ClassyFashion\Console\Commands\SecureAccounts;
 use ClassyFashion\Console\Commands\SetupUgandaHomepage;
+use ClassyFashion\Console\Commands\TransferDatabase;
 use ClassyFashion\DataGrids\OrderDataGrid;
 use ClassyFashion\Http\Middleware\ApplyClassyBrand;
 use ClassyFashion\Observers\ProductInventoryObserver;
@@ -18,11 +23,15 @@ use Webkul\Product\Models\ProductInventory as WebkulProductInventory;
 
 class ClassyFashionServiceProvider extends ServiceProvider
 {
+    /**
+     * Register the shop extensions and configuration.
+     */
     public function register(): void
     {
         $this->app->register(EventServiceProvider::class);
 
-        // Admin order list that renders/filters the report statuses.
+        $this->app->register(CloudStorageServiceProvider::class);
+
         $this->app->bind(\Webkul\Admin\DataGrids\Sales\OrderDataGrid::class, OrderDataGrid::class);
 
         $this->mergeConfigFrom(__DIR__.'/../Config/classy.php', 'classy');
@@ -36,12 +45,11 @@ class ClassyFashionServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../Config/system.php', 'core');
     }
 
+    /**
+     * Register shop views, routes, migrations, observers, and commands.
+     */
     public function boot(): void
     {
-        /*
-         * Uganda store defaults (universal): country pre-selected across
-         * address forms; timezone handled per channel (Africa/Kampala).
-         */
         config(['app.default_country' => config('app.default_country') ?: 'UG']);
 
         $this->app->make(Router::class)->pushMiddlewareToGroup('web', ApplyClassyBrand::class);
@@ -87,6 +95,11 @@ class ClassyFashionServiceProvider extends ServiceProvider
         });
 
         $this->commands([
+            AssertDeploymentReady::class,
+            AuditMedia::class,
+            CopyMedia::class,
+            CheckStorage::class,
+            TransferDatabase::class,
             RepairImages::class,
             ImportProductPhotos::class,
             SecureAccounts::class,

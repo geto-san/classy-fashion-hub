@@ -1,0 +1,10 @@
+@source "../../";
+
+@theme {
+    --color-noir: #0A0A0A;
+    --color-taupe: #B8B0A8;
+    --color-ivory: #F7F3EC;
+    --color-champagne: #E8E0D4;
+    --color-stone: #6B635B;
+    --color-gold: #8A6A3B;
+}

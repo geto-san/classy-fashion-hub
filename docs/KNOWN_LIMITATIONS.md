@@ -83,11 +83,12 @@ future work they map to.
   (`ClassyFashion`) is where they would live; Bagisto marketplace
   add-ons are paid, verify licensing before citing.
 
-- **Cloudinary evaluated and rejected:** uploads work but the only
-  Laravel-12-compatible Flysystem adapter (codebar-ag v12.9) returns
-  broken reads (SDK signature mismatch) and 404ing delivery URLs, while
-  v13 requires Laravel 13. Media persistence is handled by
-  `classy:repair-images` instead (see DEPLOY.md).
+- **Cloudinary migration:** the rejected Laravel 12 adapter has been replaced by
+  a Classy Flysystem adapter using the official Cloudinary PHP SDK. Original bytes,
+  Laravel URL generation, private visibility, and deletion have contract tests.
+  Real-account upload/read/delete and redeployment persistence remain launch gates
+  until credentials are supplied; see DEPLOY.md. Routine startup does not repair
+  uploaded photos or generate placeholders.
 
 - **AI assistant (report 5.1, first stage):** rule-based recommendations,
   shop chat and description filler work with no keys; an optional

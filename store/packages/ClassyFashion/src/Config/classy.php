@@ -37,9 +37,9 @@ return [
     // Optional LLM for the shop assistant / product descriptions. Empty key =
     // rule-based answers only. Any OpenAI-compatible endpoint works.
     'ai' => [
-        'api_key' => env('AI_LLM_API_KEY'),
-        'base_url' => env('AI_LLM_BASE_URL') ?: 'https://api.groq.com/openai/v1',
-        'model' => env('AI_LLM_MODEL') ?: 'llama-3.3-70b-versatile',
+        'api_key' => env('OPENAI_API_KEY') ?: env('AI_LLM_API_KEY'),
+        'base_url' => env('OPENAI_API_KEY') ? 'https://api.openai.com/v1' : (env('AI_LLM_BASE_URL') ?: 'https://api.groq.com/openai/v1'),
+        'model' => env('OPENAI_API_KEY') ? env('OPENAI_MODEL', 'gpt-4.1-mini') : (env('AI_LLM_MODEL') ?: 'llama-3.3-70b-versatile'),
         'timeout' => (int) env('AI_LLM_TIMEOUT', 20),
         'daily_limit' => (int) env('AI_ASSISTANT_DAILY_LIMIT', 200),
     ],

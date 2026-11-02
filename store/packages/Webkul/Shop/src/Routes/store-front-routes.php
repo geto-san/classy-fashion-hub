@@ -21,23 +21,23 @@ Route::prefix('withdraw')->middleware([NoCacheMiddleware::class])->group(functio
     Route::controller(EUWithdrawalController::class)->group(function () {
         Route::get('/', 'lookupForm')
             ->middleware('throttle:eu-withdraw-lookup')
-            ->name('shop.eu-withdrawal.guest.lookup');
+            ->name('shop.eu_withdrawal.guest.lookup');
 
         Route::post('lookup', 'lookupSubmit')
             ->middleware('throttle:eu-withdraw-lookup')
-            ->name('shop.eu-withdrawal.guest.lookup.submit');
+            ->name('shop.eu_withdrawal.guest.lookup.submit');
 
         Route::get('{orderId}/create', 'guestCreate')
             ->middleware(['signed', 'throttle:eu-withdraw-submit'])
-            ->name('shop.eu-withdrawal.guest.create');
+            ->name('shop.eu_withdrawal.guest.create');
 
         Route::post('{orderId}/store', 'guestStore')
             ->middleware(['signed', 'throttle:eu-withdraw-submit'])
-            ->name('shop.eu-withdrawal.guest.store');
+            ->name('shop.eu_withdrawal.guest.store');
 
         Route::get('confirmation/{uuid}', 'guestConfirmation')
             ->middleware('signed')
-            ->name('shop.eu-withdrawal.guest.confirmation');
+            ->name('shop.eu_withdrawal.guest.confirmation');
     });
 });
 
@@ -96,7 +96,9 @@ Route::get('search', [SearchController::class, 'index'])
     ->name('shop.search.index')
     ->middleware('cache.response');
 
-Route::post('search/upload', [SearchController::class, 'upload'])->name('shop.search.upload');
+Route::post('search/upload', [SearchController::class, 'upload'])
+    ->middleware('throttle:10,1')
+    ->name('shop.search.upload');
 
 /**
  * Subscription routes.

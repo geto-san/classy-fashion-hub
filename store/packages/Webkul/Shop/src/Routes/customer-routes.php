@@ -14,6 +14,7 @@ use Webkul\Shop\Http\Controllers\Customer\RegistrationController;
 use Webkul\Shop\Http\Controllers\Customer\ResetPasswordController;
 use Webkul\Shop\Http\Controllers\Customer\SessionController;
 use Webkul\Shop\Http\Controllers\DataGridController;
+use Webkul\Shop\Http\Middleware\EnsureGDPRIsEnabled;
 
 Route::prefix('customer')->group(function () {
     /**
@@ -22,7 +23,9 @@ Route::prefix('customer')->group(function () {
     Route::controller(ForgotPasswordController::class)->prefix('forgot-password')->group(function () {
         Route::get('', 'create')->name('shop.customers.forgot_password.create');
 
-        Route::post('', 'store')->name('shop.customers.forgot_password.store');
+        Route::post('', 'store')
+            ->middleware('throttle:6,1')
+            ->name('shop.customers.forgot_password.store');
     });
 
     /**
@@ -110,23 +113,27 @@ Route::prefix('customer')->group(function () {
             /**
              * GDPR.
              */
-            Route::controller(GDPRController::class)->prefix('gdpr')->group(function () {
-                Route::get('', 'index')->name('shop.customers.account.gdpr.index');
+            Route::controller(GDPRController::class)
+                ->prefix('gdpr')
+                ->middleware(EnsureGDPRIsEnabled::class)
+                ->group(function () {
+                    Route::get('', 'index')->name('shop.customers.account.gdpr.index');
 
-                Route::post('', 'store')->name('shop.customers.account.gdpr.store');
+                    Route::post('', 'store')->name('shop.customers.account.gdpr.store');
 
-                Route::get('pdf-view', 'pdfView')->name('shop.customers.account.gdpr.pdf-view');
+                    Route::get('pdf-view', 'pdfView')->name('shop.customers.account.gdpr.pdf_view');
 
-                Route::get('html-view', 'htmlView')->name('shop.customers.account.gdpr.html-view');
+                    Route::get('html-view', 'htmlView')->name('shop.customers.account.gdpr.html_view');
 
-                Route::post('revoke/{id}', 'revoke')->name('shop.customers.account.gdpr.revoke');
-            });
+                    Route::post('revoke/{id}', 'revoke')->name('shop.customers.account.gdpr.revoke');
+                });
 
             /**
              * Cookie consent.
              */
             Route::get('your-cookie-consent-preferences', [GDPRController::class, 'cookieConsent'])
-                ->name('shop.customers.gdpr.cookie-consent');
+                ->middleware(EnsureGDPRIsEnabled::class)
+                ->name('shop.customers.gdpr.cookie_consent');
 
             /**
              * Addresses.
@@ -159,7 +166,7 @@ Route::prefix('customer')->group(function () {
 
                 Route::post('cancel/{id}', 'cancel')->name('shop.customers.account.orders.cancel');
 
-                Route::get('print/Invoice/{id}', 'printInvoice')->name('shop.customers.account.orders.print-invoice');
+                Route::get('print/Invoice/{id}', 'printInvoice')->name('shop.customers.account.orders.print_invoice');
             });
 
             /**
@@ -167,13 +174,13 @@ Route::prefix('customer')->group(function () {
              */
             Route::controller(CustomerEUWithdrawalController::class)->group(function () {
                 Route::get('orders/{orderId}/withdraw', 'create')
-                    ->name('shop.customers.account.eu-withdrawal.create');
+                    ->name('shop.customers.account.eu_withdrawal.create');
 
                 Route::post('orders/{orderId}/withdraw', 'store')
-                    ->name('shop.customers.account.eu-withdrawal.store');
+                    ->name('shop.customers.account.eu_withdrawal.store');
 
                 Route::get('withdrawals/{uuid}', 'show')
-                    ->name('shop.customers.account.eu-withdrawal.show');
+                    ->name('shop.customers.account.eu_withdrawal.show');
             });
 
             /**
@@ -188,19 +195,23 @@ Route::prefix('customer')->group(function () {
 
                 Route::post('store', 'store')->name('shop.customers.account.rma.store');
 
-                Route::get('get-order-items/{orderId}', 'getOrderItems')->name('shop.customers.account.rma.get-order-items');
+                Route::get('get-order-items/{orderId}', 'getOrderItems')->name('shop.customers.account.rma.get_order_items');
 
-                Route::get('get-resolution-reasons/{resolutionType}', 'getResolutionReasons')->name('shop.customers.account.rma.get-resolution-reasons');
+                Route::get('get-resolution-reasons/{resolutionType}', 'getResolutionReasons')->name('shop.customers.account.rma.get_resolution_reasons');
 
-                Route::post('update-status/{id}', 'updateStatus')->name('shop.customers.account.rma.update-status');
+                Route::post('update-status/{id}', 'updateStatus')->name('shop.customers.account.rma.update_status');
 
-                Route::post('reopen/{id}', 'reOpenRequest')->name('shop.customers.account.rma.re-open');
+                Route::post('reopen/{id}', 'reOpenRequest')->name('shop.customers.account.rma.re_open');
 
                 Route::post('cancel/{id}', 'cancelRequest')->name('shop.customers.account.rma.cancel');
 
-                Route::get('get-messages', 'getMessages')->name('shop.customers.account.rma.get-messages');
+                Route::get('get-messages', 'getMessages')->name('shop.customers.account.rma.get_messages');
 
-                Route::post('send-message', 'sendMessage')->name('shop.customers.account.rma.send-message');
+                Route::get('attachments/{id}', 'downloadAttachment')->name('shop.customers.account.rma.attachment');
+
+                Route::get('images/{id}', 'showImage')->name('shop.customers.account.rma.image');
+
+                Route::post('send-message', 'sendMessage')->name('shop.customers.account.rma.send_message');
             });
         });
     });

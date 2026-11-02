@@ -1,5 +1,5 @@
-@inject ('reviewHelper', 'Webkul\Product\Helpers\Review')
-@inject ('productViewHelper', 'Webkul\Product\Helpers\View')
+@inject ('reviewHelper', \Webkul\Product\Helpers\Review::class)
+@inject ('productViewHelper', \Webkul\Product\Helpers\View::class)
 
 @php
     $avgRatings = $reviewHelper->getAverageRating($product);
@@ -19,7 +19,7 @@
 
     @if (core()->getConfigData('catalog.rich_snippets.products.enable'))
         <script type="application/ld+json">
-            {!! app('Webkul\Product\Helpers\SEO')->getProductJsonLd($product) !!}
+            {!! app(\Webkul\Product\Helpers\SEO::class)->getProductJsonLd($product) !!}
         </script>
     @endif
 
@@ -82,11 +82,11 @@
 
                 <x-shop::tabs.item
                     id="descritpion-tab"
-                    class="container mt-[60px] !p-0"
+                    class="container mt-15 p-0!"
                     :title="trans('shop::app.products.view.description')"
                     :is-selected="true"
                 >
-                    <div class="container mt-[60px] max-1180:px-5">
+                    <div class="container mt-15 max-1180:px-5">
                         <p class="text-lg text-zinc-500 max-1180:text-sm">
                             {!! $product->description !!}
                         </p>
@@ -99,11 +99,11 @@
                 @if(count($attributeData))
                     <x-shop::tabs.item
                         id="information-tab"
-                        class="container mt-[60px] !p-0"
+                        class="container mt-15 p-0!"
                         :title="trans('shop::app.products.view.additional-information')"
                         :is-selected="false"
                     >
-                        <div class="container mt-[60px] max-1180:px-5">
+                        <div class="container mt-15 max-1180:px-5">
                             <div class="mt-8 grid max-w-max grid-cols-[auto_1fr] gap-4">
                                 @foreach ($customAttributeValues as $customAttributeValue)
                                     @if (! empty($customAttributeValue['value']))
@@ -147,7 +147,7 @@
                 <!-- Reviews Tab -->
                 <x-shop::tabs.item
                     id="review-tab"
-                    class="container mt-[60px] !p-0"
+                    class="container mt-15 p-0!"
                     :title="trans('shop::app.products.view.review')"
                     :is-selected="false"
                 >
@@ -158,13 +158,13 @@
     </div>
 
     <!-- Information Section -->
-    <div class="container mt-6 grid gap-3 !p-0 max-1180:px-5 1180:hidden">
+    <div class="container mt-6 grid gap-3 p-0! max-1180:px-5 1180:hidden">
         <!-- Description Accordion -->
         <x-shop::accordion
             class="max-md:border-none"
             :is-active="true"
         >
-            <x-slot:header class="bg-gray-100 max-md:!py-3 max-sm:!py-2">
+            <x-slot:header class="bg-gray-100 max-md:py-3! max-sm:py-2!">
                 <p class="text-base font-medium 1180:hidden">
                     @lang('shop::app.products.view.description')
                 </p>
@@ -183,7 +183,7 @@
                 class="max-md:border-none"
                 :is-active="false"
             >
-                <x-slot:header class="bg-gray-100 max-md:!py-3 max-sm:!py-2">
+                <x-slot:header class="bg-gray-100 max-md:py-3! max-sm:py-2!">
                     <p class="text-base font-medium 1180:hidden">
                         @lang('shop::app.products.view.additional-information')
                     </p>
@@ -245,7 +245,7 @@
             :is-active="false"
         >
             <x-slot:header
-                class="bg-gray-100 max-md:!py-3 max-sm:!py-2"
+                class="bg-gray-100 max-md:py-3! max-sm:py-2!"
                 id="review-accordian-button"
             >
                 <p class="text-base font-medium">
@@ -288,23 +288,23 @@
                         v-model="is_buy_now"
                     >
 
-                    <div class="container px-[60px] max-1180:px-0">
+                    <div class="container px-15 max-1180:px-0">
                         <div class="mt-12 flex gap-9 max-1180:flex-wrap max-lg:mt-0 max-sm:gap-y-4">
                             <!-- Gallery Blade Inclusion -->
                             @include('shop::products.view.gallery')
 
                             <!-- Details -->
-                            <div class="relative max-w-[590px] max-1180:w-full max-1180:max-w-full max-1180:px-5 max-sm:px-4">
+                            <div class="relative max-w-147.5 max-1180:w-full max-1180:max-w-full max-1180:px-5 max-sm:px-4">
                                 {!! view_render_event('bagisto.shop.products.name.before', ['product' => $product]) !!}
 
                                 <div class="flex justify-between gap-4">
-                                    <h1 class="break-words text-3xl font-medium max-sm:text-xl" v-pre>
+                                    <h1 class="wrap-break-word text-3xl font-medium max-sm:text-xl" v-pre>
                                         {{ $product->name }}
                                     </h1>
 
                                     @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
                                         <div
-                                            class="max-sm:min-h-7 max-sm:min-w-7 flex max-h-[46px] min-h-[46px] min-w-[46px] cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] max-sm:max-h-7 max-sm:text-base"
+                                            class="max-sm:min-h-7 max-sm:min-w-7 flex max-h-11.5 min-h-11.5 min-w-11.5 cursor-pointer items-center justify-center rounded-full border bg-white text-2xl transition-all hover:opacity-[0.8] max-sm:max-h-7 max-sm:text-base"
                                             role="button"
                                             aria-label="@lang('shop::app.products.view.add-to-wishlist')"
                                             tabindex="0"
@@ -342,7 +342,7 @@
                                 <!-- Pricing -->
                                 {!! view_render_event('bagisto.shop.products.price.before', ['product' => $product]) !!}
 
-                                <p class="mt-[22px] flex items-center gap-2.5 text-2xl !font-medium max-sm:mt-2 max-sm:gap-x-2.5 max-sm:gap-y-0 max-sm:text-lg">
+                                <p class="mt-5.5 flex items-center gap-2.5 text-2xl font-medium! max-sm:mt-2 max-sm:gap-x-2.5 max-sm:gap-y-0 max-sm:text-lg">
                                     {!! $product->getTypeInstance()->getPriceHtml() !!}
                                 </p>
 
@@ -364,6 +364,8 @@
 
                                 {!! view_render_event('bagisto.shop.products.price.after', ['product' => $product]) !!}
 
+                                {!! app(\Webkul\Omnibus\Services\OmnibusPriceManager::class)->getOmnibusPriceHtml($product) !!}
+
                                 {!! view_render_event('bagisto.shop.products.short_description.before', ['product' => $product]) !!}
 
                                 <p class="mt-6 text-lg text-zinc-500 max-sm:mt-1.5 max-sm:text-sm">
@@ -381,7 +383,7 @@
                                 @include('shop::products.view.types.bundle')
 
                                 <!-- Product Actions and Quantity Box -->
-                                <div class="mt-8 flex max-w-[470px] gap-4 max-sm:mt-4 max-sm:flex-wrap">
+                                <div class="mt-8 flex max-w-117.5 gap-4 max-sm:mt-4 max-sm:flex-wrap">
 
                                     {!! view_render_event('bagisto.shop.products.view.quantity.before', ['product' => $product]) !!}
 
@@ -401,7 +403,7 @@
 
                                         <x-shop::button
                                             type="submit"
-                                            class="secondary-button w-full max-w-full max-sm:!max-w-none max-sm:!w-auto max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="secondary-button w-full max-w-full max-sm:max-w-none! max-sm:w-auto! max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
                                             button-type="secondary-button"
                                             :loading="false"
                                             :title="trans('shop::app.products.view.add-to-cart')"
@@ -415,7 +417,7 @@
                                     @else
                                         <button
                                             type="button"
-                                            class="secondary-button w-full max-w-full max-sm:!max-w-none max-sm:!w-auto max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="secondary-button w-full max-w-full max-sm:max-w-none! max-sm:w-auto! max-md:py-3 max-sm:rounded-lg max-sm:py-1.5"
                                             @click="$refs.contactUsModal.open()"
                                         >
                                             @lang('shop::app.components.layouts.footer.contact-us')
@@ -427,10 +429,10 @@
                                 @if (core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                                     {!! view_render_event('bagisto.shop.products.view.buy_now.before', ['product' => $product]) !!}
 
-                                    @if (core()->getConfigData('catalog.products.storefront.buy_now_button_display'))
+                                    @if (core()->getConfigData('catalog.products.product_view_page.buy_now_button_display'))
                                         <x-shop::button
                                             type="submit"
-                                            class="primary-button mt-5 w-full max-w-[470px] max-md:py-3 max-sm:mt-3 max-sm:rounded-lg max-sm:py-1.5"
+                                            class="primary-button mt-5 w-full max-w-117.5 max-md:py-3 max-sm:mt-3 max-sm:rounded-lg max-sm:py-1.5"
                                             button-type="primary-button"
                                             :title="trans('shop::app.products.view.buy-now')"
                                             :disabled="! $product->isSaleable(1)"
@@ -808,7 +810,7 @@
                     <!-- Up-sell Products -->
                     <x-shop::products.carousel
                         :title="trans('shop::app.products.view.up-sell-title')"
-                        :src="route('shop.api.products.up-sell.index', ['id' => $product->id])"
+                        :src="route('shop.api.products.up_sell.index', ['id' => $product->id])"
                     />
                 </template>
             </div>

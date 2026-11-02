@@ -1,3 +1,5 @@
+> Historical Railway deployment record. The current migration target and acceptance status are in [DEPLOY.md](DEPLOY.md). Both current Dockerfiles use Bagisto 2.5; use the original deployed commit/image plus its original database/media backup for a 2.4 rollback.
+
 # Railway deployment
 
 Deploy one PHP/Apache service (storefront and admin together), one MySQL service,

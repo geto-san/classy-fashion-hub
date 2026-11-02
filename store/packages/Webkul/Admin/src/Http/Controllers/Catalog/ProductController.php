@@ -18,7 +18,7 @@ use Webkul\Admin\Http\Resources\ProductResource;
 use Webkul\Attribute\Repositories\AttributeFamilyRepository;
 use Webkul\Core\Rules\Slug;
 use Webkul\Customer\Repositories\CustomerRepository;
-use Webkul\Product\Helpers\Product;
+use Webkul\Product\Enums\SearchContextEnum;
 use Webkul\Product\Helpers\ProductType;
 use Webkul\Product\Repositories\ProductAttributeValueRepository;
 use Webkul\Product\Repositories\ProductInventoryRepository;
@@ -71,7 +71,7 @@ class ProductController extends Controller
 
         $configurableFamily = null;
 
-        if ($familyId = request()->get('family')) {
+        if ($familyId = request()->input('family')) {
             $configurableFamily = $this->attributeFamilyRepository->find($familyId);
         }
 
@@ -306,23 +306,9 @@ class ProductController extends Controller
             ]);
         }
 
-        $searchEngine = 'database';
-
-        if (
-            core()->getConfigData('catalog.products.search.engine') == 'elastic'
-            && core()->getConfigData('catalog.products.search.admin_mode') == 'elastic'
-        ) {
-            $searchEngine = 'elastic';
-
-            $indexNames = core()->getAllChannels()->map(function ($channel) {
-                return Product::formatElasticSearchIndexName($channel->code, app()->getLocale());
-            })->toArray();
-        }
-
         $channelId = $this->customerRepository->find(request('customer_id'))->channel_id ?? null;
 
         $params = [
-            'index' => $indexNames ?? null,
             'name' => request('query'),
             'sort' => 'created_at',
             'order' => 'desc',
@@ -338,7 +324,7 @@ class ProductController extends Controller
         }
 
         $products = $this->productRepository
-            ->setSearchEngine($searchEngine)
+            ->setSearchContext(SearchContextEnum::ADMIN)
             ->getAll($params);
 
         return ProductResource::collection($products);

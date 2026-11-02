@@ -5,11 +5,17 @@ set -eu
 cd /var/www/html
 
 : "${DB_CONNECTION:=mysql}"
-: "${DB_HOST:?set DB_HOST}"
-: "${DB_PORT:=3306}"
-: "${DB_DATABASE:?set DB_DATABASE}"
-: "${DB_USERNAME:?set DB_USERNAME}"
-: "${DB_PASSWORD:?set DB_PASSWORD}"
+if [ -z "${DB_URL:-}" ]; then
+  : "${DB_HOST:?set DB_HOST or DB_URL}"
+  : "${DB_DATABASE:?set DB_DATABASE}"
+  : "${DB_USERNAME:?set DB_USERNAME}"
+  : "${DB_PASSWORD:?set DB_PASSWORD}"
+fi
+case "$DB_CONNECTION" in
+  pgsql) : "${DB_PORT:=5432}" ;;
+  mysql|mariadb) : "${DB_PORT:=3306}" ;;
+  *) echo 'Unsupported database driver.' >&2; exit 1 ;;
+esac
 
 # Keep the same key across every deployment; never generate an ephemeral key.
 : "${APP_KEY:?set a persistent APP_KEY (php artisan key:generate --show)}"
@@ -33,11 +39,10 @@ a2dismod mpm_event mpm_worker >/dev/null
 a2enmod mpm_prefork >/dev/null
 apache2ctl -t
 
-# Wait for the database (max ~2 minutes), then fail fast with a clear
-# message instead of cascading into migrate/seed errors.
+# Wait for the configured database, including TLS on PostgreSQL.
 DB_OK=0
 for i in $(seq 1 24); do
-  if php -r 'new PDO("mysql:host=".getenv("DB_HOST").";port=".getenv("DB_PORT"), getenv("DB_USERNAME"), getenv("DB_PASSWORD"));' 2>/dev/null; then
+  if APP_CONFIG_CACHE=/tmp/classy-readiness-config.php php /usr/local/bin/classy-database-ready.php 2>/dev/null; then
     DB_OK=1
     break
   fi
@@ -45,17 +50,21 @@ for i in $(seq 1 24); do
 done
 
 if [ "$DB_OK" != "1" ]; then
-  echo "FATAL: cannot reach MySQL at ${DB_HOST}:${DB_PORT} as ${DB_USERNAME}."
-  echo "Check: (1) Railway MySQL service is Running (not paused; trial credit left),"
-  echo "(2) DB_HOST/DB_PORT/DB_DATABASE/DB_USERNAME/DB_PASSWORD env values,"
-  echo "(3) app and database share the same Railway environment/private network."
+  echo "FATAL: database readiness failed. Check connection credentials, selected database, and TLS."
   exit 1
 fi
 
 php artisan config:clear
-php artisan storage:link || true
-php artisan migrate --force
+php artisan storage:link
+if [ "${MIGRATE_ON_BOOT:-true}" = "true" ]; then
+  if [ "$DB_CONNECTION" = pgsql ]; then
+    /usr/local/bin/classy-migrate.sh
+  else
+    php artisan migrate --force
+  fi
+fi
 
+if [ "${INITIALIZE_STORE:-false}" = "true" ]; then
 # Fresh database? Seed core data + Classy Fashion data (never wipes).
 ADMINS=$(php -r 'require "vendor/autoload.php"; $app = require "bootstrap/app.php"; $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap(); echo Illuminate\Support\Facades\DB::table("admins")->count();')
 if [ "${ADMINS:-0}" = "0" ]; then
@@ -92,12 +101,15 @@ php artisan db:seed --class='Database\Seeders\ClassyBrandSeeder' --force || true
 # prints a new random password once in this log unless SEED_*_PASSWORD is set.
 php artisan classy:secure-accounts
 
+fi
+
 # Lost-password recovery (no shell on the free tier): set SEED_ADMIN_PASSWORD
 # and RESET_ADMIN_PASSWORD=true, redeploy once, then remove RESET_ADMIN_PASSWORD.
 if [ "${RESET_ADMIN_PASSWORD:-}" = "true" ]; then
   php artisan classy:secure-accounts --reset-admin
 fi
 
+php artisan classy:assert-deployment-ready
 php artisan optimize:clear
 php artisan responsecache:clear
 php artisan optimize

@@ -6,13 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Minimal OpenAI-compatible chat client for free-tier LLM providers.
- *
- * Defaults to Groq's free tier (llama model); any OpenAI-compatible
- * endpoint works via AI_LLM_* env keys (OpenRouter free models, etc).
- * All failures degrade gracefully: callers must always have a
- * rule-based fallback so the shop works with no key at all.
- * Never logs keys or customer data.
+ * Server-side AI client with a safe null fallback and no customer-data logging.
  */
 class AiAssistant
 {
@@ -41,16 +35,25 @@ class AiAssistant
         }
 
         try {
+            $openai = self::baseUrl() === 'https://api.openai.com/v1';
+
+            $payload = $openai ? [
+                'model' => self::model(),
+                'input' => $messages,
+                'max_output_tokens' => $maxTokens,
+                'store' => false,
+            ] : [
+                'model' => self::model(),
+                'messages' => $messages,
+                'max_tokens' => $maxTokens,
+                'temperature' => 0.3,
+            ];
+
             $response = Http::baseUrl(self::baseUrl())
                 ->withToken((string) config('classy.ai.api_key'))
                 ->acceptJson()
                 ->timeout((int) config('classy.ai.timeout', 20))
-                ->post('/chat/completions', [
-                    'model'       => self::model(),
-                    'messages'    => $messages,
-                    'max_tokens'  => $maxTokens,
-                    'temperature' => 0.3,
-                ]);
+                ->post($openai ? '/responses' : '/chat/completions', $payload);
 
             if (! $response->successful()) {
                 Log::warning('classy.ai.llm_failed', ['status' => $response->status()]);
@@ -58,7 +61,16 @@ class AiAssistant
                 return null;
             }
 
-            $text = trim((string) ($response->json('choices.0.message.content') ?? ''));
+            $text = $openai
+                ? collect($response->json('output', []))
+                    ->where('type', 'message')
+                    ->flatMap(fn ($item) => $item['content'] ?? [])
+                    ->where('type', 'output_text')
+                    ->pluck('text')
+                    ->implode("\n")
+                : (string) ($response->json('choices.0.message.content') ?? '');
+
+            $text = trim($text);
 
             return $text === '' ? null : $text;
         } catch (\Throwable $e) {

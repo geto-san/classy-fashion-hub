@@ -4,27 +4,27 @@
 # Why this exists: the repo tracks only OUR files under store/ (the ClassyFashion
 # package, seeders, tests, six small core edits). Bagisto core itself is not
 # committed, so a plain clone has no artisan, no vendor/ and no app.
-# This script downloads Bagisto 2.4.12 and merges it UNDER the tracked files:
+# This script downloads Bagisto 2.5.0 and merges it UNDER the tracked files:
 # anything already in store/ (including our core edits) is never overwritten.
 #
 # Usage:   scripts/setup-local.sh
 # Options (environment):
-#   PHP_BIN=php8.3        PHP binary to use (default: php)
-#   BAGISTO_SOURCE=/dir   use an existing Bagisto 2.4.12 tree instead of downloading
+#   PHP_BIN=php8.4        PHP binary to use (default: php)
+#   BAGISTO_SOURCE=/dir   use an existing Bagisto 2.5.0 tree instead of downloading
 #   SKIP_COMPOSER=1       merge files only (no composer install / key:generate)
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STORE="$ROOT/store"
 PHP_BIN="${PHP_BIN:-php}"
-BAGISTO_VERSION="2.4.12"
+BAGISTO_VERSION="2.5.0"
 
 say() { printf '\n==> %s\n' "$*"; }
 die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 
-command -v "$PHP_BIN" >/dev/null 2>&1 || die "PHP not found. Install PHP 8.3 (Bagisto 2.4 does not support 8.5) or set PHP_BIN."
-"$PHP_BIN" -r 'exit(PHP_VERSION_ID >= 80300 && PHP_VERSION_ID < 80500 ? 0 : 1);' \
-  || die "PHP 8.3 or 8.4 required, found $("$PHP_BIN" -r 'echo PHP_VERSION;')."
+command -v "$PHP_BIN" >/dev/null 2>&1 || die "PHP not found. Install PHP 8.4 or set PHP_BIN."
+"$PHP_BIN" -r 'exit(PHP_VERSION_ID >= 80401 ? 0 : 1);' \
+  || die "PHP 8.4.1 or newer required, found $("$PHP_BIN" -r 'echo PHP_VERSION;')."
 
 if [ -z "${SKIP_COMPOSER:-}" ]; then
   command -v composer >/dev/null 2>&1 || die "Composer 2 not found (https://getcomposer.org)."
@@ -34,7 +34,9 @@ fi
   || die "store/packages/ClassyFashion is missing - run this from a full clone of the repo."
 
 if [ -f "$STORE/artisan" ]; then
-  say "store/ already contains Bagisto (artisan found) - skipping download."
+  grep -Fq "BAGISTO_VERSION = '$BAGISTO_VERSION'" "$STORE/packages/Webkul/Core/src/Core.php" \
+    || die "Existing core is not Bagisto $BAGISTO_VERSION. Use the backed-up upgrade workflow in docs/DEPLOY.md."
+  say "store/ already contains Bagisto $BAGISTO_VERSION - skipping download."
 else
   SRC="${BAGISTO_SOURCE:-}"
 
@@ -42,8 +44,8 @@ else
     TMP="$(mktemp -d)"
     trap 'rm -rf "$TMP"' EXIT
     say "Downloading Bagisto $BAGISTO_VERSION (files only, no install yet)"
-    composer create-project bagisto/bagisto "$TMP/app" "$BAGISTO_VERSION" \
-      --no-install --no-scripts --no-interaction --prefer-dist --ignore-platform-reqs
+    "$PHP_BIN" "$(command -v composer)" create-project bagisto/bagisto "$TMP/app" "$BAGISTO_VERSION" \
+      --no-install --no-scripts --no-interaction --prefer-dist
     SRC="$TMP/app"
   fi
 
@@ -80,7 +82,12 @@ cd "$STORE"
 [ -f .env ] || { cp .env.example .env; say "Created store/.env from .env.example"; }
 
 say "Installing PHP dependencies"
-composer install --no-interaction --prefer-dist --ignore-platform-reqs
+"$PHP_BIN" "$(command -v composer)" install --no-interaction --prefer-dist
+
+if [ "${SKIP_ASSETS:-0}" != "1" ]; then
+  command -v npm >/dev/null 2>&1 || die "Node 22 and npm are required to build the two themes."
+  sh "$ROOT/deploy/build-assets.sh" "$STORE"
+fi
 
 if ! grep -q '^APP_KEY=.\+' .env; then
   "$PHP_BIN" artisan key:generate

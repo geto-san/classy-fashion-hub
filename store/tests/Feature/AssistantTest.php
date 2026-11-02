@@ -19,7 +19,7 @@ it('answers delivery and payment questions without any key', function () {
 
     postJson(route('classy.assistant.chat'), ['message' => 'How much is delivery to Kampala?'])
         ->assertOk()
-        ->assertSee('flat UGX 5,000', false);
+        ->assertSee('confirm your location and delivery timing', false);
 
     postJson(route('classy.assistant.chat'), ['message' => 'Can I pay with Airtel money?'])
         ->assertOk()
@@ -53,7 +53,7 @@ it('tracks orders for customers and guides guests', function () {
 });
 
 it('uses the LLM for open questions when keys exist', function () {
-    config(['classy.ai.api_key' => 'test-key-123']);
+    config(['classy.ai.api_key' => 'test-key-123', 'classy.ai.base_url' => 'https://api.groq.com/openai/v1']);
 
     Http::fake([
         'api.groq.com/openai/v1/chat/completions*' => Http::response([
@@ -69,7 +69,7 @@ it('uses the LLM for open questions when keys exist', function () {
 });
 
 it('falls back gracefully when the LLM fails', function () {
-    config(['classy.ai.api_key' => 'test-key-123']);
+    config(['classy.ai.api_key' => 'test-key-123', 'classy.ai.base_url' => 'https://api.groq.com/openai/v1']);
 
     Http::fake([
         'api.groq.com/openai/v1/chat/completions*' => Http::response([], 500),

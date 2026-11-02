@@ -2,9 +2,9 @@
 
 namespace ClassyFashion\Console\Commands;
 
+use ClassyFashion\Repositories\MediaRepository;
 use ClassyFashion\Support\ProductImage;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -23,15 +23,14 @@ class ImportProductPhotos extends Command
 
     protected $description = 'Attach real product photos from database/seeders/product-images.';
 
-    public function handle(): int
+    /**
+     * Upload originals before changing gallery references.
+     */
+    public function handle(MediaRepository $media): int
     {
         $disk = Storage::disk('public');
 
-        $products = DB::table('product_flat')
-            ->where('locale', 'en')
-            ->select('product_id', 'name')
-            ->get()
-            ->unique('product_id');
+        $products = $media->products();
 
         $changed = 0;
         $missing = [];
@@ -46,15 +45,11 @@ class ImportProductPhotos extends Command
             }
 
             $wanted = array_map(
-                fn (string $file) => 'product/'.$product->product_id.'/cfh-'.substr(md5_file($file), 0, 12).'.'.pathinfo($file, PATHINFO_EXTENSION),
+                fn (string $file) => 'products/'.$product->product_id.'/cfh-'.substr(md5_file($file), 0, 12).'.'.pathinfo($file, PATHINFO_EXTENSION),
                 $photos
             );
 
-            $current = DB::table('product_images')
-                ->where('product_id', $product->product_id)
-                ->orderBy('position')
-                ->pluck('path')
-                ->all();
+            $current = $media->gallery($product->product_id);
 
             if ($current === $wanted) {
                 continue;
@@ -72,16 +67,7 @@ class ImportProductPhotos extends Command
                 $disk->put($wanted[$position], file_get_contents($file));
             }
 
-            DB::table('product_images')->where('product_id', $product->product_id)->delete();
-
-            foreach ($wanted as $position => $path) {
-                DB::table('product_images')->insert([
-                    'type'       => null,
-                    'path'       => $path,
-                    'product_id' => $product->product_id,
-                    'position'   => $position,
-                ]);
-            }
+            $media->replaceGallery($product->product_id, $wanted);
 
             foreach (array_diff($current, $wanted) as $old) {
                 $disk->delete($old);
