@@ -11,7 +11,8 @@ by `classy-serve.sh`; a custom command bypasses the image entrypoint. Both steps
 must run so database validation and the installed marker precede Apache.
 
 Production has not been switched. Provider credentials are stored locally and remote
-staging is being validated. The Render service stays paused during database transfer.
+staging is live at https://classy-fashion-hub.onrender.com. It was paused during
+database transfer and resumed only after restoration verification.
 Do not remove the running Railway project or its uploads volume.
 
 ## Credentials
@@ -221,3 +222,22 @@ identities, passwords, and order values were retained. A fresh production contai
 without a `.env` file or uploaded-file volume passes desktop/mobile browser tests
 and administrator login, orders, reports, stock, payments, and storefront settings
 using the preserved credentials. Three startup-protection tests also pass.
+
+The selected source has only the `about-us` and `payment-policy` CMS pages.
+Other stored footer links, including privacy/terms links, refer to pages absent
+from that source. No replacement policy text or catalogue data was invented.
+Review those content gaps before customer launch.
+
+The public Render deployment passes desktop/mobile homepage, login, search, cart,
+existing CMS-page and image checks; stored links use the Render origin. Preserved
+administrator credentials successfully access dashboard, orders, profit/audit
+reports, payments, stock, and storefront settings. An unknown payment callback
+returns HTTP 200 without changing orders, the installer rejects AJAX requests
+with HTTP 403, and the assistant responds through the normal XSRF-cookie flow.
+
+Brevo authentication succeeds from the authorized operator IP, but the configured
+`MAIL_FROM_ADDRESS` is not currently listed as a sender. Verify it and authorize
+Render outbound ranges `74.220.48.0/24` and `74.220.56.0/24` in Brevo. Actual email
+delivery and the final source write freeze/domain or callback cutover remain
+pending; Railway has not been modified or deleted. No customer email was sent
+during the read-only acceptance checks.
