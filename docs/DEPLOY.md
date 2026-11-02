@@ -6,8 +6,8 @@ pinned upstream skeleton and this checkout. `render.yaml` uses the repository
 root as its Docker context and disables automatic deployment during validation.
 The alternative Railway Dockerfile uses the same application version.
 
-Production has not been switched. Render, Neon, and Cloudinary account credentials
-must be supplied before remote provisioning, real storage tests, or staging deployment.
+Production has not been switched. Provider credentials are stored locally and remote
+staging is being validated. The Render service stays paused during database transfer.
 Do not remove the running Railway project or its uploads volume.
 
 ## Credentials
@@ -137,9 +137,15 @@ Do not enable initial-store seeders for a migrated shop.
 Verify catalogue/search/filters, variants, customer/admin/worker access, checkout,
 payment verification and callbacks, reports, uploaded-image delivery, and email.
 Render health checks use `/up`; application startup also checks database readiness.
-No artificial keep-alive traffic is configured.
+No artificial keep-alive traffic is configured. Startup verifies the imported schema,
+administrator, and channel before creating the disposable `storage/installed` marker.
+This disables the upstream browser installer without embedding a `.env` file.
 
 ## Independent backup and restore
+
+Run the operator scripts with PostgreSQL clients at least as new as the server
+(PostgreSQL 17 for this Neon project; the verified operator uses client 18).
+Render Free has no operator shell, so run backups independently from Render.
 
 Export each Cloudinary disk into a separate local directory using `classy:copy-media`,
 with `media_export` as the target and `MEDIA_EXPORT_PATH` set respectively to
@@ -184,3 +190,30 @@ and verify these links and the channel hostname before cutover.
 Remote Neon TLS/pooling, real Cloudinary operations, Render deployment/redeployment,
 real email delivery, and the final write freeze/domain/callback cutover remain
 unverified until provider access and staging acceptance are complete.
+
+## Remote verification record
+
+The migration uses the new Free Neon project `round-fire-56963406` in
+`aws-us-west-2` and the existing Free Render service `srv-db0vk0mgekts73bga2dg`
+in Oregon. Existing Neon projects were preserved. The code is on
+`deploy/render-neon-20261102`; `main` and the Railway deployment were not changed.
+
+The actual Neon import reconciled the selected source counts, administrator and
+customer password hashes, foreign keys, monetary totals, and serial sequences.
+The database occupies about 15 MB. The independent remote backup at
+`backups/neon-independent/20261102T091100Z` restored successfully into isolated
+PostgreSQL with TLS: 144 tables, 1,424 rows, 118 sequences, and 26 uploaded files
+match by per-table row checksums, sequence state, and file SHA-256. Compare hash
+results by table name because SQL does not guarantee UNION ALL result order.
+
+Real Cloudinary public and authenticated-private storage contract checks pass.
+All 26 public files (2,225,204 bytes) were copied and independently exported with
+matching hashes; no private business files were present. All 15 distinct database
+media references pass HTTPS checks against Cloudinary and the imported Neon data.
+
+Only hosting configuration was rebased after reconciliation: the default channel
+hostname, stored footer links, and the configured email sender. Business data,
+identities, passwords, and order values were retained. A fresh production container
+without a `.env` file or uploaded-file volume passes desktop/mobile browser tests
+and administrator login, orders, reports, stock, payments, and storefront settings
+using the preserved credentials. Three startup-protection tests also pass.

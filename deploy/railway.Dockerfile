@@ -61,11 +61,12 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
 COPY deploy/database-ready.php /usr/local/bin/classy-database-ready.php
 COPY deploy/migrate.sh /usr/local/bin/classy-migrate.sh
 COPY deploy/entrypoint.sh /usr/local/bin/classy-entrypoint.sh
-RUN chmod +x /usr/local/bin/classy-entrypoint.sh /usr/local/bin/classy-migrate.sh
+COPY deploy/serve.sh /usr/local/bin/classy-serve.sh
+RUN chmod +x /usr/local/bin/classy-entrypoint.sh /usr/local/bin/classy-migrate.sh /usr/local/bin/classy-serve.sh
 
 ENV PGCONNECT_TIMEOUT=5
 
 EXPOSE 80
 
 ENTRYPOINT ["classy-entrypoint.sh"]
-CMD ["apache2-foreground"]
+CMD ["classy-serve.sh"]

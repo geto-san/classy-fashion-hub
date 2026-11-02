@@ -474,6 +474,7 @@ store/vendor
 !deploy/database-ready.php
 !deploy/migrate.sh
 !deploy/build-assets.sh
+!deploy/serve.sh
 !store/config/breadcrumbs.php
 !store/config/database.php
 !store/config/filesystems.php
