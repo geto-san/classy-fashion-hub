@@ -6,6 +6,10 @@ pinned upstream skeleton and this checkout. `render.yaml` uses the repository
 root as its Docker context and disables automatic deployment during validation.
 The alternative Railway Dockerfile uses the same application version.
 
+Render's custom start command explicitly invokes `classy-entrypoint.sh` followed
+by `classy-serve.sh`; a custom command bypasses the image entrypoint. Both steps
+must run so database validation and the installed marker precede Apache.
+
 Production has not been switched. Provider credentials are stored locally and remote
 staging is being validated. The Render service stays paused during database transfer.
 Do not remove the running Railway project or its uploads volume.

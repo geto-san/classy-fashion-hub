@@ -6,6 +6,7 @@ services:
     region: oregon
     dockerfilePath: ./deploy/Dockerfile
     dockerContext: .
+    dockerCommand: /usr/local/bin/classy-entrypoint.sh /usr/local/bin/classy-serve.sh
     healthCheckPath: /up
     autoDeployTrigger: 'off'
     envVars:
