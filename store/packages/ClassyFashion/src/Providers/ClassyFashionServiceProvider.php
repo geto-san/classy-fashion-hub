@@ -2,6 +2,7 @@
 
 namespace ClassyFashion\Providers;
 
+use ClassyFashion\Console\Commands\AssertDeploymentReady;
 use ClassyFashion\Console\Commands\AuditMedia;
 use ClassyFashion\Console\Commands\CheckStorage;
 use ClassyFashion\Console\Commands\CopyMedia;
@@ -94,6 +95,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
         });
 
         $this->commands([
+            AssertDeploymentReady::class,
             AuditMedia::class,
             CopyMedia::class,
             CheckStorage::class,

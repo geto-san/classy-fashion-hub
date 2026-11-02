@@ -109,6 +109,7 @@ if [ "${RESET_ADMIN_PASSWORD:-}" = "true" ]; then
   php artisan classy:secure-accounts --reset-admin
 fi
 
+php artisan classy:assert-deployment-ready
 php artisan optimize:clear
 php artisan responsecache:clear
 php artisan optimize

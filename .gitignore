@@ -114,3 +114,5 @@ __pycache__/
 !/store/packages/Webkul/Admin/src/Routes/web/sales-routes.php
 !/store/tests/Feature/CloudStorageConfigurationTest.php
 !/store/tests/Feature/CallbackSecurityTest.php
+
+!/store/tests/Feature/DeploymentReadinessTest.php

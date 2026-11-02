@@ -498,3 +498,5 @@ store/vendor
 **/*.log
 !store/tests/Feature/CloudStorageConfigurationTest.php
 !store/tests/Feature/CallbackSecurityTest.php
+
+!store/tests/Feature/DeploymentReadinessTest.php
