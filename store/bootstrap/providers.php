@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\AppServiceProvider;
+use ClassyFashion\Providers\ClassyFashionServiceProvider;
 use Webkul\Admin\Providers\AdminServiceProvider;
 use Webkul\Attribute\Providers\AttributeServiceProvider;
 use Webkul\CartRule\Providers\CartRuleServiceProvider;
@@ -23,6 +24,7 @@ use Webkul\Inventory\Providers\InventoryServiceProvider;
 use Webkul\MagicAI\Providers\MagicAIServiceProvider;
 use Webkul\Marketing\Providers\MarketingServiceProvider;
 use Webkul\Notification\Providers\NotificationServiceProvider;
+use Webkul\Omnibus\Providers\OmnibusServiceProvider;
 use Webkul\Payment\Providers\PaymentServiceProvider;
 use Webkul\Product\Providers\ProductServiceProvider;
 use Webkul\RMA\Providers\RMAServiceProvider;
@@ -34,7 +36,6 @@ use Webkul\Sitemap\Providers\SitemapServiceProvider;
 use Webkul\SocialShare\Providers\SocialShareServiceProvider;
 use Webkul\Tax\Providers\TaxServiceProvider;
 use Webkul\Theme\Providers\ThemeServiceProvider;
-use ClassyFashion\Providers\ClassyFashionServiceProvider;
 use Webkul\User\Providers\UserServiceProvider;
 
 return [
@@ -46,6 +47,7 @@ return [
     /**
      * Webkul's service providers.
      */
+    OmnibusServiceProvider::class,
     AdminServiceProvider::class,
     AttributeServiceProvider::class,
     CMSServiceProvider::class,

@@ -1,5 +1,6 @@
 <?php
 
+use Pest\Repositories\DatasetsRepository;
 use Tests\TestCase as ProjectTestCase;
 use Webkul\Admin\Tests\AdminTestCase;
 use Webkul\Core\Tests\CoreTestCase;
@@ -62,7 +63,10 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/**
+ * Register upstream datasets for packages outside the application test directory.
+ */
+function sharedDataset(string $name, Closure|iterable $dataset): void
 {
-    // ..
+    DatasetsRepository::set($name, $dataset, dirname(__DIR__));
 }

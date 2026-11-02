@@ -1,7 +1,9 @@
 <?php
 
+use ClassyFashion\Support\AiAssistant;
 use ClassyFashion\Support\Storefront;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Theme\Repositories\SectionRepository;
@@ -115,6 +117,29 @@ it('keeps workers out of homepage publishing and routes technical appearance to 
     $this->actingAs(Admin::where('email', 'admin@example.com')->firstOrFail(), 'admin');
     get(route('admin.appearance.themes.index'))->assertRedirect(route('admin.classy.storefront.index'));
     expect(collect(config('menu.admin'))->pluck('key')->filter(fn ($key) => str_starts_with($key, 'appearance')))->toBeEmpty();
+});
+
+it('uses OpenAI Responses without storing conversations or exposing credentials', function () {
+    config(['classy.ai.api_key' => 'test-secret', 'classy.ai.base_url' => 'https://api.openai.com/v1', 'classy.ai.model' => 'gpt-4.1-mini']);
+    Http::preventStrayRequests();
+    Http::fake(['api.openai.com/v1/responses' => Http::response([
+        'output' => [['type' => 'message', 'content' => [['type' => 'output_text', 'text' => 'Pair a cap with a casual shirt.']]]],
+    ])]);
+
+    expect(AiAssistant::chat([['role' => 'user', 'content' => 'Suggest a campus outfit']]))->toBe('Pair a cap with a casual shirt.');
+    Http::assertSent(fn ($request) => $request->url() === 'https://api.openai.com/v1/responses'
+        && $request['store'] === false
+        && $request['model'] === 'gpt-4.1-mini'
+        && $request->hasHeader('Authorization', 'Bearer test-secret'));
+});
+
+it('falls back when OpenAI fails or returns no text', function () {
+    config(['classy.ai.api_key' => 'test-secret', 'classy.ai.base_url' => 'https://api.openai.com/v1']);
+    Http::preventStrayRequests();
+    Http::fake(['api.openai.com/v1/responses' => Http::response([], 429)]);
+    expect(AiAssistant::chat([['role' => 'user', 'content' => 'Hello']]))->toBeNull();
+    Http::fake(['api.openai.com/v1/responses' => Http::response(['output' => []])]);
+    expect(AiAssistant::chat([['role' => 'user', 'content' => 'Hello']]))->toBeNull();
 });
 
 it('honors the owner assistant switch while retaining the campaign', function () {

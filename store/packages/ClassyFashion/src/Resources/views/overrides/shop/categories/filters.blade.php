@@ -6,7 +6,7 @@
         <x-slot:toggle>
             <button type="button" class="cfh-filter-toggle" @click="isDrawerActive.filter = true" :aria-expanded="isDrawerActive.filter">
                 @lang('shop::app.categories.filters.filter')
-                <span class="icon-filter-1" aria-hidden="true"></span>
+                <span class="icon-funnel" aria-hidden="true"></span>
             </button>
         </x-slot>
         <x-slot:header>
@@ -37,7 +37,7 @@
                 class="flex cursor-pointer items-center gap-x-2.5 px-2.5 py-3.5 text-base font-medium uppercase max-md:py-3"
                 @click="isDrawerActive.filter = true"
             >
-                <span class="icon-filter-1 text-2xl"></span>
+                <span class="icon-funnel text-2xl"></span>
 
                 @lang('shop::app.categories.filters.filter')
             </div>
@@ -87,7 +87,7 @@
                 class="flex cursor-pointer items-center gap-x-2.5 px-2.5 py-3.5 text-base font-medium uppercase max-md:py-3"
                 @click="isDrawerActive.toolbar = true"
             >
-                <span class="icon-sort-1 text-2xl"></span>
+                <span class="icon-sort text-2xl"></span>
 
                 @lang('shop::app.categories.filters.sort')
             </div>

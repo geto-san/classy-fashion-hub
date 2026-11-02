@@ -1,18 +1,19 @@
 # Classy Fashion Hub — Online Fashion Management & E-Commerce System
 
-University project adapting **Bagisto v2.4.12** (Laravel 12) for a small
+University project adapting **Bagisto v2.5.0** (Laravel 13) for a small
 Ugandan fashion shop. Requirements: [`docs/Blair_Fashion_Hub_report.docx`](docs/Blair_Fashion_Hub_report.docx).
 Build plan & status: [`docs/Classy_Fashion_Hub_Bagisto_Plan.xlsx`](docs/Classy_Fashion_Hub_Bagisto_Plan.xlsx).
 Requirement-by-requirement status: [`docs/COMPLIANCE_AUDIT.md`](docs/COMPLIANCE_AUDIT.md).
 
 ## Prerequisites
 
-- PHP **8.3 or 8.4** with extensions: calendar, curl, intl, mbstring, openssl,
-  pdo, pdo_mysql, tokenizer, ctype, dom, fileinfo, filter, gd, hash, json,
+- PHP **8.4.1 or newer** with extensions: calendar, curl, intl, mbstring, openssl,
+  pdo, pdo_mysql, pdo_pgsql (for Neon), tokenizer, ctype, dom, fileinfo, filter, gd, hash, json,
   pcre, session, xml, bcmath, iconv, zip (+ soap recommended).
-  Bagisto 2.4 does **not** support PHP 8.5. If your default `php` is newer,
-  point the scripts at the right binary: `PHP_BIN=/path/to/php8.3`.
-- Composer 2.5+, Node 22+ (only for theme rebuilds), MySQL 8 / MariaDB.
+  The production Docker image uses PHP 8.4. Select a suitable local binary
+  with `PHP_BIN=/path/to/php8.4` when needed.
+- Composer 2, Node 22+ for both Tailwind 4 theme builds, and MySQL 8 / MariaDB
+  for local development or PostgreSQL 17 with TLS for Neon.
 
 ## Fresh-clone setup
 
@@ -24,7 +25,7 @@ does that without overwriting anything we track:
 ```bash
 git clone https://github.com/geto-san/classy-fashion-hub.git
 cd classy-fashion-hub
-scripts/setup-local.sh          # downloads Bagisto 2.4.12, merges it under store/, composer install
+scripts/setup-local.sh          # downloads Bagisto 2.5.0, merges core, installs dependencies and builds both themes
 
 cd store
 # Edit .env: DB_DATABASE / DB_USERNAME / DB_PASSWORD (an empty database), APP_URL.
@@ -73,11 +74,12 @@ Locally and in tests (`APP_ENV` not `production`) these documented accounts exis
 | Worker | `worker@classy.local` | `worker123` | Catalogue, orders, stock; no settings, deletes or profit |
 | Customer | `customer@classy.local` | `customer123` | Shopper with order history |
 
-**On production these passwords are never used.** `artisan classy:secure-accounts`
-runs on every boot and replaces any account that still accepts a published
+**On production these passwords must never be used.** Run `artisan classy:secure-accounts`
+during initial provisioning to replace any account that still accepts a published
 password, using `SEED_ADMIN_PASSWORD` / `SEED_WORKER_PASSWORD` /
 `SEED_CUSTOMER_PASSWORD` if you set them, otherwise a random password printed
-once in the deploy log. Worker/customer demo accounts are only created with
+once in the provisioning log. Routine migration deployments preserve existing accounts.
+Worker/customer demo accounts are only created with
 `SEED_DEMO=true`. See `docs/DEPLOY.md`.
 
 URLs (dev): shop `http://localhost:8000`, admin `http://localhost:8000/admin`,
@@ -87,7 +89,7 @@ customer registration `http://localhost:8000/customer/register`.
 
 ```bash
 cd store
-php vendor/bin/pest tests/Feature
+php vendor/bin/pest --testsuite="Classy Fashion"
 ```
 
 Manual click-paths: log in as worker → Roles/Users/Configuration/Audit Log
@@ -116,7 +118,7 @@ Dispatched → Delivered with the “Mark as …” buttons.
   backup, restore
 
 Docs: `docs/USER_GUIDE.md`, `docs/DEMO_SCRIPT.md`, `docs/DEPLOY.md`,
-`docs/KNOWN_LIMITATIONS.md`, `docs/COMPLIANCE_AUDIT.md`. Live deploy needs an
-external MySQL for Render (free tier has no MySQL); see `docs/DEPLOY.md`.
+`docs/KNOWN_LIMITATIONS.md`, `docs/COMPLIANCE_AUDIT.md`. The migration target is
+Render Free + Neon PostgreSQL + Cloudinary; see `docs/DEPLOY.md`.
 
-Railway deployment preparation and required variables: [docs/RAILWAY_DEPLOY.md](docs/RAILWAY_DEPLOY.md).
+Historical Railway deployment record and rollback context: [docs/RAILWAY_DEPLOY.md](docs/RAILWAY_DEPLOY.md).

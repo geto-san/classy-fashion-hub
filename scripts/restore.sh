@@ -1,27 +1,42 @@
 #!/bin/sh
-# Restore a backup made by scripts/backup.sh into a database.
-# Usage:
-#   DB_HOST=... DB_PORT=... DB_DATABASE=<target> DB_USERNAME=... DB_PASSWORD='...' \
-#   APP_DIR=store ./scripts/restore.sh backups/<stamp>
-# The target database must exist and be EMPTY (we never wipe implicitly).
+# Restore into a disposable, empty database; never overwrite business data.
 set -eu
-
-: "${DB_HOST:=127.0.0.1}"
-: "${DB_PORT:=3306}"
-: "${DB_DATABASE:?set DB_DATABASE}"
-: "${DB_USERNAME:?set DB_USERNAME}"
-: "${DB_PASSWORD:?set DB_PASSWORD}"
+umask 077
+. "$(dirname "$0")/database-env.sh"
 : "${APP_DIR:=store}"
-
+: "${MEDIA_DIR:=$APP_DIR/storage/app}"
 SRC="${1:?usage: restore.sh backups/<stamp>}"
-test -f "$SRC/db.sql" || { echo "No db.sql in $SRC"; exit 1; }
-
-TABLES=$(mariadb -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USERNAME" -p"$DB_PASSWORD" -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DB_DATABASE';")
-test "$TABLES" = "0" || { echo "Target $DB_DATABASE is not empty ($TABLES tables). Refusing."; exit 1; }
-
-mariadb -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USERNAME" -p"$DB_PASSWORD" "$DB_DATABASE" < "$SRC/db.sql"
-
-mkdir -p "$APP_DIR/storage/app"
-tar -xzf "$SRC/storage-public.tar.gz" -C "$APP_DIR/storage/app"
-
-echo "Restored $SRC into $DB_DATABASE"
+test -f "$SRC/COMPLETE" || { echo 'Backup is incomplete or uses the legacy format.' >&2; exit 1; }
+test "$(cat "$SRC/database-driver")" = "$DB_CONNECTION" || { echo 'Database driver differs from the backup.' >&2; exit 1; }
+(cd "$SRC" && sha256sum -c SHA256SUMS)
+python3 - "$SRC/media.tar.gz" "$MEDIA_DIR" <<'PY'
+import sys,tarfile
+from pathlib import Path
+with tarfile.open(sys.argv[1]) as archive:
+    for member in archive.getmembers():
+        path=Path(member.name)
+        if path.is_absolute() or '..' in path.parts or not path.parts or path.parts[0] not in ('public','private') or member.issym() or member.islnk() or not (member.isfile() or member.isdir()):
+            raise SystemExit('Unsafe media archive entry.')
+        target=Path(sys.argv[2])/path
+        if target.exists() and member.isfile():
+            raise SystemExit('Media destination contains files; choose an empty directory.')
+PY
+case "$DB_CONNECTION" in
+  pgsql)
+    TABLES=$(psql -X -At -v ON_ERROR_STOP=1 -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE';")
+    test "$TABLES" = 0 || { echo 'Target database is not empty. Refusing.' >&2; exit 1; }
+    pg_restore --exit-on-error --single-transaction --no-owner --no-acl --dbname="$DB_DATABASE" "$SRC/db.dump"
+    ;;
+  *)
+    TABLES=$(mariadb -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USERNAME" -N "$DB_DATABASE" -e 'SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE();')
+    test "$TABLES" = 0 || { echo 'Target database is not empty. Refusing.' >&2; exit 1; }
+    mariadb -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USERNAME" "$DB_DATABASE" < "$SRC/db.sql"
+    ;;
+esac
+mkdir -p "$MEDIA_DIR"
+python3 - "$SRC/media.tar.gz" "$MEDIA_DIR" <<'PY'
+import sys,tarfile
+with tarfile.open(sys.argv[1]) as archive:
+    archive.extractall(sys.argv[2],filter='data')
+PY
+echo "Restored $SRC into $DB_DATABASE."

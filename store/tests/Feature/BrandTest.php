@@ -40,7 +40,7 @@ it('keeps Bagisto typography and text colour (no brand font overrides)', functio
     expect($css)->not->toContain('Cormorant')->not->toContain('Belleza')->not->toContain('Jost')
         ->and($css)->not->toContain('@import');
 
-    $tailwind = file_get_contents(base_path('packages/Webkul/Shop/tailwind.config.js'));
+    $tailwind = file_get_contents(base_path('packages/Webkul/Shop/src/Resources/assets/css/app.css'));
 
-    expect($tailwind)->toContain('navyBlue: "#060C3B"');
+    expect($tailwind)->toContain('--color-navyBlue:');
 });

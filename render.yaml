@@ -5,9 +5,9 @@ services:
     plan: free
     region: oregon
     dockerfilePath: ./deploy/Dockerfile
-    dockerContext: ./deploy
+    dockerContext: .
     healthCheckPath: /up
-    autoDeploy: true
+    autoDeployTrigger: 'off'
     envVars:
       - key: APP_NAME
         value: Classy Fashion Hub
@@ -21,21 +21,32 @@ services:
         value: https://classy-fashion-hub.onrender.com
       - key: APP_TIMEZONE
         value: Africa/Kampala
-      # Render's generateValue emits a BARE base64 string. Laravel needs the
-      # "base64:" prefix or every page 500s, so entrypoint.sh adds the prefix.
+      # Reuse the existing Railway key to preserve encrypted business data.
       - key: APP_KEY
-        generateValue: true
+        sync: false
       - key: DB_CONNECTION
-        value: mysql
-      - key: DB_HOST
+        value: pgsql
+      - key: DB_URL
         sync: false
-      - key: DB_PORT
-        value: "3306"
-      - key: DB_DATABASE
+      - key: DB_DIRECT_URL
         sync: false
-      - key: DB_USERNAME
+      - key: DB_SSLMODE
+        value: require
+      - key: MIGRATE_ON_BOOT
+        value: "false"
+      - key: INITIALIZE_STORE
+        value: "false"
+      - key: FILESYSTEM_DISK
+        value: public
+      - key: PUBLIC_FILESYSTEM_DRIVER
+        value: cloudinary
+      - key: PRIVATE_FILESYSTEM_DRIVER
+        value: cloudinary
+      - key: CLOUDINARY_CLOUD_NAME
         sync: false
-      - key: DB_PASSWORD
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
         sync: false
       - key: SESSION_DRIVER
         value: database
@@ -46,7 +57,13 @@ services:
       - key: QUEUE_CONNECTION
         value: sync
       - key: MAIL_MAILER
-        value: log
+        value: brevo
+      - key: BREVO_API_KEY
+        sync: false
+      - key: MAIL_FROM_ADDRESS
+        sync: false
+      - key: MAIL_FROM_NAME
+        value: Classy Fashion Hub
       - key: MOMO_PROVIDER
         value: auto
       - key: MOMO_TILL_NUMBER
@@ -59,24 +76,6 @@ services:
         sync: false
       - key: SEED_DEMO
         value: "false"
-      # Production credentials (classy:secure-accounts). With SEED_DEMO=true the
-      # demo worker/customer accounts exist, so SET the three passwords below to
-      # the ones you will hand to testers; blank = random, printed ONCE in the
-      # deploy log. SET SEED_ADMIN_PASSWORD BEFORE DEPLOYING or the admin login
-      # will be a random password you must dig out of that log.
-      - key: SEED_ADMIN_EMAIL
-        sync: false
-      - key: SEED_ADMIN_PASSWORD
-        sync: false
-      - key: SEED_WORKER_PASSWORD
-        sync: false
-      - key: SEED_CUSTOMER_PASSWORD
-        sync: false
-      # Locked out of the admin panel? Set this to "true", redeploy once, sign
-      # in with SEED_ADMIN_PASSWORD, then delete it - otherwise it re-runs the
-      # reset on every single boot.
-      - key: RESET_ADMIN_PASSWORD
-        sync: false
       # Optional shop-assistant LLM (blank = rule-based answers only).
       - key: AI_LLM_API_KEY
         sync: false

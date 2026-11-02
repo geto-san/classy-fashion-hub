@@ -33,6 +33,7 @@ return [
         Webkul\Inventory\Providers\ModuleServiceProvider::class,
         Webkul\Marketing\Providers\ModuleServiceProvider::class,
         Webkul\Notification\Providers\ModuleServiceProvider::class,
+        Webkul\Omnibus\Providers\ModuleServiceProvider::class,
         Webkul\Payment\Providers\ModuleServiceProvider::class,
         Webkul\Product\Providers\ModuleServiceProvider::class,
         Webkul\RMA\Providers\ModuleServiceProvider::class,
