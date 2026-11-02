@@ -10,10 +10,42 @@ Render's custom start command explicitly invokes `classy-entrypoint.sh` followed
 by `classy-serve.sh`; a custom command bypasses the image entrypoint. Both steps
 must run so database validation and the installed marker precede Apache.
 
-Production has not been switched. Provider credentials are stored locally and remote
-staging is live at https://classy-fashion-hub.onrender.com. It was paused during
-database transfer and resumed only after restoration verification.
-Do not remove the running Railway project or its uploads volume.
+The replacement deployment is live at https://classy-fashion-hub.onrender.com.
+On 2 November 2026, the Railway application and MySQL services were deleted at the
+owner's request. The Railway API confirms zero remaining services across both
+accessible projects. Two project records and five volumes remain: automatic
+approval review rejected their deletion because three older volumes have no
+verified backup and project/volume destruction needs explicit approval.
+Railway subscription cancellation has not been performed; retained storage and
+any account plan need billing review.
+
+Before deletion, both source services already had no active deployment and all
+recorded deployments were marked `REMOVED`. A final live source export/comparison
+was therefore unavailable. The preserved Railway snapshot and independent Neon
+backup pass checksum validation; current Neon counts remain 0 products, 1 customer,
+and 1 order. Do not describe final source synchronization as verified.
+
+Provider credentials and retirement evidence remain private under the ignored
+local credential/backup paths. See [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md) for
+the current handover. The rehearsal and acceptance records below describe earlier
+migration stages; statements about Railway still running or cutover pending are
+historical. Customer launch still requires email verification, policy content,
+catalogue setup, and live payment/domain decisions.
+
+## Owner catalogue setup after photo cleanup
+
+The owner's requested fashion-photo cleanup is deployed at commit `95612f9`,
+Render release `dep-dbk6vess728c73c9r9ig`. All 23 fashion originals were removed
+from Cloudinary after fresh backups, and six bundled fashion photos were removed
+from source. The logo, favicon and locale icon remain. Homepage/category photo
+references and obsolete theme image content were cleared; absent-photo layouts
+and future owner uploads are supported. The catalogue remains empty for the shop
+to populate, with existing customers/orders preserved. Live desktop/mobile and
+admin product/account screens pass, and all three remaining media references
+resolve. See the handover report for client administrator creation instructions.
+The 26-file records below are historical migration verification before this
+intentional cleanup. Evidence and fresh backups are private under
+`backups/catalogue-handover/`.
 
 ## Credentials
 
