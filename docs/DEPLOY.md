@@ -241,3 +241,8 @@ Render outbound ranges `74.220.48.0/24` and `74.220.56.0/24` in Brevo. Actual em
 delivery and the final source write freeze/domain or callback cutover remain
 pending; Railway has not been modified or deleted. No customer email was sent
 during the read-only acceptance checks.
+
+The final redeployment (`dep-dbk5ki0n74is738ojqog`, application commit `684e72f`)
+is live and passed the same 16 desktop/mobile public-page checks with no broken
+images or JavaScript errors. Cloudinary media survived the fresh Render instance.
+The acceptance record is retained privately in `backups/render-acceptance.json`.
