@@ -30,7 +30,9 @@
                                     <input type="hidden" name="{{ $field }}" value="0">
                                     <input type="checkbox" id="{{ $field }}" name="{{ $field }}" value="1" @checked(old($field, Storefront::get($field)))>
                                 @elseif ($type === 'image')
-                                    <img src="{{ Storefront::image($field) }}" alt="{{ trans('classy-fashion::storefront.current_photo') }}" width="240" height="180">
+                                    @if (Storefront::image($field))
+                                        <img src="{{ Storefront::image($field) }}" alt="{{ trans('classy-fashion::storefront.current_photo') }}" width="240" height="180">
+                                    @endif
                                     <input type="file" id="{{ $field }}" name="{{ $field }}" accept="image/jpeg,image/png,image/webp" aria-describedby="{{ $field }}-help">
                                     <small id="{{ $field }}-help">{{ trans('classy-fashion::storefront.image_help') }}</small>
                                 @elseif ($type === 'textarea')

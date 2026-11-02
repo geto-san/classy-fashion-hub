@@ -149,3 +149,6 @@
 .cfh-store .cfh-campaign{background-size:cover;background-position:center}
 .cfh-store .cfh-campaign-image{mask-image:linear-gradient(to right,transparent 0%,transparent 20%,#000 35%,#000 100%)}
 @media(max-width:767px){.cfh-store .cfh-campaign{background-image:none!important}.cfh-store .cfh-campaign-image{aspect-ratio:1672/940;mask-image:none}}
+.cfh-store .cfh-campaign-without-photo .cfh-campaign-copy{position:static;transform:none;width:100%;max-width:none;padding:88px 24px;background:#efe5d5}
+.cfh-store .cfh-campaign-without-photo h1{max-width:760px;margin-inline:auto}
+@media(max-width:767px){.cfh-store .cfh-campaign-without-photo .cfh-campaign-copy{padding:48px 24px}}

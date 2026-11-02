@@ -28,7 +28,9 @@
 
     <div class="container cfh-catalog-banner-frame">
         <div class="cfh-catalog-banner">
-            <img src="{{ $category->banner_path ? $category->banner_url : \ClassyFashion\Support\Storefront::image('everyday_image') }}" width="1300" height="433" alt="{{ $category->banner_path ? ($category->banner_alt ?: $category->name) : \ClassyFashion\Support\Storefront::get('everyday_alt') }}" fetchpriority="high">
+            @if ($category->banner_path || \ClassyFashion\Support\Storefront::image('everyday_image'))
+                <img src="{{ $category->banner_path ? $category->banner_url : \ClassyFashion\Support\Storefront::image('everyday_image') }}" width="1300" height="433" alt="{{ $category->banner_path ? ($category->banner_alt ?: $category->name) : \ClassyFashion\Support\Storefront::get('everyday_alt') }}" fetchpriority="high">
+            @endif
             <div><h1>{{ $category->name }}</h1></div>
         </div>
     </div>

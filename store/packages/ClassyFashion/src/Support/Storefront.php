@@ -5,7 +5,7 @@ namespace ClassyFashion\Support;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Client-editable storefront content, with shipped photography as a reliable fallback.
+ * Client-editable storefront content with optional owner-supplied photography.
  */
 class Storefront
 {
@@ -59,13 +59,10 @@ class Storefront
         return match ($field) {
             'assistant_enabled' => true,
             'hero_link' => '/search',
-            'hero_image' => '/images/storefront/classy-collection-campaign-1672w.webp',
             'dresses_link' => '/search?query=dress',
             'caps_link' => '/search?query=cap',
             'everyday_link' => '/search',
-            'dresses_image' => '/images/storefront/shop-dresses.webp',
-            'caps_image' => '/images/storefront/shop-caps.webp',
-            'everyday_image' => '/images/storefront/shop-collection.webp',
+            'hero_image', 'dresses_image', 'caps_image', 'everyday_image' => '',
             default => trans('classy-fashion::storefront.content.'.$field),
         };
     }
@@ -76,6 +73,10 @@ class Storefront
     public static function image(string $field): string
     {
         $path = (string) self::get($field);
+
+        if ($path === '') {
+            return '';
+        }
 
         return str_starts_with($path, '/') ? $path : Storage::disk('public')->url($path);
     }

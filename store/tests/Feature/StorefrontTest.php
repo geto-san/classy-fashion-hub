@@ -16,18 +16,15 @@ beforeEach(function () {
     config(['repository.cache.enabled' => false, 'responsecache.enabled' => false]);
 });
 
-it('renders the Ethereal campaign with real collection links and product feeds', function () {
+it('renders a clean storefront without sample photography until the owner uploads images', function () {
     get(route('shop.home.index'))->assertOk()
         ->assertSee('cfh-campaign', false)
-        ->assertSee('fetchpriority="high"', false)
-        ->assertSee('/images/storefront/classy-collection-campaign-1672w.webp', false)
-        ->assertSee('/images/storefront/shop-dresses.webp', false)
-        ->assertSee('/images/storefront/shop-caps.webp', false)
-        ->assertSee('/images/storefront/shop-collection.webp', false)
+        ->assertSee('cfh-campaign-without-photo', false)
+        ->assertDontSee('/images/storefront/', false)
+        ->assertDontSee('src=""', false)
         ->assertSee('v-ethereal-products', false)
-        ->assertSee('cfh-editorial-splits', false)
-        ->assertSee('cfh-editorial-grid', false)
-        ->assertSee('cfh-shop-journal', false)
+        ->assertDontSee('<section class="cfh-editorial-splits"', false)
+        ->assertDontSee('<section class="cfh-container cfh-shop-journal"', false)
         ->assertDontSee('home-offer', false)
         ->assertDontSee('top-collection-container', false);
 });
@@ -83,7 +80,7 @@ it('lets the owner publish text and photos while retaining fields not uploaded',
     Storage::disk('public')->assertExists(Storefront::get('hero_image'));
     expect(Storefront::image('hero_image'))->not->toContain('/images/storefront/classy-collection-campaign');
     expect(Storefront::collections()[0]['src'])->toBe(Storefront::image('dresses_image'));
-    expect(Storefront::image('caps_image'))->toBe('/images/storefront/shop-caps.webp');
+    expect(Storefront::image('caps_image'))->toBe('');
 });
 
 it('renders an owner campaign without the bundled responsive source set', function () {
@@ -100,6 +97,22 @@ it('renders an owner campaign without the bundled responsive source set', functi
         ->assertSee(Storefront::image('hero_image'), false)
         ->assertSee('The owner collection')
         ->assertDontSee('classy-collection-campaign-640w.webp', false);
+});
+
+it('renders a single owner collection without requesting missing collection photos', function () {
+    app(CoreConfigRepository::class)->create([
+        'channel' => 'default',
+        'locale' => 'en',
+        'general' => ['content' => ['storefront' => [
+            'caps_image' => 'storefront/owner-caps.webp',
+        ]]],
+    ]);
+
+    get(route('shop.home.index'))->assertOk()
+        ->assertSee(Storefront::image('caps_image'), false)
+        ->assertSee('<section class="cfh-container cfh-shop-journal"', false)
+        ->assertDontSee('src=""', false)
+        ->assertDontSee('/images/storefront/', false);
 });
 
 it('rejects external or unsafe owner links before publishing', function () {
