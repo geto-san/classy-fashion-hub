@@ -4,9 +4,9 @@ Status checked: 3 November 2026. Website: https://classy-fashion-hub.onrender.co
 Administrator sign-in: https://classy-fashion-hub.onrender.com/admin/login.
 
 The replacement website is live and the two Railway services have been deleted.
-It is ready for the shop to start adding its own catalogue and photographs.
+It has a 100-product demonstration catalogue for client testing.
 Customer launch still requires verified email delivery, approved Privacy and
-Terms pages, configured products and live-payment decisions. Railway storage
+Terms pages, real shop products and live-payment decisions. Railway storage
 cleanup also requires additional approval, as detailed below.
 
 ## What is deployed
@@ -17,8 +17,8 @@ cleanup also requires additional approval, as detailed below.
 | Business database | Neon PostgreSQL 17, project `round-fire-56963406`; pooled connections for requests, direct connections for controlled migrations, TLS required |
 | Uploaded files | Cloudinary; public originals retain their paths and extensions, private storage uses authenticated delivery |
 | Email integration | Brevo HTTPS transport is configured; verified sender and successful delivery remain outstanding |
-| Source | Branch `deploy/render-neon-20261102`; live application commit `2abd572` |
-| Live release | Render deployment `dep-dbkuk3m7bikc73fu3m8g`, status `live` |
+| Source | Branch `deploy/render-neon-20261102`; live application commit `ff75074` |
+| Live release | Render deployment `dep-dbkvh0mi0phs73bdlfk0`, status `live` |
 
 Render serves the application, Neon stores business records and sessions, and
 Cloudinary stores uploaded originals independently of Render instances. Routine
@@ -27,11 +27,46 @@ seeders or migrations, replace accounts, or regenerate uploaded files. Automatic
 deployment is disabled in the blueprint; deployments are controlled manually.
 Jobs currently execute synchronously, without a separate queue worker.
 
-The selected Railway data was preserved rather than replaced with a demo shop:
-**0 products, 1 customer, 1 order, and 26 uploaded files**. Current Neon queries
-confirm those business counts and two CMS pages. Password hashes, identities,
+The migration preserved **0 products, 1 customer, 1 order, and 26 uploaded files**.
+The later photo cleanup and demo import are recorded separately below. Password hashes, identities,
 order values, and the application encryption key were retained during migration.
 The hosting origin and stored footer URLs were changed to Render.
+
+## Demo catalogue — 3 November 2026
+
+The owner's requested client-testing catalogue contains **100 visible demo products**:
+20 dresses/tops, 20 shirts, 20 T-shirts, 20 trousers and 20 footwear listings.
+Every name starts with `[DEMO]`; descriptions explain that the item is not for sale.
+Each listing has a distinct CC0 photo from the
+[clothing dataset](https://github.com/alexeygrigorev/clothing-dataset-small).
+The [manifest](../store/packages/ClassyFashion/src/Resources/demo-catalogue/manifest.json)
+records the pinned image source, licence, SHA-256 and illustrative UGX price benchmark.
+Descriptions are original; Jumia category prices are examples, not matching-photo
+supplier quotations. Marketplace seller photos and descriptions were not copied.
+
+All 100 originals were uploaded to Cloudinary and downloaded again for checksum
+verification. Stock is zero and backorders were intentionally disabled, preventing
+demo purchases. Existing customer, order, account, channel and homepage records
+were preserved. Demo categories sit under the existing shop categories.
+
+A fresh database archive restored successfully before the import. The catalogue
+was prepared using Bagisto repositories against that isolated restore, rehearsed
+against a second restore, then transferred into empty product tables in one
+guarded transaction. Category snapshots must match before transfer; existing
+products are never replaced. Private backup and verification evidence is under
+`backups/catalogue-sourcing/`.
+
+Verification: 6 catalogue tests (322 assertions), the 12 homepage tests
+(73 assertions), Pint and all 336 translation checks pass. Desktop/mobile and
+product-detail checks confirm demo labels, distinct photos and no purchasable demos.
+The newest-first API traversal returns all 100 distinct products across five pages.
+
+Before customer launch, remove products whose SKU starts `CFH-DEMO-20261103-`
+and their empty demo categories, then add the shop's actual products, rights-cleared
+photos, sizes, prices and stock. Do not treat these examples as available inventory.
+One further issue was found during rehearsal: **price sorting can repeat items
+between pages when prices tie**. Add a product-ID tie breaker to catalogue sorting
+before launch; newest-first and name sorting can be used during demo review.
 
 ## Homepage campaign refresh — 3 November 2026
 
@@ -86,7 +121,7 @@ page caches. Fresh backups and evidence are private under
 
 | Area | Implemented behavior and practical limits |
 |---|---|
-| Shopping | Customers can browse categories, search/filter products, choose size/colour variants, and use the cart and checkout. Products must first be added to the currently empty live catalogue. |
+| Shopping | Customers can browse categories, search/filter products, choose size/colour variants, and use the cart and checkout. The 100 demo listings have zero stock; replace them with the shop's real catalogue before selling. |
 | Customer accounts | Registration, sign-in, profiles, order history and order tracking are implemented. Password-reset delivery depends on resolving email setup. |
 | Orders and delivery | Staff manage Pending, Confirmed, Paid, Processing, Dispatched and Delivered states under payment rules. Cash on Delivery can proceed to processing after confirmation and records cash at delivery. Delivery addresses, phone numbers, instructions and a free-text rider/partner are recorded. |
 | Payments | Cash on Delivery and mobile-money integrations are implemented. MTN automatic confirmation verifies payment server-side; a configured manual Till flow lets staff reconcile a submitted transaction reference. Neither a harmless unknown-callback check nor sandbox tests prove live merchant readiness. Paid mobile-money cancellations require manual refund reconciliation. |

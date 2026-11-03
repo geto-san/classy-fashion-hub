@@ -34,6 +34,13 @@ catalogue setup, and live payment/domain decisions.
 
 ## Current homepage campaigns
 
+The latest application release is `ff75074`, deployment `dep-dbkvh0mi0phs73bdlfk0`.
+The 3 November client-testing catalogue adds 100 labelled demo listings with
+distinct CC0 photos and illustrative UGX prices. All have zero stock; backorders
+are disabled. Existing customers/orders remain preserved. See the
+[handover report](DEPLOYMENT_REPORT.md#demo-catalogue--3-november-2026) for sources,
+verification, removal instructions and the price-sort pagination issue found in rehearsal.
+
 The owner's 3 November update is live at commit `2abd572`, Render deployment
 `dep-dbkuk3m7bikc73fu3m8g`. The supplied hero, three centered category photos and
 a distinct back/front closing campaign each appear once. All five Cloudinary
