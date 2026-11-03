@@ -1,16 +1,18 @@
+> Historical reference. See the [current handover](../DEPLOYMENT_REPORT.md) and [deployment guide](../DEPLOY.md) for current behavior and verification. Generated screenshots are no longer bundled.
+
 # Classy Fashion Hub — Ethereal storefront redesign
 
 The storefront redesign is implemented in the working tree. The existing Laravel/Bagisto commerce system and Classy identity remain in place. The storefront source and shipped web assets are prepared for GitHub publication. Live Railway deployment must be verified independently.
 
 ## Review
 
-- [Screenshot comparison gallery](../output/ethereal-exact/index.html)
-- [Desktop homepage](../output/ethereal-exact/local-home-1440.png)
-- [Mobile homepage](../output/ethereal-exact/local-home-390.png)
-- [Category listing](../output/ethereal-exact/local-category-1440.png)
-- [Product details](../output/ethereal-exact/local-product-1440.png)
-- [Mobile checkout](../output/ethereal-exact/checkout-390.png)
-- [Browser checks](../output/ethereal-exact/browser-checks.json)
+- Screenshot comparison gallery (historical generated output; removed)
+- Desktop homepage (historical generated output; removed)
+- Mobile homepage (historical generated output; removed)
+- Category listing (historical generated output; removed)
+- Product details (historical generated output; removed)
+- Mobile checkout (historical generated output; removed)
+- Browser checks (historical generated output; removed)
 
 The actual deployment inspected was https://classy-fashion-hub-production-ec16.up.railway.app/. Its before captures are `deployed-1440.png` and `deployed-390.png`. The visual reference was https://demo.bagisto.com/common/ethereal-fashion/ethereal-men. Chromium could inspect the live reference at desktop and mobile sizes after the web tool failed; the owner's Ethereal recording also informed the homepage composition. Reference screenshots are `reference-1440.png` and `reference-390.png`.
 

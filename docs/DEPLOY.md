@@ -4,7 +4,7 @@ The application targets Bagisto 2.5.0, Laravel 13, PHP 8.4, and Tailwind 4.
 `deploy/Dockerfile` builds the storefront, admin, and backend together from the
 pinned upstream skeleton and this checkout. `render.yaml` uses the repository
 root as its Docker context and disables automatic deployment during validation.
-The alternative Railway Dockerfile uses the same application version.
+Historical Railway setup notes are retained under `docs/archive/`; Render uses `deploy/Dockerfile`.
 
 Render's custom start command explicitly invokes `classy-entrypoint.sh` followed
 by `classy-serve.sh`; a custom command bypasses the image entrypoint. Both steps

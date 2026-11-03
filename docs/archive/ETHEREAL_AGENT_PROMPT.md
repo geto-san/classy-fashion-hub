@@ -1,3 +1,5 @@
+> Historical reference. See the [current handover](../DEPLOYMENT_REPORT.md) and [deployment guide](../DEPLOY.md) for current behavior and verification. Generated screenshots are no longer bundled.
+
 # Classy Fashion Hub — Ethereal implementation prompt
 
 Copy the prompt below to your implementation agent. Supply the actual Classy Fashion Hub deployment URL if the agent cannot discover it from the deployment configuration; the Bagisto URL is a reference demo, not the Classy deployment.
@@ -12,9 +14,9 @@ Do the implementation and verify it in a browser. Preserve the existing Laravel/
 ## Inspect first
 
 - Read repository instructions and applicable Bagisto skills. Inspect the existing working tree and preserve unrelated ongoing changes.
-- Inspect the live reference at desktop and mobile sizes. If unavailable, inspect `documents/ethereal.bagisto.com.webm`; extracted frames are in `output/premium-assets/reference/`. The recording shows the demo state captured by the owner; verify current live behavior when possible. Use the Ethereal recording rather than `documents/commerce.bagisto.com.webm` as the visual target.
+- Inspect the live reference at desktop and mobile sizes. If unavailable, inspect `backups/reference-materials/documents/ethereal.bagisto.com.webm`; extracted frames are in `output/premium-assets/reference/`. The recording shows the demo state captured by the owner; verify current live behavior when possible. Use the Ethereal recording rather than `backups/reference-materials/documents/commerce.bagisto.com.webm` as the visual target.
 - Inspect the actual Classy deployment and compare it with local code. Discover its URL from available deployment information; ask for it only if unavailable. Never describe the reference demo as our deployed website.
-- Read `documents/Blair_Fashion_Hub report.docx`, the brand kit, and existing shop overrides. The audience includes Ugandan students and adults; fixed prices, stock visibility and a simple buying journey matter.
+- Read `docs/project/Blair_Fashion_Hub_report.docx`, the brand kit, and existing shop overrides. The audience includes Ugandan students and adults; fixed prices, stock visibility and a simple buying journey matter.
 - Current customizations live in `store/packages/ClassyFashion/`, particularly `src/Resources/views/overrides/shop/`, `src/Support/Storefront.php`, the provider and admin storefront configuration. Work through this package and Bagisto extension points wherever possible.
 
 ## Match the observed Ethereal composition

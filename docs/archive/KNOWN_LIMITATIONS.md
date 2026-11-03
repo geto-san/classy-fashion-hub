@@ -1,3 +1,5 @@
+> Historical reference. See the [current handover](../DEPLOYMENT_REPORT.md) and [deployment guide](../DEPLOY.md) for current behavior and verification. Generated screenshots are no longer bundled.
+
 # Verification and remaining work — 31 October 2026
 
 - Docker PHP 8.4/MySQL 8 feature suite: 79 passed, 333 assertions.
