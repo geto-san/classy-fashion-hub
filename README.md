@@ -41,6 +41,19 @@ Shop: `http://localhost:8000` · Admin: `http://localhost:8000/admin/login`.
 For optional demo products, run `php artisan db:seed --class='Database\Seeders\ClassyFashionCatalogSeeder'`.
 Use installers and demo seeders only on a fresh local database.
 
+For client testing, use the [100-product demo manifest](store/packages/ClassyFashion/src/Resources/demo-catalogue/manifest.json).
+It contains original descriptions, illustrative Jumia category prices, and 100 distinct CC0 photos with source and licence records.
+Upload the matching originals to the public storage paths in the manifest, then run:
+
+```bash
+php artisan classy:seed-demo-catalogue packages/ClassyFashion/src/Resources/demo-catalogue/manifest.json
+# After checking the preview and disabling backorders in inventory settings:
+php artisan classy:seed-demo-catalogue packages/ClassyFashion/src/Resources/demo-catalogue/manifest.json --execute
+```
+
+Demo listings are visible, labelled `[DEMO]`, and have zero stock. Repeat imports preserve existing products and client edits.
+Before opening for sales, delete the `CFH-DEMO-20261103-` listings in Catalog → Products and add the shop's real products, prices, sizes and stock.
+
 ## Manage the shop
 
 - **Products:** Catalog → Products → Create Product.

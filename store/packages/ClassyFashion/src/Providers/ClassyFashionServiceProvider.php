@@ -11,6 +11,7 @@ use ClassyFashion\Console\Commands\ExpirePayments;
 use ClassyFashion\Console\Commands\ImportProductPhotos;
 use ClassyFashion\Console\Commands\RepairImages;
 use ClassyFashion\Console\Commands\SecureAccounts;
+use ClassyFashion\Console\Commands\SeedDemoCatalogue;
 use ClassyFashion\Console\Commands\SetupUgandaHomepage;
 use ClassyFashion\Console\Commands\TransferDatabase;
 use ClassyFashion\DataGrids\OrderDataGrid;
@@ -103,6 +104,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
             RepairImages::class,
             ImportProductPhotos::class,
             SecureAccounts::class,
+            SeedDemoCatalogue::class,
             ExpirePayments::class,
             DescribeProducts::class,
             SetupUgandaHomepage::class,

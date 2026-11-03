@@ -115,6 +115,7 @@ __pycache__/
 !/store/tests/Feature/CallbackSecurityTest.php
 
 !/store/tests/Feature/DeploymentReadinessTest.php
+!/store/tests/Feature/DemoCatalogueTest.php
 
 # Generated browser captures and design exports.
 /output/
