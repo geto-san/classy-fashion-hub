@@ -1,6 +1,6 @@
 # Classy Fashion Hub deployment and handover
 
-Status checked: 2 November 2026. Website: https://classy-fashion-hub.onrender.com.
+Status checked: 3 November 2026. Website: https://classy-fashion-hub.onrender.com.
 Administrator sign-in: https://classy-fashion-hub.onrender.com/admin/login.
 
 The replacement website is live and the two Railway services have been deleted.
@@ -17,8 +17,8 @@ cleanup also requires additional approval, as detailed below.
 | Business database | Neon PostgreSQL 17, project `round-fire-56963406`; pooled connections for requests, direct connections for controlled migrations, TLS required |
 | Uploaded files | Cloudinary; public originals retain their paths and extensions, private storage uses authenticated delivery |
 | Email integration | Brevo HTTPS transport is configured; verified sender and successful delivery remain outstanding |
-| Source | Branch `deploy/render-neon-20261102`; live application commit `95612f9` |
-| Live release | Render deployment `dep-dbk6vess728c73c9r9ig`, status `live` |
+| Source | Branch `deploy/render-neon-20261102`; live application commit `2abd572` |
+| Live release | Render deployment `dep-dbkuk3m7bikc73fu3m8g`, status `live` |
 
 Render serves the application, Neon stores business records and sessions, and
 Cloudinary stores uploaded originals independently of Render instances. Routine
@@ -33,17 +33,35 @@ confirm those business counts and two CMS pages. Password hashes, identities,
 order values, and the application encryption key were retained during migration.
 The hosting origin and stored footer URLs were changed to Render.
 
-## Photo cleanup and catalogue setup
+## Homepage campaign refresh — 3 November 2026
+
+At the owner's request, the original two-woman campaign is restored as the hero.
+A distinct generated photograph of the women embracing in opposite directions
+closes the homepage. Three different shop photographs appear once each in the
+centered Categories section. Repeated editorial/photo sections and duplicate
+homepage product feeds were removed; catalogue and search remain available.
+
+Five originals were uploaded to `storefront/campaigns/20261103/` on Cloudinary and
+verified by SHA-256. Bundled copies are included as fallbacks. Homepage settings
+now include separate closing-image and description fields; repeated saved photo
+paths are suppressed. Both live desktop and mobile checks confirm five unique
+photos, centered categories, the closing banner last, and no JavaScript or broken
+visible-image errors. The Shop build, translation gate and 12 storefront tests
+(73 assertions) pass. Business counts remain 0 products, 1 customer and 1 order.
+The release is commit `2abd572`, deployment `dep-dbkuk3m7bikc73fu3m8g`.
+Private upload/check records are under `backups/homepage-refresh/`.
+
+## Photo cleanup and catalogue setup — 2 November 2026 (historical)
 
 At the owner's request, all fashion photos were cleared, including homepage,
 category, legacy theme and product-search images. The 23 corresponding Cloudinary
 originals were deleted after fresh independent media/database backups. Six bundled
-fashion photos were removed from the deployed source. Cloudinary now retains only
-the logo, favicon and locale icon; all three database media references pass checks.
+fashion photos were removed from the deployed source. At that point Cloudinary retained only
+the logo, favicon and locale icon; all three database media references passed checks.
 The earlier 26-file migration and restore records below describe the state before
 this intentional cleanup, and their backups remain available.
 
-The storefront now handles absent photos without broken images. Photo-dependent
+That release handled absent photos without broken images. Photo-dependent
 sections stay hidden until the owner uploads photos; category links and product
 feeds remain available. The catalogue has zero products and zero gallery images.
 Existing customer/order records were preserved. Startup initialization and demo

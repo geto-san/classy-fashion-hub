@@ -13,12 +13,13 @@ approve any hosting, payment, delivery or other operating costs.
 
 The deployed app includes catalogue/variants, customer accounts, cart/checkout,
 Cash on Delivery, mobile-money integration, staff permissions, stock management,
-order tracking, reports, an audit trail, and the assistant. Fashion photographs
-were removed intentionally; the shop should supply its own products and images.
+order tracking, reports, an audit trail, and the assistant. Homepage campaign/category photos were restored on 3 November, with a distinct
+closing banner and no repeated photos. The catalogue is still empty; the shop
+should supply its own product listings and product images.
 
 The last verified business counts were zero products, one customer and one order.
 Do not delete that customer or order as part of testing without the owner's decision.
-Cloudinary retains the logo, favicon and locale icon. Previous database/media
+Cloudinary retains the branding assets and five verified homepage campaign/shop photos. Previous database/media
 restore checks succeeded, but recurring off-machine backups are not yet proven.
 
 Current unresolved items include email delivery, missing policy pages, a complete

@@ -32,6 +32,17 @@ migration stages; statements about Railway still running or cutover pending are
 historical. Customer launch still requires email verification, policy content,
 catalogue setup, and live payment/domain decisions.
 
+## Current homepage campaigns
+
+The owner's 3 November update is live at commit `2abd572`, Render deployment
+`dep-dbkuk3m7bikc73fu3m8g`. The supplied hero, three centered category photos and
+a distinct back/front closing campaign each appear once. All five Cloudinary
+originals match local SHA-256 hashes; the code also includes fallback originals.
+The closing campaign is independently editable in Homepage & photos. Live desktop
+and mobile checks pass; product/customer/order counts remain 0/1/1. See the
+handover report for verification details. The photo-removal record below describes
+the earlier state and has been superseded for homepage campaign imagery.
+
 ## Owner catalogue setup after photo cleanup
 
 The owner's requested fashion-photo cleanup is deployed at commit `95612f9`,
