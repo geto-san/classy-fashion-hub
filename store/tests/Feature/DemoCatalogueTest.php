@@ -67,6 +67,7 @@ it('imports 100 non-purchasable listings and preserves existing business data an
 
     expect($result['created'])->toHaveCount(100);
     expect($products->getModel()->count())->toBe($count + 100);
+    expect($products->getModel()->whereIn('sku', $result['created'])->pluck('created_at')->unique())->toHaveCount(100);
 
     foreach ($result['created'] as $sku) {
         $product = $products->findOneByField('sku', $sku);

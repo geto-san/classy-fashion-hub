@@ -87,8 +87,9 @@ class DemoCatalogueRepository
         return DB::transaction(function () use ($rows, $channel, $source) {
             $created = [];
             $skipped = [];
+            $createdAt = now()->startOfSecond();
 
-            foreach ($rows as $row) {
+            foreach ($rows as $position => $row) {
                 if ($this->products->findOneByField('sku', $row['sku'])) {
                     $skipped[] = $row['sku'];
 
@@ -101,6 +102,7 @@ class DemoCatalogueRepository
                     'attribute_family_id' => 1,
                     'sku' => $row['sku'],
                 ]);
+                $product->forceFill(['created_at' => $createdAt->copy()->subSeconds(count($rows) - $position)])->save();
 
                 $product = $this->products->update([
                     'sku' => $row['sku'],
