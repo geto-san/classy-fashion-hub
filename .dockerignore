@@ -239,3 +239,7 @@ store/vendor
 !store/tests/Feature/CallbackSecurityTest.php
 
 !store/tests/Feature/DeploymentReadinessTest.php
+
+# Distinct homepage campaign photographs.
+!store/public/images/campaigns
+!store/public/images/campaigns/*.webp

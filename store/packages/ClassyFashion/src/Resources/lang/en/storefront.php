@@ -51,6 +51,7 @@ return [
     'publish_help' => 'Publishing makes these changes visible to customers immediately.',
     'publish' => 'Publish changes',
     'groups' => [
+        'closing' => 'Closing campaign',
         'hero' => 'First impression',
         'collections' => 'Shop collections',
         'visit' => 'Your shop',
@@ -63,6 +64,8 @@ return [
         'hero_link' => 'Shop button destination',
         'hero_image' => 'Homepage campaign image',
         'hero_alt' => 'Campaign image description',
+        'closing_image' => 'Closing campaign image',
+        'closing_alt' => 'Closing image description',
         'collection_title' => 'Photo section heading',
         'collection_text' => 'Photo section introduction',
         'assistant_enabled' => 'Show the shopping assistant',
@@ -94,6 +97,7 @@ return [
     ],
     'content' => [
         'hero_alt' => 'Fashion campaign featuring a red trouser set and a coral, ivory and blue maxi dress',
+        'closing_alt' => 'Two women embracing, with the red trouser outfit facing forward and the coral, ivory and blue dress facing away',
         'hero_title' => 'Style, on your terms.',
         'hero_text' => 'From everyday favourites to going-out looks. Discover the collection from our Mbarara shop.',
         'hero_button' => 'Explore the collection',

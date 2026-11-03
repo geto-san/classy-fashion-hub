@@ -16,17 +16,24 @@ beforeEach(function () {
     config(['repository.cache.enabled' => false, 'responsecache.enabled' => false]);
 });
 
-it('renders a clean storefront without sample photography until the owner uploads images', function () {
-    get(route('shop.home.index'))->assertOk()
+it('renders each campaign and category photo once with the closing campaign last', function () {
+    $response = get(route('shop.home.index'))->assertOk()
         ->assertSee('cfh-campaign', false)
-        ->assertSee('cfh-campaign-without-photo', false)
-        ->assertDontSee('/images/storefront/', false)
+        ->assertSee('cfh-closing-banner', false)
+        ->assertDontSee('background-image:', false)
         ->assertDontSee('src=""', false)
         ->assertSee('v-ethereal-products', false)
         ->assertDontSee('<section class="cfh-editorial-splits"', false)
         ->assertDontSee('<section class="cfh-container cfh-shop-journal"', false)
         ->assertDontSee('home-offer', false)
         ->assertDontSee('top-collection-container', false);
+
+    foreach (Storefront::homepageImages() as $image) {
+        expect(substr_count($response->getContent(), $image))->toBe(1);
+    }
+
+    expect(strpos($response->getContent(), 'cfh-closing-banner'))
+        ->toBeGreaterThan(strpos($response->getContent(), 'cfh-shop-strip'));
 });
 
 it('restores the original sections without overwriting their content', function () {
@@ -80,7 +87,7 @@ it('lets the owner publish text and photos while retaining fields not uploaded',
     Storage::disk('public')->assertExists(Storefront::get('hero_image'));
     expect(Storefront::image('hero_image'))->not->toContain('/images/storefront/classy-collection-campaign');
     expect(Storefront::collections()[0]['src'])->toBe(Storefront::image('dresses_image'));
-    expect(Storefront::image('caps_image'))->toBe('');
+    expect(Storefront::image('caps_image'))->toBe('/images/campaigns/caps.webp');
 });
 
 it('renders an owner campaign without the bundled responsive source set', function () {
@@ -110,9 +117,30 @@ it('renders a single owner collection without requesting missing collection phot
 
     get(route('shop.home.index'))->assertOk()
         ->assertSee(Storefront::image('caps_image'), false)
-        ->assertSee('<section class="cfh-container cfh-shop-journal"', false)
+        ->assertDontSee('<section class="cfh-container cfh-shop-journal"', false)
         ->assertDontSee('src=""', false)
         ->assertDontSee('/images/storefront/', false);
+});
+
+it('does not repeat a photo assigned to more than one homepage placement', function () {
+    app(CoreConfigRepository::class)->create([
+        'channel' => 'default',
+        'locale' => 'en',
+        'general' => ['content' => ['storefront' => [
+            'hero_image' => 'storefront/shared.webp',
+            'closing_image' => 'storefront/shared.webp',
+            'dresses_image' => 'storefront/shared.webp',
+        ]]],
+    ]);
+
+    $images = Storefront::homepageImages();
+
+    expect($images['closing_image'])->toBe('');
+    expect($images['dresses_image'])->toBe('');
+
+    $response = get(route('shop.home.index'))->assertOk();
+
+    expect(substr_count($response->getContent(), $images['hero_image']))->toBe(1);
 });
 
 it('rejects external or unsafe owner links before publishing', function () {

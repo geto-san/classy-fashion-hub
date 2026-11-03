@@ -21,6 +21,8 @@ class Storefront
             'hero_link' => 'link',
             'hero_image' => 'image',
             'hero_alt' => 'text',
+            'closing_image' => 'image',
+            'closing_alt' => 'text',
             'collection_title' => 'text',
             'collection_text' => 'textarea',
             'dresses_title' => 'text',
@@ -50,7 +52,7 @@ class Storefront
             return '/search';
         }
 
-        if ($value !== null) {
+        if ($value !== null && ! (str_ends_with($field, '_image') && $value === '')) {
             return $field === 'assistant_enabled'
                 ? filter_var($value, FILTER_VALIDATE_BOOLEAN)
                 : $value;
@@ -62,7 +64,11 @@ class Storefront
             'dresses_link' => '/search?query=dress',
             'caps_link' => '/search?query=cap',
             'everyday_link' => '/search',
-            'hero_image', 'dresses_image', 'caps_image', 'everyday_image' => '',
+            'hero_image' => '/images/campaigns/hero.webp',
+            'dresses_image' => '/images/campaigns/dresses.webp',
+            'caps_image' => '/images/campaigns/caps.webp',
+            'everyday_image' => '/images/campaigns/everyday.webp',
+            'closing_image' => '/images/campaigns/closing.webp',
             default => trans('classy-fashion::storefront.content.'.$field),
         };
     }
@@ -86,12 +92,34 @@ class Storefront
      */
     public static function collections(): array
     {
+        $images = self::homepageImages();
+
         return array_map(fn ($key) => [
-            'src' => self::image($key.'_image'),
+            'src' => $images[$key.'_image'],
             'title' => self::get($key.'_title'),
             'alt' => self::get($key.'_alt'),
             'link' => self::get($key.'_link'),
         ], ['dresses', 'caps', 'everyday']);
+    }
+
+    /**
+     * Reserve each photo for one placement, prioritizing the opening and closing campaigns.
+     */
+    public static function homepageImages(): array
+    {
+        $images = [];
+        $used = [];
+
+        foreach (['hero_image', 'closing_image', 'dresses_image', 'caps_image', 'everyday_image'] as $field) {
+            $image = self::image($field);
+            $images[$field] = in_array($image, $used, true) ? '' : $image;
+
+            if ($image !== '') {
+                $used[] = $image;
+            }
+        }
+
+        return $images;
     }
 
     /**

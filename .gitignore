@@ -118,3 +118,6 @@ __pycache__/
 
 # Generated browser captures and design exports.
 /output/
+
+# Homepage campaign assets.
+!/store/public/images/campaigns/
