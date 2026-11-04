@@ -22,7 +22,7 @@ any account plan need billing review.
 Before deletion, both source services already had no active deployment and all
 recorded deployments were marked `REMOVED`. A final live source export/comparison
 was therefore unavailable. The preserved Railway snapshot and independent Neon
-backup pass checksum validation; current Neon counts remain 0 products, 1 customer,
+backup pass checksum validation; migration-time Neon counts were 0 products, 1 customer,
 and 1 order. Do not describe final source synchronization as verified.
 
 Provider credentials and retirement evidence remain private under the ignored
@@ -33,6 +33,8 @@ historical. Customer launch still requires email verification, policy content,
 catalogue setup, and live payment/domain decisions.
 
 ## Current coursework configuration
+
+Live application: `44c2c2d`, Render deployment `dep-dblqfnmgekts73c4fbq0`.
 
 The 5 November refresh uses `CLASSY_COURSEWORK_MODE=true`: practice mobile-money
 approval/decline, private mail previews without sending, and the local assistant.

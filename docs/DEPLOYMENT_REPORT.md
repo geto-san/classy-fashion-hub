@@ -41,10 +41,17 @@ the first 100 listings; customer, order and administrator records are outside th
 transfer. The importer is explicit and repeat-safe; startup never reseeds the shop.
 Private backup, upload and browser evidence: `backups/coursework-refresh-20261104/`.
 
-Verification before publication: 36 focused tests / 583 assertions pass, including
+Verification: 36 focused tests / 583 assertions pass, including
 checkout, reports, worker restrictions and notification capture. Pint passes on
 65 changed PHP files; the Shop production build and all 336 translation checks pass.
-The earlier eight payment/callback regression tests also pass.
+The earlier eight payment/callback regression tests also pass. Live desktop
+(1440px) and mobile (390px) checks load all 23 distinct campaign/editorial images
+and 40 distinct product images, with no broken images, JavaScript errors or horizontal
+overflow. All 122 listings traverse price-sorted pages without duplicates and are
+saleable. Guest cart, address, shipping and practice-payment entry checks pass;
+no hosted review order or customer was created. Existing customer/order/item/admin/channel
+fingerprints match the pre-refresh backup exactly. One transient 502 occurred
+while the service was restarting; the subsequent complete catalogue traversal passed.
 
 ### Presenting without a budget
 
@@ -73,8 +80,8 @@ Those paid-service decisions are not prerequisites for this course demonstration
 | Business database | Neon PostgreSQL 17, project `round-fire-56963406`; pooled connections for requests, direct connections for controlled migrations, TLS required |
 | Uploaded files | Cloudinary; public originals retain their paths and extensions, private storage uses authenticated delivery |
 | Email integration | Brevo transport is retained; coursework mode captures previews and cancels delivery |
-| Source | Branch `deploy/render-neon-20261102`; live application commit `ff75074` |
-| Live release | Render deployment `dep-dbkvh0mi0phs73bdlfk0`, status `live` |
+| Source | Branch `deploy/render-neon-20261102`; live application commit `44c2c2d` |
+| Live release | Render deployment `dep-dblqfnmgekts73c4fbq0`, status `live` |
 
 Render serves the application, Neon stores business records and sessions, and
 Cloudinary stores uploaded originals independently of Render instances. Routine
@@ -178,9 +185,9 @@ page caches. Fresh backups and evidence are private under
 | Area | Implemented behavior and practical limits |
 |---|---|
 | Shopping | Customers can browse categories, search/filter products, choose size/colour variants, and use the cart and checkout. The current academic catalogue has 122 stocked styles; use actual merchant inventory before commercial sales. |
-| Customer accounts | Registration, sign-in, profiles, order history and order tracking are implemented. Password-reset delivery depends on resolving email setup. |
+| Customer accounts | Registration, sign-in, profiles, order history and order tracking are implemented. Coursework emails are captured privately, so email-based reset links are not delivered; an administrator can reset a project account through user management. |
 | Orders and delivery | Staff manage Pending, Confirmed, Paid, Processing, Dispatched and Delivered states under payment rules. Cash on Delivery can proceed to processing after confirmation and records cash at delivery. Delivery addresses, phone numbers, instructions and a free-text rider/partner are recorded. |
-| Payments | Cash on Delivery and mobile-money integrations are implemented. MTN automatic confirmation verifies payment server-side; a configured manual Till flow lets staff reconcile a submitted transaction reference. Neither a harmless unknown-callback check nor sandbox tests prove live merchant readiness. Paid mobile-money cancellations require manual refund reconciliation. |
+| Payments | Coursework mode offers practice approval/decline without moving money; Cash on Delivery records a project order. Outside this mode, mobile-money integrations are implemented. MTN automatic confirmation verifies payment server-side; a configured manual Till flow lets staff reconcile a submitted transaction reference. Neither a harmless unknown-callback check nor sandbox tests prove live merchant readiness. Paid mobile-money cancellations require manual refund reconciliation. |
 | Worker access | The standard Worker role supports operational work with a quantity-only stock screen and restricted settings, account management and profit access. Review custom roles before assigning real staff. |
 | Administrator access | Preserved credentials access orders, payments, stock, users/roles, storefront settings, sales/profit reports and the audit log. No credentials are included in this report. |
 | Reporting | Reports and CSV exports cover sales, stock, payments and gross product profit. Costs are captured per sale; enter actual supplier costs. Profit excludes business overheads, and period reporting uses the original order date. |
