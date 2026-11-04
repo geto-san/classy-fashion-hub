@@ -32,23 +32,30 @@ migration stages; statements about Railway still running or cutover pending are
 historical. Customer launch still requires email verification, policy content,
 catalogue setup, and live payment/domain decisions.
 
-## Current homepage campaigns
+## Current coursework configuration
 
-The latest application release is `ff75074`, deployment `dep-dbkvh0mi0phs73bdlfk0`.
-The 3 November client-testing catalogue adds 100 labelled demo listings with
-distinct CC0 photos and illustrative UGX prices. All have zero stock; backorders
-are disabled. Existing customers/orders remain preserved. See the
-[handover report](DEPLOYMENT_REPORT.md#demo-catalogue--3-november-2026) for sources,
-verification, removal instructions and the price-sort pagination issue found in rehearsal.
+The 5 November refresh uses `CLASSY_COURSEWORK_MODE=true`: practice mobile-money
+approval/decline, private mail previews without sending, and the local assistant.
+Accounts, stock, checkout, orders, authorization and reports retain their real
+application behavior. Keep this flag enabled for the student assessment.
 
-The owner's 3 November update is live at commit `2abd572`, Render deployment
-`dep-dbkuk3m7bikc73fu3m8g`. The supplied hero, three centered category photos and
-a distinct back/front closing campaign each appear once. All five Cloudinary
-originals match local SHA-256 hashes; the code also includes fallback originals.
-The closing campaign is independently editable in Homepage & photos. Live desktop
-and mobile checks pass; product/customer/order counts remain 0/1/1. See the
-handover report for verification details. The photo-removal record below describes
-the earlier state and has been superseded for homepage campaign imagery.
+The catalogue contains 122 normal retail listings across 24 collections, with
+147 licensed product photos. Twenty-one additional homepage photos restore the
+Ethereal editorial sections, while retaining the supplied hero and closing campaign.
+The older zero-stock, labelled catalogue below is historical. See the
+[current report](DEPLOYMENT_REPORT.md#coursework-refresh--5-november-2026).
+
+For a fresh local installation, use the README and
+`python3 scripts/fetch-coursework-media.py`, then the validated
+`classy:install-coursework-catalogue --execute` command. This explicit importer
+is never part of service startup. Do not run installers or legacy seeders on the
+hosted database. Deployment and catalogue transfer require a fresh verified backup;
+code enabling practice payments must be live before academic stock is published.
+
+Setting the flag to false restores the existing real/manual payment behavior;
+old coursework attempts cannot be confirmed through a merchant provider. Before
+real trading, configure and test that provider and email delivery, replace authored
+inventory, and review information pages. Do not disable the flag just for presentation.
 
 ## Owner catalogue setup after photo cleanup
 

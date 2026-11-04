@@ -3,6 +3,7 @@
 namespace ClassyFashion\Http\Controllers\Shop;
 
 use ClassyFashion\Models\PaymentAttempt;
+use ClassyFashion\Payment\CourseworkProvider;
 use ClassyFashion\Payment\MobileMoneyProvider;
 use ClassyFashion\Payment\Momo;
 use ClassyFashion\Payment\MtnMomoProvider;
@@ -268,6 +269,14 @@ class MobileMoneyController extends Controller
      */
     protected function providerFor(PaymentAttempt $attempt): ?MobileMoneyProvider
     {
+        if ($attempt->provider === 'coursework') {
+            return config('classy.coursework_mode') ? app(CourseworkProvider::class) : null;
+        }
+
+        if (config('classy.coursework_mode')) {
+            return null;
+        }
+
         $map = [
             'mtn' => MtnMomoProvider::class,
         ];
@@ -279,6 +288,18 @@ class MobileMoneyController extends Controller
         }
 
         return Momo::provider($attempt->network);
+    }
+
+    /**
+     * Let only the owning session choose a practice-payment outcome.
+     */
+    public function practice(Request $request, PaymentAttempt $attempt)
+    {
+        abort_unless(config('classy.coursework_mode') && $attempt->provider === 'coursework' && $this->owns($attempt), 404);
+        $data = $request->validate(['result' => ['required', 'in:success,failed']]);
+        $this->attempts->practiceOutcome($attempt, $data['result']);
+
+        return redirect()->route('classy.mobilemoney.status', ['attempt' => $attempt->public_id]);
     }
 
     /**
@@ -353,6 +374,7 @@ class MobileMoneyController extends Controller
                 ->name('mtn-callback');
 
             Route::post('claim/{attempt}', [self::class, 'claim'])->name('claim');
+            Route::post('practice/{attempt}', [self::class, 'practice'])->middleware('throttle:10,1')->name('practice');
         });
     }
 }

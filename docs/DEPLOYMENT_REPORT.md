@@ -1,13 +1,69 @@
 # Classy Fashion Hub deployment and handover
 
-Status checked: 3 November 2026. Website: https://classy-fashion-hub.onrender.com.
+Status checked: 5 November 2026. Website: https://classy-fashion-hub.onrender.com.
 Administrator sign-in: https://classy-fashion-hub.onrender.com/admin/login.
 
-The replacement website is live and the two Railway services have been deleted.
-It has a 100-product demonstration catalogue for client testing.
-Customer launch still requires verified email delivery, approved Privacy and
-Terms pages, real shop products and live-payment decisions. Railway storage
-cleanup also requires additional approval, as detailed below.
+The project is configured for student assessment with the original Ethereal
+Fashion UI, a normal retail catalogue, and practice payment controls. The two
+Railway application/database services were deleted previously; retained Railway
+storage is documented below. This report separates the current academic setup
+from the historical migration and any future commercial launch.
+
+## Coursework refresh — 5 November 2026
+
+- **122 published styles**, 24 collections under Women, Men, Outerwear and Accessories.
+  Names and descriptions use ordinary retail wording; previous `[DEMO]` labels are removed.
+- **147 product photographs**, including 25 alternate gallery views, plus **21 new homepage photos**.
+  Originals have a minimum short edge of 919 pixels; old 320-pixel catalogue photos are replaced.
+- The supplied hero and opposite-facing embracing-women closing campaign remain.
+  All 23 homepage editorial/campaign photographs are distinct; four product feeds allocate
+  distinct products. Four centered category tiles fit desktop and mobile.
+- Original Ethereal typography, header, card proportions, grid/rail layouts and editorial
+  sections remain. Direct CDN image delivery and native card loading avoid stalled shimmers.
+- Prices, costs and stock (20 units per listing at installation) are classroom scenarios.
+  Descriptions are original. Photos come from Burst by Shopify, with individual source,
+  photographer, licence and checksum records in the
+  [manifest](../store/packages/ClassyFashion/src/Resources/coursework-catalogue/manifest.json).
+  Marketplace seller images and descriptions were not copied.
+- `CLASSY_COURSEWORK_MODE=true` selects local Approve/Decline mobile-money controls,
+  blocks external gateway confirmation, captures email previews privately without sending,
+  and uses the local assistant even if a paid AI key exists. Checkout, stock, orders,
+  accounts, authorization, audits and reports still persist and function normally.
+- Eleven information pages now provide project-appropriate contact, shipping, payment,
+  returns, privacy and terms content. These are academic explanations, not approved
+  policies for a real merchant.
+- Tied-price catalogue pagination now uses a product-ID tie breaker.
+
+A fresh independent PostgreSQL archive was verified and restored twice. The refresh
+was prepared through Bagisto repositories in one isolated restore and reconciled
+against the second before live application. Existing product IDs are retained for
+the first 100 listings; customer, order and administrator records are outside the
+transfer. The importer is explicit and repeat-safe; startup never reseeds the shop.
+Private backup, upload and browser evidence: `backups/coursework-refresh-20261104/`.
+
+Verification before publication: 36 focused tests / 583 assertions pass, including
+checkout, reports, worker restrictions and notification capture. Pint passes on
+65 changed PHP files; the Shop production build and all 336 translation checks pass.
+The earlier eight payment/callback regression tests also pass.
+
+### Presenting without a budget
+
+1. Use the hosted site for client/lecturer review; allow for free-host cold starts.
+   Keep a local installation as the presentation backup.
+2. Follow the README once, including the public media downloader. No paid payment,
+   email or AI accounts are required in coursework mode.
+3. Add an item to the cart, enter an example checkout phone/address, select mobile
+   money, and choose **Approve** or **Decline** on the practice-payment screen.
+   An approval creates a real project order once; a decline keeps the cart.
+4. Show order processing, stock changes, staff restrictions and reports in administration.
+   Use made-up customer details, since saved orders and logs are genuine project records.
+5. Give the reviewer an administrator created through Settings → Users, and let them
+   set their own password. Keep project credentials and private logs out of Git/screenshots.
+
+For a future real business, replace authored inventory/prices with the shop's actual
+stock, review policy/contact content, disable coursework mode, verify email and
+merchant payments, and perform a fresh backup and full checkout acceptance test.
+Those paid-service decisions are not prerequisites for this course demonstration.
 
 ## What is deployed
 
@@ -16,7 +72,7 @@ cleanup also requires additional approval, as detailed below.
 | Website and administration | Render Free, Oregon; Docker image containing Bagisto 2.5.0, Laravel 13, PHP 8.4, and the built Tailwind 4 storefront/admin themes |
 | Business database | Neon PostgreSQL 17, project `round-fire-56963406`; pooled connections for requests, direct connections for controlled migrations, TLS required |
 | Uploaded files | Cloudinary; public originals retain their paths and extensions, private storage uses authenticated delivery |
-| Email integration | Brevo HTTPS transport is configured; verified sender and successful delivery remain outstanding |
+| Email integration | Brevo transport is retained; coursework mode captures previews and cancels delivery |
 | Source | Branch `deploy/render-neon-20261102`; live application commit `ff75074` |
 | Live release | Render deployment `dep-dbkvh0mi0phs73bdlfk0`, status `live` |
 
@@ -32,7 +88,7 @@ The later photo cleanup and demo import are recorded separately below. Password 
 order values, and the application encryption key were retained during migration.
 The hosting origin and stored footer URLs were changed to Render.
 
-## Demo catalogue — 3 November 2026
+## Demo catalogue — 3 November 2026 (historical; superseded)
 
 The owner's requested client-testing catalogue contains **100 visible demo products**:
 20 dresses/tops, 20 shirts, 20 T-shirts, 20 trousers and 20 footwear listings.
@@ -64,8 +120,8 @@ The newest-first API traversal returns all 100 distinct products across five pag
 Before customer launch, remove products whose SKU starts `CFH-DEMO-20261103-`
 and their empty demo categories, then add the shop's actual products, rights-cleared
 photos, sizes, prices and stock. Do not treat these examples as available inventory.
-One further issue was found during rehearsal: **price sorting can repeat items
-between pages when prices tie**. Add a product-ID tie breaker to catalogue sorting
+One issue found during that rehearsal, now fixed in the coursework refresh, was
+price sorting repeating items between pages when prices tie. Add a product-ID tie breaker to catalogue sorting
 before launch; newest-first and name sorting can be used during demo review.
 
 ## Homepage campaign refresh — 3 November 2026
@@ -121,7 +177,7 @@ page caches. Fresh backups and evidence are private under
 
 | Area | Implemented behavior and practical limits |
 |---|---|
-| Shopping | Customers can browse categories, search/filter products, choose size/colour variants, and use the cart and checkout. The 100 demo listings have zero stock; replace them with the shop's real catalogue before selling. |
+| Shopping | Customers can browse categories, search/filter products, choose size/colour variants, and use the cart and checkout. The current academic catalogue has 122 stocked styles; use actual merchant inventory before commercial sales. |
 | Customer accounts | Registration, sign-in, profiles, order history and order tracking are implemented. Password-reset delivery depends on resolving email setup. |
 | Orders and delivery | Staff manage Pending, Confirmed, Paid, Processing, Dispatched and Delivered states under payment rules. Cash on Delivery can proceed to processing after confirmation and records cash at delivery. Delivery addresses, phone numbers, instructions and a free-text rider/partner are recorded. |
 | Payments | Cash on Delivery and mobile-money integrations are implemented. MTN automatic confirmation verifies payment server-side; a configured manual Till flow lets staff reconcile a submitted transaction reference. Neither a harmless unknown-callback check nor sandbox tests prove live merchant readiness. Paid mobile-money cancellations require manual refund reconciliation. |

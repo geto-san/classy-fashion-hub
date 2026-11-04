@@ -1,0 +1,207 @@
+{
+  "purpose": "academic-presentation",
+  "departments": {
+    "women": {
+      "name": "Women",
+      "previous_slugs": [
+        "womens"
+      ],
+      "position": 1,
+      "description": "Considered shapes, everyday layers and occasion-ready pieces."
+    },
+    "men": {
+      "name": "Men",
+      "previous_slugs": [
+        "mens"
+      ],
+      "position": 2,
+      "description": "Easy essentials, relaxed tailoring and timeless everyday style."
+    },
+    "outerwear": {
+      "name": "Outerwear",
+      "position": 3,
+      "description": "Light layers and structured jackets for days out and evenings in town."
+    },
+    "accessories": {
+      "name": "Accessories",
+      "position": 4,
+      "description": "Shoes, bags and finishing touches to make an outfit your own."
+    }
+  },
+  "collections": {
+    "dresses": {
+      "name": "Dresses",
+      "department": "women",
+      "position": 1,
+      "description": "Explore dresses from the women collection.",
+      "previous_slugs": [
+        "demo-dress"
+      ]
+    },
+    "tops": {
+      "name": "Tops",
+      "department": "women",
+      "position": 2,
+      "description": "Explore tops from the women collection."
+    },
+    "skirts": {
+      "name": "Skirts",
+      "department": "women",
+      "position": 3,
+      "description": "Explore skirts from the women collection."
+    },
+    "womens-trousers": {
+      "name": "Jeans & Trousers",
+      "department": "women",
+      "position": 4,
+      "description": "Explore trousers from the women collection."
+    },
+    "knitwear": {
+      "name": "Knitwear",
+      "department": "women",
+      "position": 5,
+      "description": "Explore knitwear from the women collection."
+    },
+    "shirts": {
+      "name": "Shirts",
+      "department": "men",
+      "position": 1,
+      "description": "Explore shirts from the men collection.",
+      "previous_slugs": [
+        "demo-shirt"
+      ]
+    },
+    "t-shirts": {
+      "name": "T-Shirts",
+      "department": "men",
+      "position": 2,
+      "description": "Explore t-shirts from the men collection.",
+      "previous_slugs": [
+        "demo-t-shirt"
+      ]
+    },
+    "jeans": {
+      "name": "Jeans",
+      "department": "men",
+      "position": 4,
+      "description": "Explore jeans from the men collection."
+    },
+    "chinos": {
+      "name": "Trousers",
+      "department": "men",
+      "position": 5,
+      "description": "Easy trousers and relaxed joggers for everyday dressing.",
+      "previous_slugs": [
+        "demo-pants"
+      ]
+    },
+    "jackets": {
+      "name": "Jackets",
+      "department": "outerwear",
+      "position": 1,
+      "description": "Explore jackets from the outerwear collection."
+    },
+    "hoodies": {
+      "name": "Hoodies",
+      "department": "outerwear",
+      "position": 2,
+      "description": "Explore hoodies from the outerwear collection."
+    },
+    "coats": {
+      "name": "Coats",
+      "department": "outerwear",
+      "position": 3,
+      "description": "Explore coats from the outerwear collection."
+    },
+    "sneakers": {
+      "name": "Sneakers",
+      "department": "accessories",
+      "position": 1,
+      "description": "Explore sneakers from the accessories collection.",
+      "previous_slugs": [
+        "demo-shoes"
+      ],
+      "parent_group": "shoes"
+    },
+    "loafers": {
+      "name": "Flats & Loafers",
+      "department": "accessories",
+      "position": 2,
+      "description": "Explore loafers from the accessories collection.",
+      "parent_group": "shoes"
+    },
+    "heels": {
+      "name": "Heels",
+      "department": "accessories",
+      "position": 3,
+      "description": "Explore heels from the accessories collection.",
+      "parent_group": "shoes"
+    },
+    "sandals": {
+      "name": "Sandals",
+      "department": "accessories",
+      "position": 4,
+      "description": "Explore sandals from the accessories collection.",
+      "parent_group": "shoes"
+    },
+    "bags": {
+      "name": "Bags",
+      "department": "accessories",
+      "position": 5,
+      "description": "Explore bags from the accessories collection."
+    },
+    "backpacks": {
+      "name": "Backpacks",
+      "department": "accessories",
+      "position": 6,
+      "description": "Explore backpacks from the accessories collection."
+    },
+    "caps": {
+      "name": "Hats & Caps",
+      "department": "accessories",
+      "position": 8,
+      "description": "Explore caps from the accessories collection."
+    },
+    "sunglasses": {
+      "name": "Sunglasses",
+      "department": "accessories",
+      "position": 9,
+      "description": "Explore sunglasses from the accessories collection."
+    },
+    "watches": {
+      "name": "Watches",
+      "department": "accessories",
+      "position": 10,
+      "description": "Explore watches from the accessories collection."
+    },
+    "jewellery": {
+      "name": "Jewellery",
+      "department": "accessories",
+      "position": 11,
+      "description": "Explore jewellery from the accessories collection."
+    },
+    "tailoring": {
+      "name": "Tailoring",
+      "department": "men",
+      "position": 3,
+      "description": "Refined jackets, dress shirts and occasion-ready tailoring.",
+      "previous_slugs": [
+        "formal-wear-men",
+        "formal-wear"
+      ]
+    },
+    "bracelets": {
+      "name": "Bracelets",
+      "department": "accessories",
+      "position": 7,
+      "description": "Simple bracelets and considered details for everyday wear."
+    }
+  },
+  "groups": {
+    "shoes": {
+      "name": "Shoes",
+      "department": "accessories",
+      "description": "Sneakers, loafers, heels and sandals for every part of your week."
+    }
+  }
+}

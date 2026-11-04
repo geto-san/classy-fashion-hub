@@ -9,6 +9,7 @@ use ClassyFashion\Console\Commands\CopyMedia;
 use ClassyFashion\Console\Commands\DescribeProducts;
 use ClassyFashion\Console\Commands\ExpirePayments;
 use ClassyFashion\Console\Commands\ImportProductPhotos;
+use ClassyFashion\Console\Commands\InstallCourseworkCatalogue;
 use ClassyFashion\Console\Commands\RepairImages;
 use ClassyFashion\Console\Commands\SecureAccounts;
 use ClassyFashion\Console\Commands\SeedDemoCatalogue;
@@ -17,10 +18,14 @@ use ClassyFashion\Console\Commands\TransferDatabase;
 use ClassyFashion\DataGrids\OrderDataGrid;
 use ClassyFashion\Http\Middleware\ApplyClassyBrand;
 use ClassyFashion\Observers\ProductInventoryObserver;
+use ClassyFashion\Repositories\CatalogProductRepository;
+use ClassyFashion\Support\CloudProductImages;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Product\Models\ProductInventory as WebkulProductInventory;
+use Webkul\Product\ProductImage;
+use Webkul\Product\Repositories\ProductRepository;
 
 class ClassyFashionServiceProvider extends ServiceProvider
 {
@@ -32,6 +37,9 @@ class ClassyFashionServiceProvider extends ServiceProvider
         $this->app->register(EventServiceProvider::class);
 
         $this->app->register(CloudStorageServiceProvider::class);
+
+        $this->app->bind(ProductImage::class, CloudProductImages::class);
+        $this->app->bind(ProductRepository::class, CatalogProductRepository::class);
 
         $this->app->bind(\Webkul\Admin\DataGrids\Sales\OrderDataGrid::class, OrderDataGrid::class);
 
@@ -103,6 +111,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
             TransferDatabase::class,
             RepairImages::class,
             ImportProductPhotos::class,
+            InstallCourseworkCatalogue::class,
             SecureAccounts::class,
             SeedDemoCatalogue::class,
             ExpirePayments::class,

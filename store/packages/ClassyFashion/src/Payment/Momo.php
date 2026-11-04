@@ -3,7 +3,15 @@
 namespace ClassyFashion\Payment;
 
 use ClassyFashion\Models\PaymentAttempt;
+use ClassyFashion\Models\Sales\Order;
+use ClassyFashion\Repositories\PaymentAttemptRepository;
 use ClassyFashion\Support\Audit;
+use ClassyFashion\Support\CheckoutFingerprint;
+use ClassyFashion\Support\Notify;
+use Webkul\Checkout\Facades\Cart;
+use Webkul\Checkout\Repositories\CartRepository;
+use Webkul\Sales\Repositories\OrderRepository;
+use Webkul\Sales\Transformers\OrderResource;
 
 /**
  * Picks the mobile-money provider and fulfils human-confirmed payments.
@@ -16,6 +24,10 @@ class Momo
 {
     public static function provider(?string $network = null): ?MobileMoneyProvider
     {
+        if (config('classy.coursework_mode')) {
+            return new CourseworkProvider;
+        }
+
         $forced = strtolower((string) config('classy.momo.provider', 'auto'));
 
         $mtn = new MtnMomoProvider;
@@ -28,8 +40,6 @@ class Momo
             return null;
         }
 
-        // Auto: MTN covers MTN numbers; anything else goes manual.
-        // (Airtel has no self-service sandbox, so it always uses the Till.)
         if ($network !== 'AIRTEL' && $mtn->isConfigured()) {
             return $mtn;
         }
@@ -39,12 +49,12 @@ class Momo
 
     public static function manualEnabled(): bool
     {
-        return filled(config('classy.momo.till_number'));
+        return ! config('classy.coursework_mode') && filled(config('classy.momo.till_number'));
     }
 
     public static function tillNumber(): ?string
     {
-        $till = config('classy.momo.till_number');
+        $till = config('classy.coursework_mode') ? null : config('classy.momo.till_number');
 
         return filled($till) ? (string) $till : null;
     }
@@ -68,13 +78,7 @@ class Momo
             return PaymentAttempt::STATUS_FAILED;
         }
 
-        $claimed = PaymentAttempt::query()
-            ->whereKey($attempt->getKey())
-            ->whereIn('status', [PaymentAttempt::STATUS_PENDING, PaymentAttempt::STATUS_EXPIRED])
-            ->update([
-                'status'      => PaymentAttempt::STATUS_FINALIZING,
-                'verified_at' => now(),
-            ]);
+        $claimed = app(PaymentAttemptRepository::class)->claimManual($attempt);
 
         if ($claimed === 0) {
             return $attempt->fresh()->status;
@@ -89,19 +93,19 @@ class Momo
      */
     public static function createPaidOrder(PaymentAttempt $attempt, $causer = null, ?string $via = null): string
     {
-        $cart = \Webkul\Checkout\Models\Cart::find($attempt->cart_id);
+        $cart = app(CartRepository::class)->find($attempt->cart_id);
 
         if (! $cart || $cart->is_active === false) {
             return self::unfulfilled($attempt, 'Cart no longer available after payment.', $causer);
         }
 
         try {
-            \Webkul\Checkout\Facades\Cart::setCart($cart);
-            if (! \Webkul\Checkout\Facades\Cart::validateItems()) {
+            Cart::setCart($cart);
+            if (! Cart::validateItems()) {
                 return self::unfulfilled($attempt, 'Products are no longer available after payment.', $causer);
             }
 
-            \Webkul\Checkout\Facades\Cart::collectTotals();
+            Cart::collectTotals();
 
             $cart->refresh();
 
@@ -110,31 +114,30 @@ class Momo
                 return self::unfulfilled($attempt, 'Checkout total or currency changed after payment.', $causer);
             }
 
-            if (! $attempt->checkout_fingerprint || ! hash_equals($attempt->checkout_fingerprint, \ClassyFashion\Support\CheckoutFingerprint::forCart($cart))) {
+            if (! $attempt->checkout_fingerprint || ! hash_equals($attempt->checkout_fingerprint, CheckoutFingerprint::forCart($cart))) {
                 return self::unfulfilled($attempt, 'Checkout contents changed or predate payment snapshots; staff reconciliation required.', $causer);
             }
 
-            $claimed = \Webkul\Checkout\Models\Cart::query()
-                ->whereKey($cart->id)
-                ->where('is_active', 1)
-                ->update(['is_active' => 0]);
+            $claimed = app(PaymentAttemptRepository::class)->claimCart($cart->id);
 
             if ($claimed !== 1) {
                 return self::unfulfilled($attempt, 'Another payment already claimed this cart; staff reconciliation required.', $causer);
             }
 
-            $repository = app(\Webkul\Sales\Repositories\OrderRepository::class);
+            $repository = app(OrderRepository::class);
 
-            $order = $repository->create((new \Webkul\Sales\Transformers\OrderResource($cart))->jsonSerialize());
+            $order = $repository->create((new OrderResource($cart))->jsonSerialize());
 
-            $repository->updateOrderStatus($order, \ClassyFashion\Models\Sales\Order::STATUS_PAID);
+            $repository->updateOrderStatus($order, Order::STATUS_PAID);
         } catch (\Throwable $e) {
             report($e);
 
             return self::unfulfilled($attempt, 'Order creation failed after payment.', $causer);
         }
 
-        $channel = $via ?? "mobile money ({$attempt->network}, {$attempt->tx_ref})";
+        $channel = $via ?? ($attempt->provider === 'coursework'
+            ? 'coursework payment simulation (no money transferred)'
+            : "mobile money ({$attempt->network}, {$attempt->tx_ref})");
 
         Audit::log(
             $order->fresh(),
@@ -146,13 +149,13 @@ class Momo
 
         $attempt->update(['status' => PaymentAttempt::STATUS_SUCCESS, 'order_id' => $order->id]);
 
-        \Webkul\Checkout\Facades\Cart::deActivateCart();
+        Cart::deActivateCart();
 
         if (session()->isStarted()) {
             session()->flash('order_id', $order->id);
         }
 
-        \ClassyFashion\Support\Notify::orderStatus($order->fresh(), \ClassyFashion\Models\Sales\Order::STATUS_PAID);
+        Notify::orderStatus($order->fresh(), Order::STATUS_PAID);
 
         return PaymentAttempt::STATUS_SUCCESS;
     }
@@ -160,7 +163,7 @@ class Momo
     public static function unfulfilled(PaymentAttempt $attempt, string $reason, $causer = null): string
     {
         $attempt->update([
-            'status'         => PaymentAttempt::STATUS_PAID_UNFULFILLED,
+            'status' => PaymentAttempt::STATUS_PAID_UNFULFILLED,
             'failure_reason' => $reason,
         ]);
 

@@ -23,13 +23,13 @@ it('renders each campaign and category photo once with the closing campaign last
         ->assertDontSee('background-image:', false)
         ->assertDontSee('src=""', false)
         ->assertSee('v-ethereal-products', false)
-        ->assertDontSee('<section class="cfh-editorial-splits"', false)
-        ->assertDontSee('<section class="cfh-container cfh-shop-journal"', false)
+        ->assertSee('<section class="cfh-editorial-splits"', false)
+        ->assertSee('<section class="cfh-container cfh-shop-journal"', false)
         ->assertDontSee('home-offer', false)
         ->assertDontSee('top-collection-container', false);
 
-    foreach (Storefront::homepageImages() as $image) {
-        expect(substr_count($response->getContent(), $image))->toBe(1);
+    foreach (array_filter(Storefront::homepageImages()) as $image) {
+        expect(preg_match_all('~<img[^>]+src="'.preg_quote(e($image), '~').'"~', $response->getContent()))->toBe(1);
     }
 
     expect(strpos($response->getContent(), 'cfh-closing-banner'))
@@ -53,11 +53,11 @@ it('restores the original sections without overwriting their content', function 
 it('keeps collection photographs attached to their descriptions and destinations', function () {
     $collections = Storefront::collections();
 
-    expect($collections)->toHaveCount(3);
+    expect($collections)->toHaveCount(4);
     expect($collections[0]['src'])->toBe(Storefront::image('dresses_image'));
     expect($collections[0]['alt'])->toBe(Storefront::get('dresses_alt'));
-    expect($collections[1]['link'])->toBe(Storefront::get('caps_link'));
-    expect($collections[2]['title'])->toBe(Storefront::get('everyday_title'));
+    expect($collections[1]['link'])->toBe(Storefront::get('everyday_link'));
+    expect($collections[3]['title'])->toBe(Storefront::get('caps_title'));
 });
 
 it('lets the owner publish text and photos while retaining fields not uploaded', function () {
@@ -117,7 +117,7 @@ it('renders a single owner collection without requesting missing collection phot
 
     get(route('shop.home.index'))->assertOk()
         ->assertSee(Storefront::image('caps_image'), false)
-        ->assertDontSee('<section class="cfh-container cfh-shop-journal"', false)
+        ->assertSee('<section class="cfh-container cfh-shop-journal"', false)
         ->assertDontSee('src=""', false)
         ->assertDontSee('/images/storefront/', false);
 });

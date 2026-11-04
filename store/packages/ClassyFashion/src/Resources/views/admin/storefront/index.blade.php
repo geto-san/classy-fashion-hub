@@ -18,7 +18,7 @@
         <form method="POST" action="{{ route('admin.classy.storefront.update') }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            @foreach (['hero' => ['hero_title', 'hero_text', 'hero_button', 'hero_link', 'hero_image', 'hero_alt'], 'collections' => ['collection_title', 'collection_text', 'dresses_title', 'dresses_link', 'dresses_image', 'dresses_alt', 'caps_title', 'caps_link', 'caps_image', 'caps_alt', 'everyday_title', 'everyday_link', 'everyday_image', 'everyday_alt'], 'closing' => ['closing_image', 'closing_alt'], 'options' => ['assistant_enabled']] as $group => $fields)
+            @foreach (Storefront::editorGroups() as $group => $fields)
                 <fieldset>
                     <legend>{{ trans('classy-fashion::storefront.groups.'.$group) }}</legend>
                     <div class="cfh-editor-fields">

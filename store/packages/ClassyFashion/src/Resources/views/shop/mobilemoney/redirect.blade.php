@@ -12,6 +12,10 @@
             {{ __('classy-fashion::app.mobilemoney.choose_network', ['amount' => core()->formatPrice($cart->grand_total)]) }}
         </p>
 
+        @if (config('classy.coursework_mode'))
+            <p class="mt-2 text-sm text-zinc-600">{{ trans('classy-fashion::coursework.payment_intro') }}</p>
+        @endif
+
         <form
             method="POST"
             action="{{ route('classy.mobilemoney.charge') }}"

@@ -11,6 +11,8 @@
 */
 
 return [
+    'coursework_mode' => filter_var(env('CLASSY_COURSEWORK_MODE', false), FILTER_VALIDATE_BOOLEAN),
+
     'client_admin' => filter_var(env('CLASSY_CLIENT_ADMIN', true), FILTER_VALIDATE_BOOLEAN),
 
     'momo' => [
