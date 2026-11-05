@@ -1,7 +1,7 @@
 # Bagisto core: reinstalled via `composer create-project` (see README.md).
 # Project customizations inside store/ are tracked explicitly with
 # `git add -f` (seeders, tests, ClassyFashion package, docs hooks) and
-# are listed in README.md under "Custom code".
+# are described in the README code layout.
 /store/*
 !/store/packages/
 /store/packages/*
@@ -54,12 +54,11 @@ backups/
 /store/packages/Webkul/Sales/src/Models/*
 !/store/packages/Webkul/Sales/src/Models/OrderItem.php
 
-# Shipped shop photography and storefront coverage.
+# Custom storefront assets and feature coverage.
 !/store/public/
 /store/public/*
 !/store/public/images/
 /store/public/images/*
-!/store/public/images/storefront/
 !/store/tests/
 /store/tests/*
 !/store/tests/Feature/
@@ -116,3 +115,12 @@ __pycache__/
 !/store/tests/Feature/CallbackSecurityTest.php
 
 !/store/tests/Feature/DeploymentReadinessTest.php
+!/store/tests/Feature/DemoCatalogueTest.php
+!/store/tests/Feature/CourseworkModeTest.php
+!/store/tests/Feature/CourseworkCatalogueTest.php
+
+# Generated browser captures and design exports.
+/output/
+
+# Homepage campaign assets.
+!/store/public/images/campaigns/

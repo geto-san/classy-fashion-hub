@@ -1,0 +1,293 @@
+{
+  "images": {
+    "dresses": {
+      "path": "storefront/editorial/20261104/model-in-gold-fashion.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/model-in-gold-fashion",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "92b9425442dfa81c23c684c5f104512e45a45f31f0e65faccfaa0874c7634a81",
+      "width": 1600,
+      "height": 2399,
+      "alt": "Statement womenswear from the collection"
+    },
+    "everyday": {
+      "path": "storefront/editorial/20261104/man-dressed-in-monochrome-by-white-wall.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/man-dressed-in-monochrome-by-white-wall",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Matthew Henry",
+      "sha256": "1183b8acf892c0339068e1c296f647f0e556cb82f12cfbb305095e31eeb9a7e6",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Menswear and everyday styling"
+    },
+    "outerwear": {
+      "path": "storefront/editorial/20261104/lady-in-leather-jacket-in-the-city.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/lady-in-leather-jacket-in-the-city",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "12e19be6f6d7df96cf6492709dee47772c71bf4d9a9beaadc4e77d7dec6b2f43",
+      "width": 1600,
+      "height": 2399,
+      "alt": "Outerwear styled for everyday dressing"
+    },
+    "caps": {
+      "path": "storefront/editorial/20261104/accessories-flatlay.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/accessories-flatlay",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Sarah Pflug",
+      "sha256": "181c1833f609fb6f2d4f082a876417578a78e7d2d3dc6d63c5c5bbc0746e0068",
+      "width": 1600,
+      "height": 2400,
+      "alt": "Shoes and finishing accessories"
+    },
+    "women_editorial": {
+      "path": "storefront/editorial/20261104/woman-in-red-dress-stands-in-field-of-yellow.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-in-red-dress-stands-in-field-of-yellow",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Matthew Henry",
+      "sha256": "1bc122093be4ddaa8053087fbe5b1f724ecab6a768ce5ca5003bfe50e0caee94",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Woman In Red Dress Stands In Field Of Yellow"
+    },
+    "men_editorial": {
+      "path": "storefront/editorial/20261104/smiling-man-in-blue-jpg.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/smiling-man-in-blue-jpg",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "9e85dd1486441a519e689339088089f5a4d577f93e22ef86a4f5b5fca83479aa",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Smiling Man in Blue"
+    },
+    "collection_dresses": {
+      "path": "storefront/editorial/20261104/person-stands-by-pink-flower-stand-in-polka-dot-dress.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/person-stands-by-pink-flower-stand-in-polka-dot-dress",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Farah",
+      "sha256": "f8ca9b98cfd1790cc74cf4a0daf24b66023664498a07d6a944f91f542f9d2520",
+      "width": 1600,
+      "height": 2400,
+      "alt": "Person Stands By Pink Flower Stand In Polka Dot Dress"
+    },
+    "collection_shirts": {
+      "path": "storefront/editorial/20261104/mens-fashion-close-up-shirt-tucked-in-leaning.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/mens-fashion-close-up-shirt-tucked-in-leaning",
+      "license": "CC0-1.0",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/creative-commons",
+      "credit": "Photo by Brodie",
+      "sha256": "65b6fcdd900f504b846110d5e55c6009d5b7210ace94a236f0dc898a8bcb0f09",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Men's Fashion Close Up Shirt Tucked In Leaning"
+    },
+    "collection_caps": {
+      "path": "storefront/editorial/20261104/person-in-a-white-dress-and-hat-sits-in-a-floral-room.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/person-in-a-white-dress-and-hat-sits-in-a-floral-room",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Farah",
+      "sha256": "9817d139ce9e0e33b2ca28cf59d6fc6438f8e3e644dedc4d38e7cbd6867a54e9",
+      "width": 1600,
+      "height": 2400,
+      "alt": "Person In A White Dress And Hat Sits In A Floral Room"
+    },
+    "collection_bags": {
+      "path": "storefront/editorial/20261104/sitting-behind-a-wicker-beach-bag-on-rockys-by-the-beach.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/sitting-behind-a-wicker-beach-bag-on-rockys-by-the-beach",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Avelino Calvar Martinez",
+      "sha256": "2e3a391e48cb87982f07943be1efcfad5bd10ff6ff32e9d998b1bce05af5caba",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Sitting Behind A Wicker Beach Bag On Rockys By The Beach"
+    },
+    "collection_shoes": {
+      "path": "storefront/editorial/20261104/athlete-tying-running-shoes.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/athlete-tying-running-shoes",
+      "license": "CC0-1.0",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/creative-commons",
+      "credit": "Photo by Matthew Henry",
+      "sha256": "d39b17e7a07bc3bf038eddf102edb2166d8230a5a93406632f429e24f96b0c14",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Athlete Tying Running Shoes"
+    },
+    "collection_tops": {
+      "path": "storefront/editorial/20261104/close-up-of-a-hand-in-a-blue-jean-pocket.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/close-up-of-a-hand-in-a-blue-jean-pocket",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Burst by Shopify contributors",
+      "sha256": "ba0ebe4d625a73bb67e1ebba582427def33ba9764a184076e92b20ea267f6d93",
+      "width": 1600,
+      "height": 2400,
+      "alt": "Close Up of A Hand In A Blue Jean Pocket"
+    },
+    "women_lookbook": {
+      "path": "storefront/editorial/20261104/woman-in-white-dress-outside.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-in-white-dress-outside",
+      "license": "CC0-1.0",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/creative-commons",
+      "credit": "Photo by Brodie",
+      "sha256": "72ead6f5a018b5c35f8e991101551301b9443b386287b537394cc40683772ca0",
+      "width": 1600,
+      "height": 1106,
+      "alt": "Woman In White Dress Outside"
+    },
+    "men_lookbook": {
+      "path": "storefront/editorial/20261104/a-man-looks-to-the-street-below-from-a-rooftop.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/a-man-looks-to-the-street-below-from-a-rooftop",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Brodie",
+      "sha256": "c73de00c997107b6354eae73bef3532bb4027a13103a3313ba8471acd43b29c5",
+      "width": 1600,
+      "height": 2844,
+      "alt": "A Man Looks To The Street Below From A Rooftop"
+    },
+    "featured_story": {
+      "path": "storefront/editorial/20261104/man-in-suit-on-stairs.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/man-in-suit-on-stairs",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "ed7d37dfdc9e1a45c108fa7196be456dfc2b97d73d690cf162e0f55d5c7d6467",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Man In Suit On Stairs"
+    },
+    "journal_one": {
+      "path": "storefront/editorial/20261104/woman-dressed-in-white-leans-against-a-wall.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-dressed-in-white-leans-against-a-wall",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Thom Bradley",
+      "sha256": "554ec8f30db9857a8283d1b0cad13fd4bfa29054adebdb304601b748cccfdde8",
+      "width": 1600,
+      "height": 2240,
+      "alt": "Woman Dressed In White Leans Against A Wall"
+    },
+    "journal_two": {
+      "path": "storefront/editorial/20261104/woman-with-laptop-in-hotel.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-with-laptop-in-hotel",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Partners",
+      "sha256": "38699d2c962676bd53105f4f0cc315a09f3e295cb9441735f4e77a5d5de9edf7",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Woman With Laptop In Hotel"
+    },
+    "journal_three": {
+      "path": "storefront/editorial/20261104/a-man-in-sandals-treads-a-path-through-ferns.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/a-man-in-sandals-treads-a-path-through-ferns",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Burst by Shopify contributors",
+      "sha256": "8b7c906a6185238ba309554ca7f5f094c10f7555360fe7522e1b7379622b7f6f",
+      "width": 1600,
+      "height": 2000,
+      "alt": "A Man In Sandals Treads A Path Through Ferns"
+    },
+    "journal_four": {
+      "path": "storefront/editorial/20261104/fashion-model-looks-at-camera.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/fashion-model-looks-at-camera",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "46f569d186a6b24dc4f24880f0634297dd71643addf3148983f3e9d8551008cd",
+      "width": 1600,
+      "height": 2399,
+      "alt": "Fashion Model Looks At Camera"
+    },
+    "journal_five": {
+      "path": "storefront/editorial/20261104/young-woman-in-sunlight.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/young-woman-in-sunlight",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "664ca9b5731e6175a8a15d71f135b793a0c1454e3a195e9fec7306a433ca7509",
+      "width": 1600,
+      "height": 2399,
+      "alt": "Young Woman In Sunlight"
+    },
+    "journal_six": {
+      "path": "storefront/editorial/20261104/man-takes-time-to-ponder.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/man-takes-time-to-ponder",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Jeremy Marasigan",
+      "sha256": "cee917dc7e37b5a1755ba5574ce1830880ece83bdc69b7a3e5a60dfcbf9f591b",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Man Takes Time To Ponder"
+    }
+  },
+  "settings": {
+    "dresses_title": "Women",
+    "dresses_link": "/women",
+    "everyday_title": "Men",
+    "everyday_link": "/men",
+    "outerwear_title": "Outerwear",
+    "outerwear_link": "/outerwear",
+    "caps_title": "Accessories",
+    "caps_link": "/accessories",
+    "collection_title": "Collections worth exploring",
+    "collection_text": "Everyday pieces. Considered details. Find your next favourite."
+  },
+  "pages": {
+    "about-us": {
+      "title": "About Classy Fashion Hub",
+      "text": "Classy Fashion Hub is a student fashion-store project showing a complete shopping and administration experience. Explore collections, create an account and follow an order through the system."
+    },
+    "contact-us": {
+      "title": "Contact Us",
+      "text": "For questions about this project or an example order, contact the project administrator using the details supplied with your presentation. You can also use the shop assistant to explore products and order information."
+    },
+    "customer-service": {
+      "title": "Customer Service",
+      "text": "Browse the collections, choose a product and add it to your cart. Your account keeps order history and delivery details together. The project administrator can demonstrate order confirmation, payment, dispatch and delivery."
+    },
+    "privacy-policy": {
+      "title": "Privacy Policy",
+      "text": "This academic project stores account details, addresses and order records to demonstrate an online shop. Use example contact details during testing. Passwords use the application authentication system, and notification previews remain in private project logs. Ask the project administrator to remove your example account when the presentation is complete."
+    },
+    "terms-conditions": {
+      "title": "Terms & Conditions",
+      "text": "This website is an academic storefront. Catalogue prices and stock are presentation data. Practice payments do not transfer money, and no real goods are dispatched through this project. Use example details when exploring checkout."
+    },
+    "terms-of-use": {
+      "title": "Terms of Use",
+      "text": "Use this project to explore the shopping and administration workflow. Keep login details private, use example personal information and contact the project administrator if you find an issue."
+    },
+    "payment-policy": {
+      "title": "Payment Information",
+      "text": "The coursework payment flow lets you demonstrate approval, decline and pending outcomes without moving money. Cash on delivery shows the alternative order workflow. Payment records are kept so that orders and reports can be demonstrated."
+    },
+    "shipping-policy": {
+      "title": "Delivery Information",
+      "text": "Checkout includes a delivery address, delivery instructions and the displayed delivery fee. Staff can demonstrate packing, dispatch and delivery statuses. These are presentation workflows; this academic deployment does not arrange real deliveries."
+    },
+    "return-policy": {
+      "title": "Returns",
+      "text": "Contact the project administrator with an example order number to walk through the return workflow. This academic storefront does not supply or collect real merchandise."
+    },
+    "refund-policy": {
+      "title": "Refunds",
+      "text": "Refund-related records and order statuses are used to explain the shop workflow. Practice payments do not move money, so this project does not issue real refunds."
+    },
+    "whats-new": {
+      "title": "What Is New",
+      "text": "Explore new arrivals across Women, Men, Outerwear and Accessories. Product names, photographs, galleries, categories and stock can be managed from the administration area."
+    }
+  }
+}

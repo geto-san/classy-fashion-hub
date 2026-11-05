@@ -1,6 +1,9 @@
 # Demo Script — six SMART objectives
 
-Run on `http://localhost:8000` + `/admin`. Demo accounts (local only) in README.md.
+Run only on a seeded local database at `http://localhost:8000` + `/admin`.
+Local demo accounts: admin `admin@example.com / admin123`, worker
+`worker@classy.local / worker123`, customer `customer@classy.local / customer123`.
+These are development credentials; production uses private accounts.
 
 ## 1. Digital product catalogue
 - **Show:** `/womens` (4 products), open Gomesi → size/colour selectors,

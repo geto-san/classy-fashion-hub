@@ -1,3 +1,5 @@
+> Historical reference. See the [current handover](../DEPLOYMENT_REPORT.md) and [deployment guide](../DEPLOY.md) for current behavior and verification. Generated screenshots are no longer bundled.
+
 # Current verification update — 31 October 2026
 
 Implementation now checks MTN response currency, payment-time stock validation,

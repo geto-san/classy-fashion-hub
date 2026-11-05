@@ -16,20 +16,24 @@ beforeEach(function () {
     config(['repository.cache.enabled' => false, 'responsecache.enabled' => false]);
 });
 
-it('renders the Ethereal campaign with real collection links and product feeds', function () {
-    get(route('shop.home.index'))->assertOk()
+it('renders each campaign and category photo once with the closing campaign last', function () {
+    $response = get(route('shop.home.index'))->assertOk()
         ->assertSee('cfh-campaign', false)
-        ->assertSee('fetchpriority="high"', false)
-        ->assertSee('/images/storefront/classy-collection-campaign-1672w.webp', false)
-        ->assertSee('/images/storefront/shop-dresses.webp', false)
-        ->assertSee('/images/storefront/shop-caps.webp', false)
-        ->assertSee('/images/storefront/shop-collection.webp', false)
+        ->assertSee('cfh-closing-banner', false)
+        ->assertDontSee('background-image:', false)
+        ->assertDontSee('src=""', false)
         ->assertSee('v-ethereal-products', false)
-        ->assertSee('cfh-editorial-splits', false)
-        ->assertSee('cfh-editorial-grid', false)
-        ->assertSee('cfh-shop-journal', false)
+        ->assertSee('<section class="cfh-editorial-splits"', false)
+        ->assertSee('<section class="cfh-container cfh-shop-journal"', false)
         ->assertDontSee('home-offer', false)
         ->assertDontSee('top-collection-container', false);
+
+    foreach (array_filter(Storefront::homepageImages()) as $image) {
+        expect(preg_match_all('~<img[^>]+src="'.preg_quote(e($image), '~').'"~', $response->getContent()))->toBe(1);
+    }
+
+    expect(strpos($response->getContent(), 'cfh-closing-banner'))
+        ->toBeGreaterThan(strpos($response->getContent(), 'cfh-shop-strip'));
 });
 
 it('restores the original sections without overwriting their content', function () {
@@ -49,11 +53,11 @@ it('restores the original sections without overwriting their content', function 
 it('keeps collection photographs attached to their descriptions and destinations', function () {
     $collections = Storefront::collections();
 
-    expect($collections)->toHaveCount(3);
+    expect($collections)->toHaveCount(4);
     expect($collections[0]['src'])->toBe(Storefront::image('dresses_image'));
     expect($collections[0]['alt'])->toBe(Storefront::get('dresses_alt'));
-    expect($collections[1]['link'])->toBe(Storefront::get('caps_link'));
-    expect($collections[2]['title'])->toBe(Storefront::get('everyday_title'));
+    expect($collections[1]['link'])->toBe(Storefront::get('everyday_link'));
+    expect($collections[3]['title'])->toBe(Storefront::get('caps_title'));
 });
 
 it('lets the owner publish text and photos while retaining fields not uploaded', function () {
@@ -83,7 +87,7 @@ it('lets the owner publish text and photos while retaining fields not uploaded',
     Storage::disk('public')->assertExists(Storefront::get('hero_image'));
     expect(Storefront::image('hero_image'))->not->toContain('/images/storefront/classy-collection-campaign');
     expect(Storefront::collections()[0]['src'])->toBe(Storefront::image('dresses_image'));
-    expect(Storefront::image('caps_image'))->toBe('/images/storefront/shop-caps.webp');
+    expect(Storefront::image('caps_image'))->toBe('/images/campaigns/caps.webp');
 });
 
 it('renders an owner campaign without the bundled responsive source set', function () {
@@ -100,6 +104,43 @@ it('renders an owner campaign without the bundled responsive source set', functi
         ->assertSee(Storefront::image('hero_image'), false)
         ->assertSee('The owner collection')
         ->assertDontSee('classy-collection-campaign-640w.webp', false);
+});
+
+it('renders a single owner collection without requesting missing collection photos', function () {
+    app(CoreConfigRepository::class)->create([
+        'channel' => 'default',
+        'locale' => 'en',
+        'general' => ['content' => ['storefront' => [
+            'caps_image' => 'storefront/owner-caps.webp',
+        ]]],
+    ]);
+
+    get(route('shop.home.index'))->assertOk()
+        ->assertSee(Storefront::image('caps_image'), false)
+        ->assertSee('<section class="cfh-container cfh-shop-journal"', false)
+        ->assertDontSee('src=""', false)
+        ->assertDontSee('/images/storefront/', false);
+});
+
+it('does not repeat a photo assigned to more than one homepage placement', function () {
+    app(CoreConfigRepository::class)->create([
+        'channel' => 'default',
+        'locale' => 'en',
+        'general' => ['content' => ['storefront' => [
+            'hero_image' => 'storefront/shared.webp',
+            'closing_image' => 'storefront/shared.webp',
+            'dresses_image' => 'storefront/shared.webp',
+        ]]],
+    ]);
+
+    $images = Storefront::homepageImages();
+
+    expect($images['closing_image'])->toBe('');
+    expect($images['dresses_image'])->toBe('');
+
+    $response = get(route('shop.home.index'))->assertOk();
+
+    expect(substr_count($response->getContent(), $images['hero_image']))->toBe(1);
 });
 
 it('rejects external or unsafe owner links before publishing', function () {

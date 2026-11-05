@@ -14,19 +14,20 @@
             <div class="cfh-product-image">
                 {!! view_render_event('bagisto.shop.components.products.card.image.before') !!}
                 <a :href="'{{ route('shop.product_or_category.index', ':slug') }}'.replace(':slug', product.url_key)" :aria-label="product.name">
-                    <x-shop::media.images.lazy
+                    <img
                         class="cfh-card-primary"
-                        ::src="product.base_image.large_image_url || product.base_image.medium_image_url"
-                        ::key="product.id"
-                        ::alt="product.base_image.alt || product.name"
-                        width="432" height="530"
+                        :style="{ objectFit: product.base_image.fit || 'cover' }"
+                        :src="product.base_image.large_image_url || product.base_image.medium_image_url"
+                        :key="product.id"
+                        :alt="product.base_image.alt || product.name"
+                        width="432" height="530" loading="lazy" decoding="async"
                     />
-                    <x-shop::media.images.lazy
+                    <img
                         v-if="product.images?.length > 1"
                         class="cfh-card-secondary"
-                        ::src="product.images[1].large_image_url"
-                        ::alt="product.images[1].alt || product.name"
-                        width="432" height="530"
+                        :src="product.images[1].large_image_url"
+                        :alt="product.images[1].alt || product.name"
+                        width="432" height="530" loading="lazy" decoding="async"
                     />
                 </a>
                 {!! view_render_event('bagisto.shop.components.products.card.image.after') !!}
@@ -65,14 +66,14 @@
                 {!! view_render_event('bagisto.shop.components.products.card.image.before') !!}
 
                 <a :href="'{{ route('shop.product_or_category.index', ':slug') }}'.replace(':slug', product.url_key)">
-                    <x-shop::media.images.lazy
+                    <img
                         class="after:content-[' '] relative min-w-[250px] bg-zinc-100 transition-all duration-300 after:block after:pb-[calc(100%+9px)] group-hover:scale-105"
-                        ::src="product.base_image.large_image_url || product.base_image.medium_image_url"
-                        ::key="product.id"
-                        ::index="product.id"
+                        :src="product.base_image.large_image_url || product.base_image.medium_image_url"
+                        :key="product.id"
+                        loading="lazy" decoding="async"
                         width="600"
                         height="800"
-                        ::alt="product.base_image.alt || product.name"
+                        :alt="product.base_image.alt || product.name"
                     />
                 </a>
 

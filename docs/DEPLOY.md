@@ -4,16 +4,75 @@ The application targets Bagisto 2.5.0, Laravel 13, PHP 8.4, and Tailwind 4.
 `deploy/Dockerfile` builds the storefront, admin, and backend together from the
 pinned upstream skeleton and this checkout. `render.yaml` uses the repository
 root as its Docker context and disables automatic deployment during validation.
-The alternative Railway Dockerfile uses the same application version.
+Historical Railway setup notes are retained under `docs/archive/`; Render uses `deploy/Dockerfile`.
 
 Render's custom start command explicitly invokes `classy-entrypoint.sh` followed
 by `classy-serve.sh`; a custom command bypasses the image entrypoint. Both steps
 must run so database validation and the installed marker precede Apache.
 
-Production has not been switched. Provider credentials are stored locally and remote
-staging is live at https://classy-fashion-hub.onrender.com. It was paused during
-database transfer and resumed only after restoration verification.
-Do not remove the running Railway project or its uploads volume.
+The replacement deployment is live at https://classy-fashion-hub.onrender.com.
+On 2 November 2026, the Railway application and MySQL services were deleted at the
+owner's request. The Railway API confirms zero remaining services across both
+accessible projects. Two project records and five volumes remain: automatic
+approval review rejected their deletion because three older volumes have no
+verified backup and project/volume destruction needs explicit approval.
+Railway subscription cancellation has not been performed; retained storage and
+any account plan need billing review.
+
+Before deletion, both source services already had no active deployment and all
+recorded deployments were marked `REMOVED`. A final live source export/comparison
+was therefore unavailable. The preserved Railway snapshot and independent Neon
+backup pass checksum validation; migration-time Neon counts were 0 products, 1 customer,
+and 1 order. Do not describe final source synchronization as verified.
+
+Provider credentials and retirement evidence remain private under the ignored
+local credential/backup paths. See [DEPLOYMENT_REPORT.md](DEPLOYMENT_REPORT.md) for
+the current handover. The rehearsal and acceptance records below describe earlier
+migration stages; statements about Railway still running or cutover pending are
+historical. Customer launch still requires email verification, policy content,
+catalogue setup, and live payment/domain decisions.
+
+## Current coursework configuration
+
+Live application: `44c2c2d`, Render deployment `dep-dblqfnmgekts73c4fbq0`.
+
+The 5 November refresh uses `CLASSY_COURSEWORK_MODE=true`: practice mobile-money
+approval/decline, private mail previews without sending, and the local assistant.
+Accounts, stock, checkout, orders, authorization and reports retain their real
+application behavior. Keep this flag enabled for the student assessment.
+
+The catalogue contains 122 normal retail listings across 24 collections, with
+147 licensed product photos. Twenty-one additional homepage photos restore the
+Ethereal editorial sections, while retaining the supplied hero and closing campaign.
+The older zero-stock, labelled catalogue below is historical. See the
+[current report](DEPLOYMENT_REPORT.md#coursework-refresh--5-november-2026).
+
+For a fresh local installation, use the README and
+`python3 scripts/fetch-coursework-media.py`, then the validated
+`classy:install-coursework-catalogue --execute` command. This explicit importer
+is never part of service startup. Do not run installers or legacy seeders on the
+hosted database. Deployment and catalogue transfer require a fresh verified backup;
+code enabling practice payments must be live before academic stock is published.
+
+Setting the flag to false restores the existing real/manual payment behavior;
+old coursework attempts cannot be confirmed through a merchant provider. Before
+real trading, configure and test that provider and email delivery, replace authored
+inventory, and review information pages. Do not disable the flag just for presentation.
+
+## Owner catalogue setup after photo cleanup
+
+The owner's requested fashion-photo cleanup is deployed at commit `95612f9`,
+Render release `dep-dbk6vess728c73c9r9ig`. All 23 fashion originals were removed
+from Cloudinary after fresh backups, and six bundled fashion photos were removed
+from source. The logo, favicon and locale icon remain. Homepage/category photo
+references and obsolete theme image content were cleared; absent-photo layouts
+and future owner uploads are supported. The catalogue remains empty for the shop
+to populate, with existing customers/orders preserved. Live desktop/mobile and
+admin product/account screens pass, and all three remaining media references
+resolve. See the handover report for client administrator creation instructions.
+The 26-file records below are historical migration verification before this
+intentional cleanup. Evidence and fresh backups are private under
+`backups/catalogue-handover/`.
 
 ## Credentials
 

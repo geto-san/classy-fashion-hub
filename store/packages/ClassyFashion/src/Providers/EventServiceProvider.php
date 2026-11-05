@@ -5,6 +5,7 @@ namespace ClassyFashion\Providers;
 use ClassyFashion\Listeners\AuditStaffChanges;
 use ClassyFashion\Listeners\BrandHeadAssets;
 use ClassyFashion\Listeners\CheckoutDeliveryField;
+use ClassyFashion\Listeners\CourseworkNotifications;
 use ClassyFashion\Listeners\OrderDeliveryInfo;
 use ClassyFashion\Listeners\OrderPaymentRecords;
 use ClassyFashion\Listeners\OrderProfitSummary;
@@ -14,10 +15,13 @@ use ClassyFashion\Listeners\OrderTimeline;
 use ClassyFashion\Listeners\ProductRecommendations;
 use ClassyFashion\Listeners\SnapshotOrderItemCost;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Mail\Events\MessageSending;
 
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
+        MessageSending::class => [CourseworkNotifications::class],
+
         'sales.order.update-status.after' => [
             [OrderStatusMapper::class, 'mapCompletedToDispatched'],
         ],

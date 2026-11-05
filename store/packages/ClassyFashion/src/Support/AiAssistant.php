@@ -12,7 +12,7 @@ class AiAssistant
 {
     public static function enabled(): bool
     {
-        return filled(config('classy.ai.api_key'));
+        return ! config('classy.coursework_mode') && filled(config('classy.ai.api_key'));
     }
 
     public static function baseUrl(): string
