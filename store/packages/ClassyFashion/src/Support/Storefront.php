@@ -92,6 +92,10 @@ class Storefront
 
         $slot = preg_replace('/_(image|alt|title|link)$/', '', $field);
 
+        if (isset(self::presentation()['settings'][$field])) {
+            return self::presentation()['settings'][$field];
+        }
+
         if (in_array($slot, self::editorialSlots(), true) || $slot === 'outerwear') {
             $photo = self::presentation()['images'][$slot] ?? [];
 
@@ -127,7 +131,7 @@ class Storefront
     {
         $path = (string) self::get($field);
 
-        if ($path === '') {
+        if ($path === '' || ! Photography::allows($path, $field)) {
             return '';
         }
 
@@ -141,7 +145,7 @@ class Storefront
     {
         $images = self::homepageImages();
 
-        $keys = self::image('outerwear_image') ? ['dresses', 'everyday', 'outerwear', 'caps'] : ['dresses', 'caps', 'everyday'];
+        $keys = ['dresses', 'everyday', 'outerwear', 'caps'];
 
         return array_map(fn ($key) => [
             'src' => $images[$key.'_image'],

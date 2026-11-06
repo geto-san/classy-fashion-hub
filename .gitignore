@@ -90,6 +90,7 @@ backups/
 !/store/tests/Unit/
 /store/tests/Unit/*
 !/store/tests/Unit/CloudinaryAdapterTest.php
+!/store/tests/Unit/PhotographyTest.php
 !/store/packages/Webkul/Admin/src/Routes/web/
 !/store/packages/Webkul/Core/
 /store/packages/Webkul/Core/*

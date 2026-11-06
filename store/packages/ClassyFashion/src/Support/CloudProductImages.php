@@ -12,33 +12,41 @@ use Webkul\Product\ProductImage;
 class CloudProductImages extends ProductImage
 {
     /**
-     * Retain the ordinary Bagisto behaviour for local product storage.
+     * Use the same reviewed gallery for cards, cart thumbnails and product details.
      */
     public function getProductBaseImage($product, ?array $galleryImages = null)
     {
-        if ($product && $this->cloud() && ($image = $product->images->first())) {
-            return $galleryImages ? $galleryImages[0] : $this->urls($image->path, (string) ($image->alt ?: $product->name ?: $product->sku));
+        if (! $product) {
+            return parent::getProductBaseImage($product, $galleryImages);
         }
 
-        return parent::getProductBaseImage($product, $galleryImages);
+        $images = $this->getGalleryImages($product);
+
+        return $images[0] ?? parent::getProductBaseImage((clone $product)->setRelation('images', collect()));
     }
 
     /**
-     * Existing references are already validated during upload and import.
+     * Filter primary and alternate photos before either local or CDN delivery.
      */
     public function getGalleryImages($product)
     {
-        if (! $product || ! $this->cloud()) {
+        if (! $product) {
             return parent::getGalleryImages($product);
         }
 
-        $images = $product->images->map(fn ($image) => $this->urls($image->path, (string) ($image->alt ?: $product->name ?: $product->sku)))->all();
+        $approved = $product->images->filter(fn ($image) => Photography::allows($image->path))->values();
+
+        if (! $this->cloud()) {
+            return parent::getGalleryImages((clone $product)->setRelation('images', $approved));
+        }
+
+        $images = $approved->map(fn ($image) => $this->urls($image->path, (string) ($image->alt ?: $product->name ?: $product->sku)))->all();
 
         if ($images) {
             return $images;
         }
 
-        return $product->parent_id ? $this->getGalleryImages($product->parent) : parent::getGalleryImages($product);
+        return $product->parent_id ? $this->getGalleryImages($product->parent) : parent::getGalleryImages((clone $product)->setRelation('images', collect()));
     }
 
     /**
