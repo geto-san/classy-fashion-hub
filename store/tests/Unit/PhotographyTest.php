@@ -39,6 +39,8 @@ class PhotographyTest extends TestCase
         $this->assertTrue(Photography::allows('storefront/campaigns/20261103/hero.webp', 'hero_image'));
         $this->assertFalse(Photography::allows('storefront/campaigns/20261103/hero.webp', 'men_editorial_image'));
         $this->assertTrue(Photography::allows('storefront/owner-campaign.webp', 'hero_image'));
+        $this->assertFalse(Photography::allows('products/catalogue-20261104/reflective-sunglasses.jpg', 'collection_caps_image'));
+        $this->assertFalse(Photography::allows('products/catalogue-20261104/a-model-in-khaki-trousers-and-a-striped-t-shirt.jpg', 'men_lookbook_image'));
     }
 
     /**

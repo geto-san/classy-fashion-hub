@@ -12,11 +12,25 @@
       "alt": "Statement womenswear from the collection"
     },
     "everyday": {
-      "path": "storefront/editorial/20261104/man-takes-time-to-ponder.jpg",
+      "path": "storefront/editorial/20261104/man-dressed-in-monochrome-by-white-wall.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/man-dressed-in-monochrome-by-white-wall",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Matthew Henry",
+      "sha256": "1183b8acf892c0339068e1c296f647f0e556cb82f12cfbb305095e31eeb9a7e6",
+      "width": 1600,
+      "height": 1067,
       "alt": "Menswear and everyday styling"
     },
     "outerwear": {
-      "path": "products/catalogue-20261104/close-up-of-man-in-tan-hoodie.jpg",
+      "path": "storefront/editorial/20261104/lady-in-leather-jacket-in-the-city.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/lady-in-leather-jacket-in-the-city",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "12e19be6f6d7df96cf6492709dee47772c71bf4d9a9beaadc4e77d7dec6b2f43",
+      "width": 1600,
+      "height": 2399,
       "alt": "Outerwear styled for everyday dressing"
     },
     "caps": {
@@ -31,16 +45,37 @@
       "alt": "Shoes and finishing accessories"
     },
     "women_editorial": {
-      "path": "storefront/editorial/20261104/fashion-model-looks-at-camera.jpg",
-      "alt": "Statement womenswear editorial"
+      "path": "storefront/editorial/20261104/woman-in-red-dress-stands-in-field-of-yellow.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-in-red-dress-stands-in-field-of-yellow",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Matthew Henry",
+      "sha256": "1bc122093be4ddaa8053087fbe5b1f724ecab6a768ce5ca5003bfe50e0caee94",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Woman In Red Dress Stands In Field Of Yellow"
     },
     "men_editorial": {
-      "path": "products/catalogue-20261104/man-in-white-and-light-tan-outfit.jpg",
-      "alt": "Menswear editorial"
+      "path": "storefront/editorial/20261104/smiling-man-in-blue-jpg.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/smiling-man-in-blue-jpg",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "9e85dd1486441a519e689339088089f5a4d577f93e22ef86a4f5b5fca83479aa",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Smiling Man in Blue"
     },
     "collection_dresses": {
-      "path": "products/catalogue-20261104/shiny-black-cocktail-dress.jpg",
-      "alt": "Dresses collection"
+      "path": "storefront/editorial/20261104/person-stands-by-pink-flower-stand-in-polka-dot-dress.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/person-stands-by-pink-flower-stand-in-polka-dot-dress",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Farah",
+      "sha256": "f8ca9b98cfd1790cc74cf4a0daf24b66023664498a07d6a944f91f542f9d2520",
+      "width": 1600,
+      "height": 2400,
+      "alt": "Person Stands By Pink Flower Stand In Polka Dot Dress"
     },
     "collection_shirts": {
       "path": "storefront/editorial/20261104/mens-fashion-close-up-shirt-tucked-in-leaning.jpg",
@@ -54,12 +89,26 @@
       "alt": "Men's Fashion Close Up Shirt Tucked In Leaning"
     },
     "collection_caps": {
-      "path": "products/catalogue-20261104/reflective-sunglasses.jpg",
-      "alt": "Caps and accessories collection"
+      "path": "storefront/editorial/20261104/person-in-a-white-dress-and-hat-sits-in-a-floral-room.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/person-in-a-white-dress-and-hat-sits-in-a-floral-room",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Farah",
+      "sha256": "9817d139ce9e0e33b2ca28cf59d6fc6438f8e3e644dedc4d38e7cbd6867a54e9",
+      "width": 1600,
+      "height": 2400,
+      "alt": "Person In A White Dress And Hat Sits In A Floral Room"
     },
     "collection_bags": {
-      "path": "products/catalogue-20261104/bright-red-purse-with-gold.jpg",
-      "alt": "Bags collection"
+      "path": "storefront/editorial/20261104/sitting-behind-a-wicker-beach-bag-on-rockys-by-the-beach.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/sitting-behind-a-wicker-beach-bag-on-rockys-by-the-beach",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Avelino Calvar Martinez",
+      "sha256": "2e3a391e48cb87982f07943be1efcfad5bd10ff6ff32e9d998b1bce05af5caba",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Sitting Behind A Wicker Beach Bag On Rockys By The Beach"
     },
     "collection_shoes": {
       "path": "storefront/editorial/20261104/athlete-tying-running-shoes.jpg",
@@ -84,31 +133,73 @@
       "alt": "Close Up of A Hand In A Blue Jean Pocket"
     },
     "women_lookbook": {
-      "path": "products/catalogue-20261104/light-pink-fur-fashion.jpg",
-      "alt": "Women lookbook"
+      "path": "storefront/editorial/20261104/woman-in-white-dress-outside.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-in-white-dress-outside",
+      "license": "CC0-1.0",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/creative-commons",
+      "credit": "Photo by Brodie",
+      "sha256": "72ead6f5a018b5c35f8e991101551301b9443b386287b537394cc40683772ca0",
+      "width": 1600,
+      "height": 1106,
+      "alt": "Woman In White Dress Outside"
     },
     "men_lookbook": {
-      "path": "products/catalogue-20261104/man-in-hoodie-sits-with-hand-to-chin.jpg",
-      "alt": "Men lookbook"
+      "path": "storefront/editorial/20261104/a-man-looks-to-the-street-below-from-a-rooftop.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/a-man-looks-to-the-street-below-from-a-rooftop",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Brodie",
+      "sha256": "c73de00c997107b6354eae73bef3532bb4027a13103a3313ba8471acd43b29c5",
+      "width": 1600,
+      "height": 2844,
+      "alt": "A Man Looks To The Street Below From A Rooftop"
     },
     "featured_story": {
-      "path": "products/catalogue-20261104/fashion-model-in-red-suit.jpg",
-      "alt": "Featured story"
+      "path": "storefront/editorial/20261104/man-in-suit-on-stairs.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/man-in-suit-on-stairs",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "ed7d37dfdc9e1a45c108fa7196be456dfc2b97d73d690cf162e0f55d5c7d6467",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Man In Suit On Stairs"
     },
     "journal_one": {
-      "path": "products/catalogue-20261104/woman-in-braids-and-floral-blouse.jpg",
-      "alt": "Journal story one"
+      "path": "storefront/editorial/20261104/woman-dressed-in-white-leans-against-a-wall.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-dressed-in-white-leans-against-a-wall",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Thom Bradley",
+      "sha256": "554ec8f30db9857a8283d1b0cad13fd4bfa29054adebdb304601b748cccfdde8",
+      "width": 1600,
+      "height": 2240,
+      "alt": "Woman Dressed In White Leans Against A Wall"
     },
     "journal_two": {
-      "path": "products/catalogue-20261104/a-model-in-khaki-trousers-and-a-striped-t-shirt.jpg",
-      "alt": "Menswear style inspiration"
+      "path": "storefront/editorial/20261104/woman-with-laptop-in-hotel.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/woman-with-laptop-in-hotel",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Partners",
+      "sha256": "38699d2c962676bd53105f4f0cc315a09f3e295cb9441735f4e77a5d5de9edf7",
+      "width": 1600,
+      "height": 1067,
+      "alt": "Woman With Laptop In Hotel"
     },
     "journal_three": {
-      "path": "products/catalogue-20261104/pink-fur-fabulous-fashion.jpg",
-      "alt": "Journal story three"
+      "path": "storefront/editorial/20261104/a-man-in-sandals-treads-a-path-through-ferns.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/a-man-in-sandals-treads-a-path-through-ferns",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Burst by Shopify contributors",
+      "sha256": "8b7c906a6185238ba309554ca7f5f094c10f7555360fe7522e1b7379622b7f6f",
+      "width": 1600,
+      "height": 2000,
+      "alt": "A Man In Sandals Treads A Path Through Ferns"
     },
     "journal_four": {
-      "path": "products/catalogue-20261104/fancy-embroidered-dress-on-display.jpg",
+      "path": "storefront/editorial/20261104/fashion-model-looks-at-camera.jpg",
       "source_url": "https://www.shopify.com/stock-photos/photos/fashion-model-looks-at-camera",
       "license": "Burst",
       "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
@@ -116,14 +207,21 @@
       "sha256": "46f569d186a6b24dc4f24880f0634297dd71643addf3148983f3e9d8551008cd",
       "width": 1600,
       "height": 2399,
-      "alt": "Womenswear style journal"
+      "alt": "Fashion Model Looks At Camera"
     },
     "journal_five": {
-      "path": "products/catalogue-20261104/a-model-in-khakis-holding-orchids.jpg",
-      "alt": "Journal story five"
+      "path": "storefront/editorial/20261104/young-woman-in-sunlight.jpg",
+      "source_url": "https://www.shopify.com/stock-photos/photos/young-woman-in-sunlight",
+      "license": "Burst",
+      "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
+      "credit": "Photo by Shopify Photos",
+      "sha256": "664ca9b5731e6175a8a15d71f135b793a0c1454e3a195e9fec7306a433ca7509",
+      "width": 1600,
+      "height": 2399,
+      "alt": "Young Woman In Sunlight"
     },
     "journal_six": {
-      "path": "products/catalogue-20261104/close-up-grey-marl-hoodie.jpg",
+      "path": "storefront/editorial/20261104/man-takes-time-to-ponder.jpg",
       "source_url": "https://www.shopify.com/stock-photos/photos/man-takes-time-to-ponder",
       "license": "Burst",
       "license_url": "https://www.shopify.com/stock-photos/licenses/shopify-some-rights-reserved",
@@ -131,7 +229,7 @@
       "sha256": "cee917dc7e37b5a1755ba5574ce1830880ece83bdc69b7a3e5a60dfcbf9f591b",
       "width": 1600,
       "height": 1067,
-      "alt": "Everyday menswear essentials"
+      "alt": "Man Takes Time To Ponder"
     }
   },
   "settings": {
