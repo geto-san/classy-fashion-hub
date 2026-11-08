@@ -28,15 +28,15 @@ class PhotographyTest extends TestCase
     }
 
     /**
-     * A known image cannot move from its reviewed subject to another section.
+     * Withdrawn stock photographs stay hidden across products and editorial placements.
      */
     public function test_imported_photos_require_review_and_the_matching_placement(): void
     {
-        $this->assertTrue(Photography::allows('products/catalogue-20261104/blue-t-shirt.jpg'));
+        $this->assertFalse(Photography::allows('products/catalogue-20261104/blue-t-shirt.jpg'));
         $this->assertFalse(Photography::allows('products/catalogue-20261104/white-tshirt-template.jpg'));
         $this->assertFalse(Photography::allows('storefront/editorial/20261104/smiling-man-in-blue-jpg.jpg', 'women_editorial_image'));
         $this->assertFalse(Photography::allows('/images/campaigns/everyday.webp', 'category:women'));
-        $this->assertTrue(Photography::allows('storefront/campaigns/20261103/hero.webp', 'hero_image'));
+        $this->assertFalse(Photography::allows('storefront/campaigns/20261103/hero.webp', 'hero_image'));
         $this->assertFalse(Photography::allows('storefront/campaigns/20261103/hero.webp', 'men_editorial_image'));
         $this->assertTrue(Photography::allows('storefront/owner-campaign.webp', 'hero_image'));
         $this->assertFalse(Photography::allows('products/catalogue-20261104/reflective-sunglasses.jpg', 'collection_caps_image'));
@@ -86,7 +86,7 @@ class PhotographyTest extends TestCase
         $product = new class extends Model {};
         $product->setRawAttributes(['name' => 'Blue T-shirt', 'sku' => 'CFH-T-SHIRTS-002']);
         $blocked = (object) ['path' => 'products/catalogue-20261104/white-tshirt-template.jpg', 'alt' => 'Unreviewed', 'alt_text' => 'Unreviewed'];
-        $approved = (object) ['path' => 'products/catalogue-20261104/blue-t-shirt.jpg', 'alt' => 'Blue T-shirt', 'alt_text' => 'Blue T-shirt'];
+        $approved = (object) ['path' => 'products/owner-reviewed-kitenge.jpg', 'alt' => 'Kitenge fabric', 'alt_text' => 'Kitenge fabric'];
         $product->setRelation('images', collect([$blocked, $approved]));
         $product->setRelation('videos', collect());
 
