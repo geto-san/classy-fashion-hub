@@ -206,6 +206,7 @@ store/packages/Webkul/Shop/src/Resources/views/checkout/onepage/address/*
 # Measured Ethereal layouts.
 !store/public/css/classy-ethereal-footer.css
 !store/public/css/classy-ethereal-product.css
+!store/public/css/classy-african-campaign.css
 
 # Bagisto 2.5 migration and cloud storage overlay.
 !deploy/Dockerfile

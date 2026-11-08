@@ -38,6 +38,8 @@ RUN test -f /tmp/overlay/config/filesystems.php \
     && test -f /tmp/overlay/config/database.php \
     && test -f /tmp/overlay/packages/ClassyFashion/src/Filesystem/CloudinaryFilesystem.php \
     && test -f /tmp/overlay/packages/Webkul/Admin/src/Routes/web/catalog-routes.php \
+    && test -f /tmp/overlay/public/css/classy-african-campaign.css \
+    && test -f /tmp/overlay/packages/ClassyFashion/src/Resources/african-catalogue/manifest.json \
     && test ! -f /tmp/overlay/.env \
     && cp -a /tmp/overlay/. /var/www/html/ && rm -rf /tmp/overlay
 RUN composer config --unset php-binary
