@@ -9,6 +9,7 @@ use ClassyFashion\Console\Commands\CopyMedia;
 use ClassyFashion\Console\Commands\DescribeProducts;
 use ClassyFashion\Console\Commands\ExpirePayments;
 use ClassyFashion\Console\Commands\ImportProductPhotos;
+use ClassyFashion\Console\Commands\InstallAfricanCatalogue;
 use ClassyFashion\Console\Commands\InstallCourseworkCatalogue;
 use ClassyFashion\Console\Commands\RepairImages;
 use ClassyFashion\Console\Commands\SecureAccounts;
@@ -27,6 +28,9 @@ use Webkul\Product\Models\ProductInventory as WebkulProductInventory;
 use Webkul\Product\ProductImage;
 use Webkul\Product\Repositories\ProductRepository;
 
+/**
+ * Register the shop's catalogue, payment and storefront extensions.
+ */
 class ClassyFashionServiceProvider extends ServiceProvider
 {
     /**
@@ -111,6 +115,7 @@ class ClassyFashionServiceProvider extends ServiceProvider
             TransferDatabase::class,
             RepairImages::class,
             ImportProductPhotos::class,
+            InstallAfricanCatalogue::class,
             InstallCourseworkCatalogue::class,
             SecureAccounts::class,
             SeedDemoCatalogue::class,

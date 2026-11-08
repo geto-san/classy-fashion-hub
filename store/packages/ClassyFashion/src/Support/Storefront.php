@@ -68,9 +68,24 @@ class Storefront
     {
         static $presentation;
 
+        if (is_file(__DIR__.'/../Resources/african-catalogue/manifest.json')) {
+            return $presentation ??= json_decode(file_get_contents(__DIR__.'/../Resources/african-catalogue/manifest.json'), true, 512, JSON_THROW_ON_ERROR)['presentation'];
+        }
+
         return $presentation ??= is_file(__DIR__.'/../Resources/coursework-catalogue/presentation.json')
             ? json_decode(file_get_contents(__DIR__.'/../Resources/coursework-catalogue/presentation.json'), true, 512, JSON_THROW_ON_ERROR)
             : [];
+    }
+
+    /**
+     * Keep the campaign tied to reviewed products and same-site destinations.
+     */
+    public static function campaignSlides(): array
+    {
+        return array_values(array_map(fn ($slide) => array_merge($slide, [
+            'src' => Storage::disk('public')->url($slide['path']),
+        ]), array_filter(self::presentation()['campaign_slides'] ?? [], fn ($slide) => self::validLink($slide['link']) && Photography::allows($slide['path'], 'hero_slide')
+        )));
     }
 
     /**
@@ -183,6 +198,15 @@ class Storefront
     public static function editorialCollections(): array
     {
         $images = self::homepageImages();
+
+        if ($collections = self::presentation()['editorial_collections'] ?? []) {
+            return array_map(fn ($collection) => [
+                'src' => $images[$collection['slot'].'_image'],
+                'title' => $collection['title'],
+                'alt' => self::get($collection['slot'].'_alt'),
+                'link' => $collection['link'],
+            ], $collections);
+        }
 
         return array_map(fn ($key) => [
             'src' => $images['collection_'.$key.'_image'],

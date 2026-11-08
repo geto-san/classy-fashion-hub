@@ -30,14 +30,14 @@ class HomeCollectionsRepository
         $membership = DB::table('product_categories')->whereIn('product_id', $ids)->get()->groupBy('product_id');
         $departments = [];
 
-        foreach (['women', 'men', 'outerwear', 'accessories'] as $slug) {
+        foreach (['women', 'men', 'outerwear', 'footwear', 'accessories'] as $slug) {
             $departments[$slug] = $this->categories->findBySlug($slug)?->id;
         }
 
         $selected = [];
         $groups = [];
 
-        foreach (['arrivals' => [null, 12], 'layers' => [['outerwear'], 8], 'everyday' => [['women', 'men'], 12], 'finishing' => [['accessories'], 8]] as $key => [$slugs, $limit]) {
+        foreach (['arrivals' => [null, 12], 'layers' => [['footwear', 'outerwear'], 8], 'everyday' => [['women', 'men'], 12], 'finishing' => [['accessories'], 8]] as $key => [$slugs, $limit]) {
             $categoryIds = $slugs ? array_filter(array_map(fn ($slug) => $departments[$slug], $slugs)) : [];
             $available = array_values(array_filter($ids, function ($id) use ($selected, $slugs, $categoryIds, $membership) {
                 return ! in_array($id, $selected, true) && (! $slugs || collect($membership[$id] ?? [])->contains(fn ($row) => in_array($row->category_id, $categoryIds)));

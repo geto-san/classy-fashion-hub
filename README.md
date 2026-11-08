@@ -8,7 +8,7 @@ with the **Ethereal Fashion** storefront.
 
 ## Explore the project
 
-- **122 styles, 24 collections:** retail names, UGX prices, stock and high-resolution galleries.
+- **122 African styles, 24 collections:** 22 collections of five and two of six, with product-only photographs.
 - **Shopping:** search, categories, cart, checkout, accounts and order tracking.
 - **Administration:** products, orders, delivery, staff permissions, reports and homepage editing.
 - **Coursework mode:** approve/decline a practice mobile-money payment without transferring money;
@@ -16,8 +16,10 @@ with the **Ethereal Fashion** storefront.
 
 Accounts, inventory, orders and reports use the actual database. Prices, costs and
 stock are authored classroom scenarios, not supplier offers. The catalogue has
-ordinary retail presentation without demonstration labels. Licensed photographs
-and source records are in the [catalogue manifest](store/packages/ClassyFashion/src/Resources/coursework-catalogue/manifest.json).
+ordinary retail presentation without demonstration labels. Retailer references and
+photo reviews are in the [African catalogue manifest](store/packages/ClassyFashion/src/Resources/african-catalogue/manifest.json).
+Images reference Jumia Kenya, Ghana and Nigeria, and The Kikoy Co.; they are not
+represented as openly licensed or as evidence of a supplier relationship.
 
 Hosted on **Render + Neon + Cloudinary**. See the [current report](docs/DEPLOYMENT_REPORT.md)
 for verification and the distinction between coursework and commercial operation.
@@ -45,8 +47,8 @@ cd ..
 python3 scripts/fetch-coursework-media.py
 cd store
 php artisan storage:link
-php artisan classy:install-coursework-catalogue
-php artisan classy:install-coursework-catalogue --execute
+php artisan classy:install-african-catalogue
+php artisan classy:install-african-catalogue --execute
 php artisan serve --port=8000
 ```
 

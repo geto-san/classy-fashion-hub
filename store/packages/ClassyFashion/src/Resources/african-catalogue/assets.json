@@ -1,0 +1,856 @@
+[
+  {
+    "file": "blue-dashiki-poncho-web.webp",
+    "path": "products/african-20261108/blue-dashiki-poncho-web.webp",
+    "sha256": "1c7d978c687fb8746ac98f475df67cb90fd4317336efade8579890178cab62d6",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152188/classy-fashion-hub/public/products/african-20261108/blue-dashiki-poncho-web.webp",
+    "bytes": 23676
+  },
+  {
+    "file": "rose-dashiki-tunic-web.webp",
+    "path": "products/african-20261108/rose-dashiki-tunic-web.webp",
+    "sha256": "cf1a72695c349de38dd38cd4ae465423f9ccb2fafc7d8e57b1d840469029b568",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152188/classy-fashion-hub/public/products/african-20261108/rose-dashiki-tunic-web.webp",
+    "bytes": 38596
+  },
+  {
+    "file": "kenya-stripe-beaded-slides-web.webp",
+    "path": "products/african-20261108/kenya-stripe-beaded-slides-web.webp",
+    "sha256": "e22adfb6ba42dd481755180f033bae2e67213aeac6023fbccfa2d29db86c8a95",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152189/classy-fashion-hub/public/products/african-20261108/kenya-stripe-beaded-slides-web.webp",
+    "bytes": 201092
+  },
+  {
+    "file": "honey-kiondo-crossbody-web.webp",
+    "path": "products/african-20261108/honey-kiondo-crossbody-web.webp",
+    "sha256": "7e2c1a482092d61cc534bbb7bd9fffea1bb18f01f070bd3278bf8102174928a8",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152189/classy-fashion-hub/public/products/african-20261108/honey-kiondo-crossbody-web.webp",
+    "bytes": 130314
+  },
+  {
+    "file": "ivory-kitenge-panel-flared-dress-web.webp",
+    "path": "products/african-20261108/ivory-kitenge-panel-flared-dress-web.webp",
+    "sha256": "a5a6f81ccecb671ffb4a21ae2576e505e2d55b92ae89d8fd8204d0030dd5f6bb",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152192/classy-fashion-hub/public/products/african-20261108/ivory-kitenge-panel-flared-dress-web.webp",
+    "bytes": 95408
+  },
+  {
+    "file": "black-and-gold-dashiki-tunic-web.webp",
+    "path": "products/african-20261108/black-and-gold-dashiki-tunic-web.webp",
+    "sha256": "514d55069f673d5089817945a85b13ce42f5fe7edc4d5b4ea04da224e14aa2be",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152192/classy-fashion-hub/public/products/african-20261108/black-and-gold-dashiki-tunic-web.webp",
+    "bytes": 81048
+  },
+  {
+    "file": "gold-bead-band-black-slides-web.webp",
+    "path": "products/african-20261108/gold-bead-band-black-slides-web.webp",
+    "sha256": "1a9110e11702f5a7b2b79139be07bf8ecee856a1af803c7719572f8b4f5630af",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152192/classy-fashion-hub/public/products/african-20261108/gold-bead-band-black-slides-web.webp",
+    "bytes": 36132
+  },
+  {
+    "file": "round-stripe-sisal-crossbody-web.webp",
+    "path": "products/african-20261108/round-stripe-sisal-crossbody-web.webp",
+    "sha256": "e38175a7c2023261631a707b24b61a1595547e9d35b6ab6d20f897dc9f0bc399",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152193/classy-fashion-hub/public/products/african-20261108/round-stripe-sisal-crossbody-web.webp",
+    "bytes": 81692
+  },
+  {
+    "file": "monochrome-kitenge-flared-dress-web.webp",
+    "path": "products/african-20261108/monochrome-kitenge-flared-dress-web.webp",
+    "sha256": "746f60244174f80aad4fdcc9b77c73168e629873810f2e61e30ca8caba5f9e1e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152195/classy-fashion-hub/public/products/african-20261108/monochrome-kitenge-flared-dress-web.webp",
+    "bytes": 71346
+  },
+  {
+    "file": "green-festival-dashiki-shirt-web.webp",
+    "path": "products/african-20261108/green-festival-dashiki-shirt-web.webp",
+    "sha256": "76a8b90d6e82559001f7fe5dee7f6d9a5ae51b8d1436d7f62d50a622f99bd7df",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152194/classy-fashion-hub/public/products/african-20261108/green-festival-dashiki-shirt-web.webp",
+    "bytes": 45154
+  },
+  {
+    "file": "sunburst-bead-cover-slides-web.webp",
+    "path": "products/african-20261108/sunburst-bead-cover-slides-web.webp",
+    "sha256": "5a69daf07ccc8abdf5561b519947aac70e8af88eb7659aea5a80e08dff3f3e38",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152195/classy-fashion-hub/public/products/african-20261108/sunburst-bead-cover-slides-web.webp",
+    "bytes": 128950
+  },
+  {
+    "file": "saddle-kiondo-crossbody-set-web.webp",
+    "path": "products/african-20261108/saddle-kiondo-crossbody-set-web.webp",
+    "sha256": "b6aaf2c51f496e972e1c0d2254f9fccc5618b3c9f782546b727b6fb59a80917a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152195/classy-fashion-hub/public/products/african-20261108/saddle-kiondo-crossbody-set-web.webp",
+    "bytes": 66366
+  },
+  {
+    "file": "royal-blue-kaftan-web.webp",
+    "path": "products/african-20261108/royal-blue-kaftan-web.webp",
+    "sha256": "49546e959fa9dff2c4487d41eb13d894115ecbefe51a449fe553135a5e267eb9",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152198/classy-fashion-hub/public/products/african-20261108/royal-blue-kaftan-web.webp",
+    "bytes": 50454
+  },
+  {
+    "file": "navy-gold-trim-dashiki-tunic-web.webp",
+    "path": "products/african-20261108/navy-gold-trim-dashiki-tunic-web.webp",
+    "sha256": "72eae66a93d17a40560229ee72621a2b0f95f360acab40dfd8ff1f0885066e0c",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152197/classy-fashion-hub/public/products/african-20261108/navy-gold-trim-dashiki-tunic-web.webp",
+    "bytes": 90482
+  },
+  {
+    "file": "gold-mosaic-beaded-slides-web.webp",
+    "path": "products/african-20261108/gold-mosaic-beaded-slides-web.webp",
+    "sha256": "0d2c9fdd01ee075433d1eaa6334dd7fa273fc3353413e923e54001d74d83b220",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152199/classy-fashion-hub/public/products/african-20261108/gold-mosaic-beaded-slides-web.webp",
+    "bytes": 92920
+  },
+  {
+    "file": "colour-stripe-kiondo-basket-bag-web.webp",
+    "path": "products/african-20261108/colour-stripe-kiondo-basket-bag-web.webp",
+    "sha256": "e86b7f639e8f6c8470214a17bb5f277aded59e494dea9874d5996144bf31896c",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152199/classy-fashion-hub/public/products/african-20261108/colour-stripe-kiondo-basket-bag-web.webp",
+    "bytes": 231992
+  },
+  {
+    "file": "pink-ankara-fusion-jacket-web.webp",
+    "path": "products/african-20261108/pink-ankara-fusion-jacket-web.webp",
+    "sha256": "d2aa2ba36a5d3b9a43412ba7bea10e9160f56936e6990412402d05d3947807ad",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152201/classy-fashion-hub/public/products/african-20261108/pink-ankara-fusion-jacket-web.webp",
+    "bytes": 127694
+  },
+  {
+    "file": "red-and-green-dashiki-shirt-web.webp",
+    "path": "products/african-20261108/red-and-green-dashiki-shirt-web.webp",
+    "sha256": "8d9d9b9c354206c2009b69db2951b17a54af344404e55a9d3cca2389937d73f4",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152200/classy-fashion-hub/public/products/african-20261108/red-and-green-dashiki-shirt-web.webp",
+    "bytes": 56276
+  },
+  {
+    "file": "orange-medallion-blue-slides-web.webp",
+    "path": "products/african-20261108/orange-medallion-blue-slides-web.webp",
+    "sha256": "bb743de7cfaed14f6ecdc70e2bdae2e4ea5c93bd768b1302aeede57add21268d",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152201/classy-fashion-hub/public/products/african-20261108/orange-medallion-blue-slides-web.webp",
+    "bytes": 31598
+  },
+  {
+    "file": "round-kiondo-crossbody-web.webp",
+    "path": "products/african-20261108/round-kiondo-crossbody-web.webp",
+    "sha256": "9798f1b6d41653b74e1a6aa0de61f73eca837d45f5a839ea6750515655fecca1",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152202/classy-fashion-hub/public/products/african-20261108/round-kiondo-crossbody-web.webp",
+    "bytes": 63270
+  },
+  {
+    "file": "diani-turquoise-ii-classic-kikoy-web.webp",
+    "path": "products/african-20261108/diani-turquoise-ii-classic-kikoy-web.webp",
+    "sha256": "8fa9a23d887de6d943eb865d004a63b7602e159a40986f451af18af65dab54d0",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152204/classy-fashion-hub/public/products/african-20261108/diani-turquoise-ii-classic-kikoy-web.webp",
+    "bytes": 74586
+  },
+  {
+    "file": "crimson-dashiki-print-shirt-web.webp",
+    "path": "products/african-20261108/crimson-dashiki-print-shirt-web.webp",
+    "sha256": "1202b1854c005ddd4206023897c682937d1901750b865f810dbfd3999e94c618",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152204/classy-fashion-hub/public/products/african-20261108/crimson-dashiki-print-shirt-web.webp",
+    "bytes": 66906
+  },
+  {
+    "file": "pastel-knot-beaded-sandals-web.webp",
+    "path": "products/african-20261108/pastel-knot-beaded-sandals-web.webp",
+    "sha256": "1e6a6d21156270b3e500e56c874d55c455ba55f650814f306d8edb04a89afd0c",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152204/classy-fashion-hub/public/products/african-20261108/pastel-knot-beaded-sandals-web.webp",
+    "bytes": 84980
+  },
+  {
+    "file": "natural-sisal-leather-handle-tote-web.webp",
+    "path": "products/african-20261108/natural-sisal-leather-handle-tote-web.webp",
+    "sha256": "784ca0ace97260aa1aaa0836ddf0192cfe629cb25b2bab297c8137e2f337093a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152205/classy-fashion-hub/public/products/african-20261108/natural-sisal-leather-handle-tote-web.webp",
+    "bytes": 139568
+  },
+  {
+    "file": "nairobi-blue-classic-kikoy-web.webp",
+    "path": "products/african-20261108/nairobi-blue-classic-kikoy-web.webp",
+    "sha256": "ada733247239f4d6dd01c52ace0c1c7f2db6f8cf38ecde4bdaec92015c4fc9e9",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152207/classy-fashion-hub/public/products/african-20261108/nairobi-blue-classic-kikoy-web.webp",
+    "bytes": 83050
+  },
+  {
+    "file": "festival-print-dashiki-shirt-web.webp",
+    "path": "products/african-20261108/festival-print-dashiki-shirt-web.webp",
+    "sha256": "e2750e2d48ba25d6b152c66f95f3aef05cd75d6402759d9aa5bdf61034516164",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152207/classy-fashion-hub/public/products/african-20261108/festival-print-dashiki-shirt-web.webp",
+    "bytes": 60106
+  },
+  {
+    "file": "turquoise-medallion-sandals-web.webp",
+    "path": "products/african-20261108/turquoise-medallion-sandals-web.webp",
+    "sha256": "1d02bf2b7e66639c424e2a4bcccb1dcbb892e2eb6312bff2b7c07ca20a40d5fd",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152207/classy-fashion-hub/public/products/african-20261108/turquoise-medallion-sandals-web.webp",
+    "bytes": 132794
+  },
+  {
+    "file": "coral-handle-sisal-tote-web.webp",
+    "path": "products/african-20261108/coral-handle-sisal-tote-web.webp",
+    "sha256": "6cda452baaa1c4fbdec6b23c3b315056d8bb051c60c0674d9bfee9f7c54617c8",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152209/classy-fashion-hub/public/products/african-20261108/coral-handle-sisal-tote-web.webp",
+    "bytes": 190712
+  },
+  {
+    "file": "kilifi-blue-classic-kikoy-web.webp",
+    "path": "products/african-20261108/kilifi-blue-classic-kikoy-web.webp",
+    "sha256": "d9a047ac0eaf37ba55f06fc283ea947985359f759e2e508587af166e9ef3563e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152210/classy-fashion-hub/public/products/african-20261108/kilifi-blue-classic-kikoy-web.webp",
+    "bytes": 114774
+  },
+  {
+    "file": "black-ankara-detail-shirt-web.webp",
+    "path": "products/african-20261108/black-ankara-detail-shirt-web.webp",
+    "sha256": "d073c1db5e69d8c0468a393a84becebc3fc9e3427c18a38af444a5e1dd38fbcc",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152209/classy-fashion-hub/public/products/african-20261108/black-ankara-detail-shirt-web.webp",
+    "bytes": 37352
+  },
+  {
+    "file": "multicolour-petal-sandals-web.webp",
+    "path": "products/african-20261108/multicolour-petal-sandals-web.webp",
+    "sha256": "96331c2029ef0d13166f95619519461c766980d5b0b55839e4321b0b56038e4e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152210/classy-fashion-hub/public/products/african-20261108/multicolour-petal-sandals-web.webp",
+    "bytes": 39774
+  },
+  {
+    "file": "natural-sisal-tote-pair-web.webp",
+    "path": "products/african-20261108/natural-sisal-tote-pair-web.webp",
+    "sha256": "f347590809c152329964e011699b5468888d5be6e5f46cbe78cdb4626dcae375",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152212/classy-fashion-hub/public/products/african-20261108/natural-sisal-tote-pair-web.webp",
+    "bytes": 124524
+  },
+  {
+    "file": "tatu-blue-classic-kikoy-web.webp",
+    "path": "products/african-20261108/tatu-blue-classic-kikoy-web.webp",
+    "sha256": "717efb92cfd462a71bc25b084e8b9d940dfca1a054609b9f85099a89203ae1d0",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152212/classy-fashion-hub/public/products/african-20261108/tatu-blue-classic-kikoy-web.webp",
+    "bytes": 101890
+  },
+  {
+    "file": "black-embroidered-dashiki-shirt-web.webp",
+    "path": "products/african-20261108/black-embroidered-dashiki-shirt-web.webp",
+    "sha256": "8a072ca62b020955a222178dcb32027fcab842da73f5a5cded5cab946a705bbd",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152212/classy-fashion-hub/public/products/african-20261108/black-embroidered-dashiki-shirt-web.webp",
+    "bytes": 64564
+  },
+  {
+    "file": "blue-and-gold-medallion-sandals-web.webp",
+    "path": "products/african-20261108/blue-and-gold-medallion-sandals-web.webp",
+    "sha256": "9e149e65f56fba445a27d8453a96a400631aa5da4098fa269551f2752d803b7e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152212/classy-fashion-hub/public/products/african-20261108/blue-and-gold-medallion-sandals-web.webp",
+    "bytes": 85164
+  },
+  {
+    "file": "natural-stripe-kiondo-tote-set-web.webp",
+    "path": "products/african-20261108/natural-stripe-kiondo-tote-set-web.webp",
+    "sha256": "c495c20ce8adcc9598654293686d640e85a9423b33778abd3511f5ba9aab87cb",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152216/classy-fashion-hub/public/products/african-20261108/natural-stripe-kiondo-tote-set-web.webp",
+    "bytes": 352804
+  },
+  {
+    "file": "bofa-blue-classic-kikoy-web.webp",
+    "path": "products/african-20261108/bofa-blue-classic-kikoy-web.webp",
+    "sha256": "e1adb4d3bf52b557a944f20841a9a105adaf664d3714abc95c1a536813e2185a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152216/classy-fashion-hub/public/products/african-20261108/bofa-blue-classic-kikoy-web.webp",
+    "bytes": 106996
+  },
+  {
+    "file": "colour-block-dashiki-shirt-web.webp",
+    "path": "products/african-20261108/colour-block-dashiki-shirt-web.webp",
+    "sha256": "c0311d698bbf1ac07afc5d60d3d1d5b7700b9608574327ba2aba98863c801682",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152215/classy-fashion-hub/public/products/african-20261108/colour-block-dashiki-shirt-web.webp",
+    "bytes": 35456
+  },
+  {
+    "file": "multicolour-woven-bead-sandals-web.webp",
+    "path": "products/african-20261108/multicolour-woven-bead-sandals-web.webp",
+    "sha256": "47fd49be5a893734e4c87c86d021fd81528dcfd2e40c1d3d5ae365bb354ace01",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152216/classy-fashion-hub/public/products/african-20261108/multicolour-woven-bead-sandals-web.webp",
+    "bytes": 170156
+  },
+  {
+    "file": "rust-stripe-kiondo-tote-web.webp",
+    "path": "products/african-20261108/rust-stripe-kiondo-tote-web.webp",
+    "sha256": "00f82c8772eb2a25df87d70d4490b9d0f5616ac309a3ef49ce8ee1ac208ec996",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152219/classy-fashion-hub/public/products/african-20261108/rust-stripe-kiondo-tote-web.webp",
+    "bytes": 420686
+  },
+  {
+    "file": "nairobi-lime-green-classic-kikoy-web.webp",
+    "path": "products/african-20261108/nairobi-lime-green-classic-kikoy-web.webp",
+    "sha256": "5e03ca452abec0d7e75abd4d48f62e08f9d678a38b363a65dd36a08cbf2489bd",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152219/classy-fashion-hub/public/products/african-20261108/nairobi-lime-green-classic-kikoy-web.webp",
+    "bytes": 81132
+  },
+  {
+    "file": "black-kitenge-panel-dashiki-web.webp",
+    "path": "products/african-20261108/black-kitenge-panel-dashiki-web.webp",
+    "sha256": "4d666e0cad0a1d59d0d41e00c71e6fce3245ccf9653e617e494c53de1063a187",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152220/classy-fashion-hub/public/products/african-20261108/black-kitenge-panel-dashiki-web.webp",
+    "bytes": 114780
+  },
+  {
+    "file": "midnight-bead-band-sandals-web.webp",
+    "path": "products/african-20261108/midnight-bead-band-sandals-web.webp",
+    "sha256": "c4b26876eeba9bca08652ad60bcfb2ff8fecd57fa24455cb51a496807c89f05f",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152220/classy-fashion-hub/public/products/african-20261108/midnight-bead-band-sandals-web.webp",
+    "bytes": 110532
+  },
+  {
+    "file": "ankara-bow-trim-woven-handbag-web.webp",
+    "path": "products/african-20261108/ankara-bow-trim-woven-handbag-web.webp",
+    "sha256": "6a5a12083c578926f9820167e3c51b5cf62f666e827aa1f086e6eff46ebea627",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152222/classy-fashion-hub/public/products/african-20261108/ankara-bow-trim-woven-handbag-web.webp",
+    "bytes": 161468
+  },
+  {
+    "file": "vipingo-sage-classic-kikoy-web.webp",
+    "path": "products/african-20261108/vipingo-sage-classic-kikoy-web.webp",
+    "sha256": "3cebbd2197de09afd8d15ae47be0e4c11fc7dc9c57781f67e108b3e0ec8282ee",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152222/classy-fashion-hub/public/products/african-20261108/vipingo-sage-classic-kikoy-web.webp",
+    "bytes": 76926
+  },
+  {
+    "file": "blue-and-rust-african-print-shirt-web.webp",
+    "path": "products/african-20261108/blue-and-rust-african-print-shirt-web.webp",
+    "sha256": "4b7418296c4ea9e1a1b1e54b97ce49b416dbcbefead20e8c26a811f8a8843eb5",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152222/classy-fashion-hub/public/products/african-20261108/blue-and-rust-african-print-shirt-web.webp",
+    "bytes": 52984
+  },
+  {
+    "file": "brown-beaded-house-sandals-web.webp",
+    "path": "products/african-20261108/brown-beaded-house-sandals-web.webp",
+    "sha256": "a4b6110a0c3ffd38d8d2da63bba024d509acd4354a27518cd827843cb035e8b5",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152225/classy-fashion-hub/public/products/african-20261108/brown-beaded-house-sandals-web.webp",
+    "bytes": 71066
+  },
+  {
+    "file": "lime-ankara-woven-handbag-web.webp",
+    "path": "products/african-20261108/lime-ankara-woven-handbag-web.webp",
+    "sha256": "040a75c2263b0686e28cd6a6b517fffb30412317af334dee8817c9290db4d167",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152225/classy-fashion-hub/public/products/african-20261108/lime-ankara-woven-handbag-web.webp",
+    "bytes": 51174
+  },
+  {
+    "file": "nandi-sage-classic-kikoy-web.webp",
+    "path": "products/african-20261108/nandi-sage-classic-kikoy-web.webp",
+    "sha256": "12fc43e63f57d7e63ae46b345dd120e3a6f0008295b7f3c1cb05f5d0cd504e46",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152225/classy-fashion-hub/public/products/african-20261108/nandi-sage-classic-kikoy-web.webp",
+    "bytes": 156838
+  },
+  {
+    "file": "green-and-red-wax-print-shirt-web.webp",
+    "path": "products/african-20261108/green-and-red-wax-print-shirt-web.webp",
+    "sha256": "0b6be6ddb7e5bbb1c335c49456668b353a3001d5f3258110967c082b17ad6c5e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152225/classy-fashion-hub/public/products/african-20261108/green-and-red-wax-print-shirt-web.webp",
+    "bytes": 66810
+  },
+  {
+    "file": "sunset-triangle-leather-sandals-web.webp",
+    "path": "products/african-20261108/sunset-triangle-leather-sandals-web.webp",
+    "sha256": "08dbcda230b6dbbdd6f53c748c1712e8c710d4eaa5c2944d3e2afae61328b2b7",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152228/classy-fashion-hub/public/products/african-20261108/sunset-triangle-leather-sandals-web.webp",
+    "bytes": 96530
+  },
+  {
+    "file": "kente-accent-woven-tote-web.webp",
+    "path": "products/african-20261108/kente-accent-woven-tote-web.webp",
+    "sha256": "79a9e49dc30ad52fdee9893b28e9d8ebdf7a11185b92b2c30d8fe3245f50524c",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152229/classy-fashion-hub/public/products/african-20261108/kente-accent-woven-tote-web.webp",
+    "bytes": 52278
+  },
+  {
+    "file": "bamburi-park-green-classic-kikoy-web.webp",
+    "path": "products/african-20261108/bamburi-park-green-classic-kikoy-web.webp",
+    "sha256": "6f5306c26fb063195471db15b6144772867ffff61cb63ff168c7eadd280ac77c",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152229/classy-fashion-hub/public/products/african-20261108/bamburi-park-green-classic-kikoy-web.webp",
+    "bytes": 122850
+  },
+  {
+    "file": "gold-patchwork-african-print-shirt-web.webp",
+    "path": "products/african-20261108/gold-patchwork-african-print-shirt-web.webp",
+    "sha256": "5afdafa54583f99b00897e732d25ac1004dce65e4131c36b17fa73c1c4d619de",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152230/classy-fashion-hub/public/products/african-20261108/gold-patchwork-african-print-shirt-web.webp",
+    "bytes": 96070
+  },
+  {
+    "file": "sage-beaded-strap-sandals-web.webp",
+    "path": "products/african-20261108/sage-beaded-strap-sandals-web.webp",
+    "sha256": "a20c98df3fd4dd4ce1bdc01c91a2f58028746b9334b85b9e6a88df53446bdcc5",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152231/classy-fashion-hub/public/products/african-20261108/sage-beaded-strap-sandals-web.webp",
+    "bytes": 116592
+  },
+  {
+    "file": "dashiki-panel-travel-bag-web.webp",
+    "path": "products/african-20261108/dashiki-panel-travel-bag-web.webp",
+    "sha256": "e5523bdefd45e38bb4cc5887fa7f7f23d4a1f5c5ce7ac013979cb7c2f693e3fa",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152232/classy-fashion-hub/public/products/african-20261108/dashiki-panel-travel-bag-web.webp",
+    "bytes": 82442
+  },
+  {
+    "file": "kilifi-green-classic-kikoy-web.webp",
+    "path": "products/african-20261108/kilifi-green-classic-kikoy-web.webp",
+    "sha256": "2edf1a8e44289c7df090c180bc57390abf85bb04db6aabd5eddeedfe9443d94e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152232/classy-fashion-hub/public/products/african-20261108/kilifi-green-classic-kikoy-web.webp",
+    "bytes": 102018
+  },
+  {
+    "file": "monochrome-geometric-print-shirt-web.webp",
+    "path": "products/african-20261108/monochrome-geometric-print-shirt-web.webp",
+    "sha256": "740e50910086d18605365a6480ec200b5481292de8e69bf20907461cd4deedf8",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152232/classy-fashion-hub/public/products/african-20261108/monochrome-geometric-print-shirt-web.webp",
+    "bytes": 130398
+  },
+  {
+    "file": "kenyan-flag-leather-sandals-web.webp",
+    "path": "products/african-20261108/kenyan-flag-leather-sandals-web.webp",
+    "sha256": "e1af152128ab955eb57a59565f902f8121ec26d7ba95683099004d9d23cff074",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152234/classy-fashion-hub/public/products/african-20261108/kenyan-flag-leather-sandals-web.webp",
+    "bytes": 105506
+  },
+  {
+    "file": "burgundy-ankara-trim-woven-bag-web.webp",
+    "path": "products/african-20261108/burgundy-ankara-trim-woven-bag-web.webp",
+    "sha256": "6982eeb1875f29da1da436cf460acdf5cc1e428d677e4963fdd36839e4845580",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152235/classy-fashion-hub/public/products/african-20261108/burgundy-ankara-trim-woven-bag-web.webp",
+    "bytes": 57824
+  },
+  {
+    "file": "nairobi-orange-classic-kikoy-web.webp",
+    "path": "products/african-20261108/nairobi-orange-classic-kikoy-web.webp",
+    "sha256": "4e45ee2052e639f680e7c6fd5c0eb3552f8f555beb679ed822264a0b6f3b9e07",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152235/classy-fashion-hub/public/products/african-20261108/nairobi-orange-classic-kikoy-web.webp",
+    "bytes": 73644
+  },
+  {
+    "file": "botanical-ankara-long-sleeve-shirt-web.webp",
+    "path": "products/african-20261108/botanical-ankara-long-sleeve-shirt-web.webp",
+    "sha256": "a0e914740aae4a0a64286aff4a47c7cf99af2c589b914f898602a44b404f9f99",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152235/classy-fashion-hub/public/products/african-20261108/botanical-ankara-long-sleeve-shirt-web.webp",
+    "bytes": 53110
+  },
+  {
+    "file": "heart-bead-leather-sandals-web.webp",
+    "path": "products/african-20261108/heart-bead-leather-sandals-web.webp",
+    "sha256": "17f4783f59df854c87387e05dd3c304d575eff21774a12fdc8e48332c92564c1",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152237/classy-fashion-hub/public/products/african-20261108/heart-bead-leather-sandals-web.webp",
+    "bytes": 211742
+  },
+  {
+    "file": "long-fringe-beaded-collar-web.webp",
+    "path": "products/african-20261108/long-fringe-beaded-collar-web.webp",
+    "sha256": "5aebcbfc43a7576f91eb3e98e7f5531986c6d7730ff3811b7c6b95a785051db9",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152237/classy-fashion-hub/public/products/african-20261108/long-fringe-beaded-collar-web.webp",
+    "bytes": 85898
+  },
+  {
+    "file": "thika-red-classic-kikoy-web.webp",
+    "path": "products/african-20261108/thika-red-classic-kikoy-web.webp",
+    "sha256": "072a8f4ec1ed5e43f55746578fab8db966784749f01e5bfd38abc223f0e4d8fc",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152238/classy-fashion-hub/public/products/african-20261108/thika-red-classic-kikoy-web.webp",
+    "bytes": 129490
+  },
+  {
+    "file": "sage-patchwork-print-shirt-web.webp",
+    "path": "products/african-20261108/sage-patchwork-print-shirt-web.webp",
+    "sha256": "25b5aac089b10821941572e8c80736f293703535611ea01ef1adaf0424e9973f",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152237/classy-fashion-hub/public/products/african-20261108/sage-patchwork-print-shirt-web.webp",
+    "bytes": 54894
+  },
+  {
+    "file": "green-leaf-bead-sandals-web.webp",
+    "path": "products/african-20261108/green-leaf-bead-sandals-web.webp",
+    "sha256": "05cc4a94765f0e01fb5e289c88fc2a4c37e7e4c2e64e478d00da07a7fad77bf1",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152240/classy-fashion-hub/public/products/african-20261108/green-leaf-bead-sandals-web.webp",
+    "bytes": 76942
+  },
+  {
+    "file": "red-chevron-beaded-collar-web.webp",
+    "path": "products/african-20261108/red-chevron-beaded-collar-web.webp",
+    "sha256": "830b6dfeaaf3360732f72a2e2d70595a8f59d97ee6360855ab48572378fce983",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152241/classy-fashion-hub/public/products/african-20261108/red-chevron-beaded-collar-web.webp",
+    "bytes": 170676
+  },
+  {
+    "file": "waa-pink-classic-kikoy-web.webp",
+    "path": "products/african-20261108/waa-pink-classic-kikoy-web.webp",
+    "sha256": "4f0e2e4172e737a32eca7a1cf15e760af149e8a4ad0f62b371c859812595ad25",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152240/classy-fashion-hub/public/products/african-20261108/waa-pink-classic-kikoy-web.webp",
+    "bytes": 84314
+  },
+  {
+    "file": "navy-heritage-print-shirt-web.webp",
+    "path": "products/african-20261108/navy-heritage-print-shirt-web.webp",
+    "sha256": "ed0d081e0467d229fb7df634d9e71e355fa84eca13d08c832a09b1097e34c038",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152241/classy-fashion-hub/public/products/african-20261108/navy-heritage-print-shirt-web.webp",
+    "bytes": 284418
+  },
+  {
+    "file": "looped-bead-leather-sandals-web.webp",
+    "path": "products/african-20261108/looped-bead-leather-sandals-web.webp",
+    "sha256": "1933c69e1d0684d6a78398bc8fa9f4d2818e10101b2b0b8ef62b4dd424dcf3a0",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152243/classy-fashion-hub/public/products/african-20261108/looped-bead-leather-sandals-web.webp",
+    "bytes": 273232
+  },
+  {
+    "file": "green-and-pink-fringe-collar-web.webp",
+    "path": "products/african-20261108/green-and-pink-fringe-collar-web.webp",
+    "sha256": "fc59e6f4193a816f6fd3e32520c15dd4a6151d86ac09968d8ba5076cd4c7ae6d",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152243/classy-fashion-hub/public/products/african-20261108/green-and-pink-fringe-collar-web.webp",
+    "bytes": 69872
+  },
+  {
+    "file": "lamu-red-classic-kikoy-web.webp",
+    "path": "products/african-20261108/lamu-red-classic-kikoy-web.webp",
+    "sha256": "166fb89ec80742611d03ac20e582b6a8429c3ab318a912fe73e835fc495ce458",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152244/classy-fashion-hub/public/products/african-20261108/lamu-red-classic-kikoy-web.webp",
+    "bytes": 175880
+  },
+  {
+    "file": "blue-swirl-print-shirt-web.webp",
+    "path": "products/african-20261108/blue-swirl-print-shirt-web.webp",
+    "sha256": "bef94dbcc521610af7ec2ac609a751872aeff713d9532bb1f0181f86db47a724",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152245/classy-fashion-hub/public/products/african-20261108/blue-swirl-print-shirt-web.webp",
+    "bytes": 286720
+  },
+  {
+    "file": "oval-bead-fringe-sandals-web.webp",
+    "path": "products/african-20261108/oval-bead-fringe-sandals-web.webp",
+    "sha256": "a0a3dea14a04ccbf410bd58d962301012556083f8715cef867f7c58556c74c3d",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152246/classy-fashion-hub/public/products/african-20261108/oval-bead-fringe-sandals-web.webp",
+    "bytes": 151480
+  },
+  {
+    "file": "yellow-chevron-beaded-collar-web.webp",
+    "path": "products/african-20261108/yellow-chevron-beaded-collar-web.webp",
+    "sha256": "84e51b71e71b936de529a1ec360713ed87415a3c4a42fe783918c1da859557fe",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152246/classy-fashion-hub/public/products/african-20261108/yellow-chevron-beaded-collar-web.webp",
+    "bytes": 131432
+  },
+  {
+    "file": "waridi-red-classic-kikoy-web.webp",
+    "path": "products/african-20261108/waridi-red-classic-kikoy-web.webp",
+    "sha256": "6314ce96fe470777f1db900b8e97a06e5e8613d46cd5c634a7af57b43bd88388",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152246/classy-fashion-hub/public/products/african-20261108/waridi-red-classic-kikoy-web.webp",
+    "bytes": 73030
+  },
+  {
+    "file": "blue-paisley-african-print-shirt-web.webp",
+    "path": "products/african-20261108/blue-paisley-african-print-shirt-web.webp",
+    "sha256": "c9dd1c3a7883c75e2d0e7af0e67368dd82e04bfd837435313f6a260443bc4d7b",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152247/classy-fashion-hub/public/products/african-20261108/blue-paisley-african-print-shirt-web.webp",
+    "bytes": 85800
+  },
+  {
+    "file": "petal-cluster-leather-sandals-web.webp",
+    "path": "products/african-20261108/petal-cluster-leather-sandals-web.webp",
+    "sha256": "d411286d57f0f48b72855caa636c04f019f4c9155368bce51510bbb3940cc69d",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152248/classy-fashion-hub/public/products/african-20261108/petal-cluster-leather-sandals-web.webp",
+    "bytes": 74780
+  },
+  {
+    "file": "blue-chevron-bead-collar-web.webp",
+    "path": "products/african-20261108/blue-chevron-bead-collar-web.webp",
+    "sha256": "b3027b28199f3f296b9e6eaedcfe4491b85ee12579c653830b159f840772c7c2",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152249/classy-fashion-hub/public/products/african-20261108/blue-chevron-bead-collar-web.webp",
+    "bytes": 175166
+  },
+  {
+    "file": "waridi-purple-classic-kikoy-web.webp",
+    "path": "products/african-20261108/waridi-purple-classic-kikoy-web.webp",
+    "sha256": "ec47497ebd34758f618dc3c1c552fbd429b4173d7f084e2fed1ffe10c4b9ede4",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152249/classy-fashion-hub/public/products/african-20261108/waridi-purple-classic-kikoy-web.webp",
+    "bytes": 84988
+  },
+  {
+    "file": "earth-stripe-print-shirt-web.webp",
+    "path": "products/african-20261108/earth-stripe-print-shirt-web.webp",
+    "sha256": "48658ad72829c6db894a82a67ce4bb3aa2a7395ea31a3bd476867c1d96b4f25b",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152250/classy-fashion-hub/public/products/african-20261108/earth-stripe-print-shirt-web.webp",
+    "bytes": 120618
+  },
+  {
+    "file": "red-medallion-beaded-sandals-web.webp",
+    "path": "products/african-20261108/red-medallion-beaded-sandals-web.webp",
+    "sha256": "3c476bec2acd87fb87558716113486f7d89c534bda38aac9d8c7bd178bb06c47",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152250/classy-fashion-hub/public/products/african-20261108/red-medallion-beaded-sandals-web.webp",
+    "bytes": 28532
+  },
+  {
+    "file": "copper-fringe-beaded-necklace-web.webp",
+    "path": "products/african-20261108/copper-fringe-beaded-necklace-web.webp",
+    "sha256": "a4403982a2982f9a922eec37cfa8343137d5b1fae81343ae84da5c4156fbf660",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152252/classy-fashion-hub/public/products/african-20261108/copper-fringe-beaded-necklace-web.webp",
+    "bytes": 49270
+  },
+  {
+    "file": "nairobi-pink-classic-kikoy-web.webp",
+    "path": "products/african-20261108/nairobi-pink-classic-kikoy-web.webp",
+    "sha256": "3e28efefce48d641c954828efa4866a88f6ae9e45faedb994b9619e44e4ed25a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152252/classy-fashion-hub/public/products/african-20261108/nairobi-pink-classic-kikoy-web.webp",
+    "bytes": 75836
+  },
+  {
+    "file": "kilifi-blue-kikoy-bahari-shorts-web.webp",
+    "path": "products/african-20261108/kilifi-blue-kikoy-bahari-shorts-web.webp",
+    "sha256": "7257e7c26c5e972ce237d64ce88573ba1067e4e1f1693c72203adcab49353366",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152252/classy-fashion-hub/public/products/african-20261108/kilifi-blue-kikoy-bahari-shorts-web.webp",
+    "bytes": 53978
+  },
+  {
+    "file": "rainbow-bead-band-sandals-web.webp",
+    "path": "products/african-20261108/rainbow-bead-band-sandals-web.webp",
+    "sha256": "eaedd386b905bf0f7b9951213a540fb2fdf7c995d67f36489f2905d78098c07a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152253/classy-fashion-hub/public/products/african-20261108/rainbow-bead-band-sandals-web.webp",
+    "bytes": 95814
+  },
+  {
+    "file": "yellow-seed-bead-fringe-necklace-web.webp",
+    "path": "products/african-20261108/yellow-seed-bead-fringe-necklace-web.webp",
+    "sha256": "32c019e2661948ffd8311003dd8d086667fc4d2af5877dacb1d36bff15d0d90f",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152254/classy-fashion-hub/public/products/african-20261108/yellow-seed-bead-fringe-necklace-web.webp",
+    "bytes": 92664
+  },
+  {
+    "file": "bamburi-lilac-classic-kikoy-web.webp",
+    "path": "products/african-20261108/bamburi-lilac-classic-kikoy-web.webp",
+    "sha256": "ae0ea745e56f4ffa64d6da96de7c0729de37600fdb0d40463f130c6656e06772",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152255/classy-fashion-hub/public/products/african-20261108/bamburi-lilac-classic-kikoy-web.webp",
+    "bytes": 148710
+  },
+  {
+    "file": "kilifi-green-kikoy-bahari-shorts-web.webp",
+    "path": "products/african-20261108/kilifi-green-kikoy-bahari-shorts-web.webp",
+    "sha256": "292efa5fa3241871ee82760e3874805b52afba2747ba39803c93e6ba270d643d",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152255/classy-fashion-hub/public/products/african-20261108/kilifi-green-kikoy-bahari-shorts-web.webp",
+    "bytes": 73080
+  },
+  {
+    "file": "yellow-petal-beaded-sandals-web.webp",
+    "path": "products/african-20261108/yellow-petal-beaded-sandals-web.webp",
+    "sha256": "0a53908398771f8e507d6e2e961d247d378a66ee59035ec0c028dc1d7759ac22",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152255/classy-fashion-hub/public/products/african-20261108/yellow-petal-beaded-sandals-web.webp",
+    "bytes": 37126
+  },
+  {
+    "file": "ivory-fringe-collar-necklace-web.webp",
+    "path": "products/african-20261108/ivory-fringe-collar-necklace-web.webp",
+    "sha256": "3f9f4f12d9d85858769b2675b6c32a8888c54419114f0e180bc313e53920a349",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152257/classy-fashion-hub/public/products/african-20261108/ivory-fringe-collar-necklace-web.webp",
+    "bytes": 44552
+  },
+  {
+    "file": "shela-pink-classic-kikoy-web.webp",
+    "path": "products/african-20261108/shela-pink-classic-kikoy-web.webp",
+    "sha256": "83d4b37ba6b36e52023cd7c028d7a346e0f653fdf8551e62f549e0d13fe768e9",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152257/classy-fashion-hub/public/products/african-20261108/shela-pink-classic-kikoy-web.webp",
+    "bytes": 82778
+  },
+  {
+    "file": "kilifi-light-grey-kikoy-bahari-shorts-web.webp",
+    "path": "products/african-20261108/kilifi-light-grey-kikoy-bahari-shorts-web.webp",
+    "sha256": "5474aa59d192db64ea3496796f1f2cda50cfff5c71f6d13dd6efc8bd90501803",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152257/classy-fashion-hub/public/products/african-20261108/kilifi-light-grey-kikoy-bahari-shorts-web.webp",
+    "bytes": 79554
+  },
+  {
+    "file": "red-triangular-bead-sandals-web.webp",
+    "path": "products/african-20261108/red-triangular-bead-sandals-web.webp",
+    "sha256": "bb6a21c6948b2c5a84257654676997c90234af6cf100b0b5e15ef02aaf9ffcf0",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152258/classy-fashion-hub/public/products/african-20261108/red-triangular-bead-sandals-web.webp",
+    "bytes": 48114
+  },
+  {
+    "file": "crimson-bead-fringe-necklace-web.webp",
+    "path": "products/african-20261108/crimson-bead-fringe-necklace-web.webp",
+    "sha256": "3162710fbd8450e239d8ee5456b0b8b7c60f2d9e47956dab5c4c91c59a777c0b",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152259/classy-fashion-hub/public/products/african-20261108/crimson-bead-fringe-necklace-web.webp",
+    "bytes": 67630
+  },
+  {
+    "file": "malindi-peach-classic-kikoy-web.webp",
+    "path": "products/african-20261108/malindi-peach-classic-kikoy-web.webp",
+    "sha256": "912772c508f365dd7abf889cc424fb46f288a7d8c2570632d88374fbbed43bd1",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152260/classy-fashion-hub/public/products/african-20261108/malindi-peach-classic-kikoy-web.webp",
+    "bytes": 66342
+  },
+  {
+    "file": "kilifi-mustard-kikoy-bahari-shorts-web.webp",
+    "path": "products/african-20261108/kilifi-mustard-kikoy-bahari-shorts-web.webp",
+    "sha256": "36492ad72a67678820832ceaa15cb5f8f6ff906539600a8c573a5fa3575f4b6d",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152260/classy-fashion-hub/public/products/african-20261108/kilifi-mustard-kikoy-bahari-shorts-web.webp",
+    "bytes": 90426
+  },
+  {
+    "file": "yellow-loop-bead-thong-sandals-web.webp",
+    "path": "products/african-20261108/yellow-loop-bead-thong-sandals-web.webp",
+    "sha256": "db012f69d0ceff665c652a6379e830d56233c3c1c23ea9cfcb6f2cb851ca1a39",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152260/classy-fashion-hub/public/products/african-20261108/yellow-loop-bead-thong-sandals-web.webp",
+    "bytes": 58152
+  },
+  {
+    "file": "amber-fringe-beaded-necklace-web.webp",
+    "path": "products/african-20261108/amber-fringe-beaded-necklace-web.webp",
+    "sha256": "533bd309417363746e107b069c14085a40806261fcf18b47890fa2952ae2c0f4",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152262/classy-fashion-hub/public/products/african-20261108/amber-fringe-beaded-necklace-web.webp",
+    "bytes": 58156
+  },
+  {
+    "file": "tiva-safari-classic-kikoy-web.webp",
+    "path": "products/african-20261108/tiva-safari-classic-kikoy-web.webp",
+    "sha256": "cb3ff7e1023de160716b04ea68cccf9f0b15f184264f4e2117bfe4d2c2ca358b",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152262/classy-fashion-hub/public/products/african-20261108/tiva-safari-classic-kikoy-web.webp",
+    "bytes": 84378
+  },
+  {
+    "file": "watatu-turquoise-kikoy-bahari-shorts-web.webp",
+    "path": "products/african-20261108/watatu-turquoise-kikoy-bahari-shorts-web.webp",
+    "sha256": "aa9f8c0b44d4d5e44e9c5efdc01f29e103c3c683b85983d83f924f03cf95f3ff",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152262/classy-fashion-hub/public/products/african-20261108/watatu-turquoise-kikoy-bahari-shorts-web.webp",
+    "bytes": 143390
+  },
+  {
+    "file": "ankara-cross-strap-sandals-web.webp",
+    "path": "products/african-20261108/ankara-cross-strap-sandals-web.webp",
+    "sha256": "37fbe2a84cb514c780f3c5939f4e8d4085c40a8d680a8a9ae08804ef5417c54f",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152262/classy-fashion-hub/public/products/african-20261108/ankara-cross-strap-sandals-web.webp",
+    "bytes": 16980
+  },
+  {
+    "file": "ruby-bead-necklace-web.webp",
+    "path": "products/african-20261108/ruby-bead-necklace-web.webp",
+    "sha256": "74347cdd00654a43d5f8eb52bb5b3bb8fe3ca3f9edf464d09aebdea18b898600",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152264/classy-fashion-hub/public/products/african-20261108/ruby-bead-necklace-web.webp",
+    "bytes": 37770
+  },
+  {
+    "file": "tigoni-white-sky-classic-kikoy-web.webp",
+    "path": "products/african-20261108/tigoni-white-sky-classic-kikoy-web.webp",
+    "sha256": "099b77ff4ed49fc80a0c35cf3416e95bebf485722cf9105407cf839f46ed1896",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152265/classy-fashion-hub/public/products/african-20261108/tigoni-white-sky-classic-kikoy-web.webp",
+    "bytes": 71310
+  },
+  {
+    "file": "malindi-blue-kikoy-bahari-trousers-web.webp",
+    "path": "products/african-20261108/malindi-blue-kikoy-bahari-trousers-web.webp",
+    "sha256": "52ffd1010fe8fb369cebb54a23c0f1f0c60432bb4cd79e5830721d0905a09092",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152265/classy-fashion-hub/public/products/african-20261108/malindi-blue-kikoy-bahari-trousers-web.webp",
+    "bytes": 148562
+  },
+  {
+    "file": "ankara-wrap-strap-sandals-web.webp",
+    "path": "products/african-20261108/ankara-wrap-strap-sandals-web.webp",
+    "sha256": "323605671f58aff4be08eb4b428b8b2f967fabe652825591443f488b8b881557",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152265/classy-fashion-hub/public/products/african-20261108/ankara-wrap-strap-sandals-web.webp",
+    "bytes": 103064
+  },
+  {
+    "file": "colour-bead-necklace-web.webp",
+    "path": "products/african-20261108/colour-bead-necklace-web.webp",
+    "sha256": "866841583e2acfc55a4b2f04110ccadcf8e2e6bbb75b3e599231423630be8352",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152266/classy-fashion-hub/public/products/african-20261108/colour-bead-necklace-web.webp",
+    "bytes": 41580
+  },
+  {
+    "file": "tigoni-white-ii-classic-kikoy-web.webp",
+    "path": "products/african-20261108/tigoni-white-ii-classic-kikoy-web.webp",
+    "sha256": "adafd84ec562ae83697faea45ea92f6d4659fe4f027734ca6fbd6c2e3a1ea61e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152268/classy-fashion-hub/public/products/african-20261108/tigoni-white-ii-classic-kikoy-web.webp",
+    "bytes": 95238
+  },
+  {
+    "file": "malindi-pink-kikoy-bahari-trousers-web.webp",
+    "path": "products/african-20261108/malindi-pink-kikoy-bahari-trousers-web.webp",
+    "sha256": "d736262f8dfb5a78586486efa0bda69d1d6d68013c78e4d2fe6645f9b068b095",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152268/classy-fashion-hub/public/products/african-20261108/malindi-pink-kikoy-bahari-trousers-web.webp",
+    "bytes": 61128
+  },
+  {
+    "file": "multicolour-bead-strap-sandals-web.webp",
+    "path": "products/african-20261108/multicolour-bead-strap-sandals-web.webp",
+    "sha256": "1d427096d8c471b07eef1164f236742115145c59c93020fd9f2c878424eb7b16",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152269/classy-fashion-hub/public/products/african-20261108/multicolour-bead-strap-sandals-web.webp",
+    "bytes": 224732
+  },
+  {
+    "file": "green-chevron-beaded-necklace-web.webp",
+    "path": "products/african-20261108/green-chevron-beaded-necklace-web.webp",
+    "sha256": "d6f221087ac2ef64baab877cad444dffe2d53418ea8320da077bd50501e984a6",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152269/classy-fashion-hub/public/products/african-20261108/green-chevron-beaded-necklace-web.webp",
+    "bytes": 157622
+  },
+  {
+    "file": "tigoni-dark-grey-classic-kikoy-web.webp",
+    "path": "products/african-20261108/tigoni-dark-grey-classic-kikoy-web.webp",
+    "sha256": "1779a57322f40af3726e543618c92e7d8a275097ca74f0cf1363d4474660f3d7",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152271/classy-fashion-hub/public/products/african-20261108/tigoni-dark-grey-classic-kikoy-web.webp",
+    "bytes": 107016
+  },
+  {
+    "file": "malindi-white-kikoy-bahari-trousers-web.webp",
+    "path": "products/african-20261108/malindi-white-kikoy-bahari-trousers-web.webp",
+    "sha256": "923462b26c313c70069c83b55b9b2dab3b92f29fccac5a83323421ccd0e6455b",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152271/classy-fashion-hub/public/products/african-20261108/malindi-white-kikoy-bahari-trousers-web.webp",
+    "bytes": 88292
+  },
+  {
+    "file": "garnet-beaded-strap-sandals-web.webp",
+    "path": "products/african-20261108/garnet-beaded-strap-sandals-web.webp",
+    "sha256": "ab91f980ddfb167cbfbe285afdd120327eea220dcbaaef7329b41d349ef9467a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152271/classy-fashion-hub/public/products/african-20261108/garnet-beaded-strap-sandals-web.webp",
+    "bytes": 109922
+  },
+  {
+    "file": "yellow-layered-bead-necklace-web.webp",
+    "path": "products/african-20261108/yellow-layered-bead-necklace-web.webp",
+    "sha256": "c94a0310ac664d2a6c178a8addb243ff643e9f9151e3493c8fa9a18541dc8f3c",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152272/classy-fashion-hub/public/products/african-20261108/yellow-layered-bead-necklace-web.webp",
+    "bytes": 156474
+  },
+  {
+    "file": "tigoni-black-classic-kikoy-web.webp",
+    "path": "products/african-20261108/tigoni-black-classic-kikoy-web.webp",
+    "sha256": "494966877ef8eee24cb0b1894841d9f3b4478b816a5bb633bc329b036c99ce9c",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152273/classy-fashion-hub/public/products/african-20261108/tigoni-black-classic-kikoy-web.webp",
+    "bytes": 82682
+  },
+  {
+    "file": "malindi-green-kikoy-bahari-trousers-web.webp",
+    "path": "products/african-20261108/malindi-green-kikoy-bahari-trousers-web.webp",
+    "sha256": "67362f05da756f17e90961a364b6598a68a399c1410f45362c698f747f894aac",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152274/classy-fashion-hub/public/products/african-20261108/malindi-green-kikoy-bahari-trousers-web.webp",
+    "bytes": 154014
+  },
+  {
+    "file": "lime-and-white-bead-sandals-web.webp",
+    "path": "products/african-20261108/lime-and-white-bead-sandals-web.webp",
+    "sha256": "f942dc782e41a583321c24340e88b39adb3e3f0bc8204cf5f445e2b1b0c2ef7e",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152275/classy-fashion-hub/public/products/african-20261108/lime-and-white-bead-sandals-web.webp",
+    "bytes": 196410
+  },
+  {
+    "file": "green-and-red-tribal-bead-collar-web.webp",
+    "path": "products/african-20261108/green-and-red-tribal-bead-collar-web.webp",
+    "sha256": "e61e16e4a8dc38498bb300f12430e84ac1d763ce7a2f3f333375c593afe3671a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152275/classy-fashion-hub/public/products/african-20261108/green-and-red-tribal-bead-collar-web.webp",
+    "bytes": 90524
+  },
+  {
+    "file": "tiva-cream-classic-kikoy-web.webp",
+    "path": "products/african-20261108/tiva-cream-classic-kikoy-web.webp",
+    "sha256": "8ef504726ab4d434393b189213ee36bf506439f2b6412f9a8f3878f503d4500a",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152276/classy-fashion-hub/public/products/african-20261108/tiva-cream-classic-kikoy-web.webp",
+    "bytes": 75182
+  },
+  {
+    "file": "nairobi-park-green-kikoy-bahari-trousers-web.webp",
+    "path": "products/african-20261108/nairobi-park-green-kikoy-bahari-trousers-web.webp",
+    "sha256": "fe9ea02278cf57a910a1e13e99ccedd6179e5c732a646aa6c0d103d8710c7c15",
+    "url": "https://res.cloudinary.com/dyxwig6ok/raw/upload/v1794152276/classy-fashion-hub/public/products/african-20261108/nairobi-park-green-kikoy-bahari-trousers-web.webp",
+    "bytes": 74622
+  }
+]

@@ -5,6 +5,7 @@
     $images = Storefront::homepageImages();
     $hero = $images['hero_image'];
     $closing = $images['closing_image'];
+    $slides = Storefront::campaignSlides();
 @endphp
 
 @push('meta')
@@ -22,6 +23,9 @@
 <x-shop::layouts>
     <x-slot:title>{{ $channel->home_seo['meta_title'] ?? config('app.name') }}</x-slot>
 
+    @if ($slides)
+        @include('classy-fashion::campaign')
+    @else
     <section class="cfh-campaign @if (! $hero) cfh-campaign-without-photo @endif" aria-labelledby="campaign-title">
         @if ($hero)
             <img class="cfh-campaign-image" src="{{ $hero }}" width="1672" height="940" alt="{{ Storefront::get('hero_alt') }}" fetchpriority="high" loading="eager">
@@ -32,6 +36,7 @@
             <a class="cfh-button" href="{{ Storefront::get('hero_link') }}">{{ Storefront::get('hero_button') }}</a>
         </div>
     </section>
+    @endif
 
     <section class="cfh-promotion">
         <div class="cfh-container cfh-promotion-inner">
@@ -105,7 +110,7 @@
     @if ($images['featured_story_image'])
         <section class="cfh-featured-split">
             <img src="{{ $images['featured_story_image'] }}" width="983" height="1020" alt="{{ Storefront::get('featured_story_alt') }}" loading="lazy">
-            <div><x-shop::products.ethereal-feed :title="trans('classy-fashion::coursework.layering')" :src="route('classy.collections.index', ['collection' => 'layers'])" :navigation-link="url('/outerwear')" layout="rail" :count="8" /></div>
+            <div><x-shop::products.ethereal-feed :title="Storefront::get('outerwear_title')" :src="route('classy.collections.index', ['collection' => 'layers'])" :navigation-link="Storefront::get('outerwear_link')" layout="rail" :count="8" /></div>
         </section>
     @endif
 

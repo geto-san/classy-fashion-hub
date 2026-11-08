@@ -1,5 +1,519 @@
 {
   "reviewed_on": "2026-11-08",
   "policy": "Only African or East African clothing and fashion with product-only photography may be published throughout the storefront. Do not approve photos containing people, including cropped bodies, or Western fashion. Existing generic stock photos are withdrawn. New owner uploads require manual review for clothing style and the absence of people before publication.",
-  "approved": {}
+  "approved": {
+    "products/african-20261108/blue-dashiki-poncho-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/rose-dashiki-tunic-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kenya-stripe-beaded-slides-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/honey-kiondo-crossbody-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/ivory-kitenge-panel-flared-dress-web.webp": [
+      "product",
+      "category",
+      "collection_dresses_image"
+    ],
+    "products/african-20261108/black-and-gold-dashiki-tunic-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/gold-bead-band-black-slides-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/round-stripe-sisal-crossbody-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/monochrome-kitenge-flared-dress-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/green-festival-dashiki-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/sunburst-bead-cover-slides-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/saddle-kiondo-crossbody-set-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/royal-blue-kaftan-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/navy-gold-trim-dashiki-tunic-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/gold-mosaic-beaded-slides-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/colour-stripe-kiondo-basket-bag-web.webp": [
+      "product",
+      "category",
+      "journal_four_image"
+    ],
+    "products/african-20261108/pink-ankara-fusion-jacket-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/red-and-green-dashiki-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/orange-medallion-blue-slides-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/round-kiondo-crossbody-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/diani-turquoise-ii-classic-kikoy-web.webp": [
+      "product",
+      "category",
+      "dresses_image"
+    ],
+    "products/african-20261108/crimson-dashiki-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/pastel-knot-beaded-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/natural-sisal-leather-handle-tote-web.webp": [
+      "product",
+      "category",
+      "collection_bags_image"
+    ],
+    "products/african-20261108/nairobi-blue-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/festival-print-dashiki-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/turquoise-medallion-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/coral-handle-sisal-tote-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kilifi-blue-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/black-ankara-detail-shirt-web.webp": [
+      "product",
+      "category",
+      "everyday_image",
+      "hero_slide"
+    ],
+    "products/african-20261108/multicolour-petal-sandals-web.webp": [
+      "product",
+      "category",
+      "outerwear_image",
+      "hero_slide"
+    ],
+    "products/african-20261108/natural-sisal-tote-pair-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/tatu-blue-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/black-embroidered-dashiki-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/blue-and-gold-medallion-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/natural-stripe-kiondo-tote-set-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/bofa-blue-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/colour-block-dashiki-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/multicolour-woven-bead-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/rust-stripe-kiondo-tote-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/nairobi-lime-green-classic-kikoy-web.webp": [
+      "product",
+      "category",
+      "journal_one_image"
+    ],
+    "products/african-20261108/black-kitenge-panel-dashiki-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/midnight-bead-band-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/ankara-bow-trim-woven-handbag-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/vipingo-sage-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/blue-and-rust-african-print-shirt-web.webp": [
+      "product",
+      "category",
+      "collection_shirts_image"
+    ],
+    "products/african-20261108/brown-beaded-house-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/lime-ankara-woven-handbag-web.webp": [
+      "product",
+      "category",
+      "caps_image",
+      "hero_slide"
+    ],
+    "products/african-20261108/nandi-sage-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/green-and-red-wax-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/sunset-triangle-leather-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kente-accent-woven-tote-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/bamburi-park-green-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/gold-patchwork-african-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/sage-beaded-strap-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/dashiki-panel-travel-bag-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kilifi-green-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/monochrome-geometric-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kenyan-flag-leather-sandals-web.webp": [
+      "product",
+      "category",
+      "featured_story_image"
+    ],
+    "products/african-20261108/burgundy-ankara-trim-woven-bag-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/nairobi-orange-classic-kikoy-web.webp": [
+      "product",
+      "category",
+      "women_lookbook_image"
+    ],
+    "products/african-20261108/botanical-ankara-long-sleeve-shirt-web.webp": [
+      "product",
+      "category",
+      "men_editorial_image"
+    ],
+    "products/african-20261108/heart-bead-leather-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/long-fringe-beaded-collar-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/thika-red-classic-kikoy-web.webp": [
+      "product",
+      "category",
+      "women_editorial_image",
+      "hero_slide"
+    ],
+    "products/african-20261108/sage-patchwork-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/green-leaf-bead-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/red-chevron-beaded-collar-web.webp": [
+      "product",
+      "category",
+      "collection_caps_image"
+    ],
+    "products/african-20261108/waa-pink-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/navy-heritage-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/looped-bead-leather-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/green-and-pink-fringe-collar-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/lamu-red-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/blue-swirl-print-shirt-web.webp": [
+      "product",
+      "category",
+      "journal_three_image"
+    ],
+    "products/african-20261108/oval-bead-fringe-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/yellow-chevron-beaded-collar-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/waridi-red-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/blue-paisley-african-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/petal-cluster-leather-sandals-web.webp": [
+      "product",
+      "category",
+      "collection_shoes_image"
+    ],
+    "products/african-20261108/blue-chevron-bead-collar-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/waridi-purple-classic-kikoy-web.webp": [
+      "product",
+      "category",
+      "collection_tops_image"
+    ],
+    "products/african-20261108/earth-stripe-print-shirt-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/red-medallion-beaded-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/copper-fringe-beaded-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/nairobi-pink-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kilifi-blue-kikoy-bahari-shorts-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/rainbow-bead-band-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/yellow-seed-bead-fringe-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/bamburi-lilac-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kilifi-green-kikoy-bahari-shorts-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/yellow-petal-beaded-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/ivory-fringe-collar-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/shela-pink-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/kilifi-light-grey-kikoy-bahari-shorts-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/red-triangular-bead-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/crimson-bead-fringe-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/malindi-peach-classic-kikoy-web.webp": [
+      "product",
+      "category",
+      "journal_two_image"
+    ],
+    "products/african-20261108/kilifi-mustard-kikoy-bahari-shorts-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/yellow-loop-bead-thong-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/amber-fringe-beaded-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/tiva-safari-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/watatu-turquoise-kikoy-bahari-shorts-web.webp": [
+      "product",
+      "category",
+      "men_lookbook_image"
+    ],
+    "products/african-20261108/ankara-cross-strap-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/ruby-bead-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/tigoni-white-sky-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/malindi-blue-kikoy-bahari-trousers-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/ankara-wrap-strap-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/colour-bead-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/tigoni-white-ii-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/malindi-pink-kikoy-bahari-trousers-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/multicolour-bead-strap-sandals-web.webp": [
+      "product",
+      "category",
+      "journal_six_image"
+    ],
+    "products/african-20261108/green-chevron-beaded-necklace-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/tigoni-dark-grey-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/malindi-white-kikoy-bahari-trousers-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/garnet-beaded-strap-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/yellow-layered-bead-necklace-web.webp": [
+      "product",
+      "category",
+      "journal_five_image"
+    ],
+    "products/african-20261108/tigoni-black-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/malindi-green-kikoy-bahari-trousers-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/lime-and-white-bead-sandals-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/green-and-red-tribal-bead-collar-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/tiva-cream-classic-kikoy-web.webp": [
+      "product",
+      "category"
+    ],
+    "products/african-20261108/nairobi-park-green-kikoy-bahari-trousers-web.webp": [
+      "product",
+      "category"
+    ]
+  }
 }

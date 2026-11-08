@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download the licensed coursework originals for a local, offline presentation."""
+"""Download reviewed catalogue images for a local, offline presentation."""
 
 import argparse
 import concurrent.futures
@@ -15,9 +15,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--destination', type=pathlib.Path, default=root / 'store/storage/app/public')
     parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--catalogue', choices=['african', 'coursework'], default='african')
     args = parser.parse_args()
     destination = args.destination.resolve()
-    manifest = root / 'store/packages/ClassyFashion/src/Resources/coursework-catalogue/assets.json'
+    manifest = root / f'store/packages/ClassyFashion/src/Resources/{args.catalogue}-catalogue/assets.json'
     assets = json.loads(manifest.read_text())
 
     for asset in assets:
@@ -25,11 +26,11 @@ def main():
         target = (destination / asset['path']).resolve()
         if parsed.scheme != 'https' or parsed.hostname != 'res.cloudinary.com':
             raise ValueError('Unexpected image host.')
-        if not asset['path'].startswith(('products/catalogue-20261104/', 'storefront/editorial/20261104/')) or not target.is_relative_to(destination):
+        if not asset['path'].startswith(('products/african-20261108/', 'products/catalogue-20261104/', 'storefront/editorial/20261104/')) or not target.is_relative_to(destination):
             raise ValueError('Unexpected image path.')
 
     if args.dry_run:
-        print(f'{len(assets)} licensed originals validated; destination: {destination}. No changes made.')
+        print(f'{len(assets)} reviewed images validated; destination: {destination}. No changes made.')
         return
 
     def fetch(asset):
@@ -49,7 +50,7 @@ def main():
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         list(pool.map(fetch, assets))
-    print(f'{len(assets)} originals verified in {destination}.')
+    print(f'{len(assets)} catalogue images verified in {destination}.')
 
 
 if __name__ == '__main__':

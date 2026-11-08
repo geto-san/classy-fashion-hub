@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="{{ asset('css/classy-ethereal.css') }}?v={{ filemtime(public_path('css/classy-ethereal.css')) }}">
 <link rel="stylesheet" href="{{ asset('css/classy-ethereal-footer.css') }}?v={{ filemtime(public_path('css/classy-ethereal-footer.css')) }}">
 <link rel="stylesheet" href="{{ asset('css/classy-ethereal-product.css') }}?v={{ filemtime(public_path('css/classy-ethereal-product.css')) }}">
+<link rel="stylesheet" href="{{ asset('css/classy-african-campaign.css') }}?v={{ filemtime(public_path('css/classy-african-campaign.css')) }}">
 <script type="module">
     document.addEventListener('keydown', (event) => {
         const target = event.target;

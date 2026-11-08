@@ -45,6 +45,6 @@ class Photography
             return false;
         }
 
-        return ! preg_match('~^(products/(catalogue-20261104|demo)|storefront/(editorial/20261104|campaigns/20261103)|images/(campaigns|storefront))/~', $path);
+        return ! preg_match('~^(products/(catalogue-20261104|african-20261108|demo)|storefront/(editorial/20261104|campaigns/20261103)|images/(campaigns|storefront))/~', $path);
     }
 }
